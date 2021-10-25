@@ -5,12 +5,14 @@ const Button = ({
   label,
   disabled
 }) => {
-    return <button
-              onClick={onClick}
-              disabled={disabled}
-            >
-                {label}
-            </button>;
+    return (
+        <button
+            onClick={onClick}
+            disabled={disabled}
+        >
+            {label}
+        </button>
+    );
 };
 
 export default Button;

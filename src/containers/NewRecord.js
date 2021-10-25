@@ -1,6 +1,6 @@
 import React from 'react';
 import AddRecordForm from '../app/forms/AddRecordForm/AddRecordForm';
-import NewRecordButton from '../app/components/NewRecordButton/NewRecordButton';
+import NewRecordButton from '../app/forms/AddRecordForm/buttons/NewRecordButton';
 import AddRecordButton from '../app/forms/AddRecordForm/buttons/AddRecordButton';
 import CancelButton from '../app/forms/AddRecordForm/buttons/CancelButton';
 

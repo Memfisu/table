@@ -1,6 +1,7 @@
 import React from 'react';
 import TableHeader from '../app/components/Table/TableHeader';
 import TableRow from '../app/components/Table/TableRow';
+import TableFilter from '../app/components/Table/TableFilter';
 
 const temporaryData = [
     {
@@ -22,6 +23,7 @@ const temporaryData = [
 const Table = () => {
     return (
         <div>
+            <TableFilter />
             <TableHeader />
             {temporaryData.map(item => <TableRow rowData={item} />)}
         </div>
