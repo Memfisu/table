@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Button from '../../../../ui-kit/Button';
 import { Box } from '../../../../ui-kit/Containers';
 
-const CancelButton = () => {
+const CancelButton = ({ checkIfClicked }) => {
+    const handleClick = useCallback(() => {
+        checkIfClicked(false);
+    }, [checkIfClicked]);
+
     return (
         <Box>
             <Button
-                onClick={() => console.log('Hide AddRecordForm')}
+                onClick={handleClick}
                 disabled={false}
                 label="Cancel"
             />

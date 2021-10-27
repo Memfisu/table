@@ -1,9 +1,14 @@
 import React from 'react';
+import { Box } from '../../../../ui-kit/Containers';
 
 const TableField = ({ fieldData }) => {
-    return <p>
-        {fieldData}
-    </p>;
+    return (
+        <Box
+            padding="5px 0px 0px 5px"
+        >
+            {fieldData}
+        </Box>
+    );
 };
 
 export default TableField;

@@ -1,12 +1,11 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback } from 'react';
 import Button from '../../../../ui-kit/Button';
 import { Box } from '../../../../ui-kit/Containers';
 
-const NewRecordButton = () => {
-    const [clicked, setClicked] = useState(false);
-
-    const handleClick = useCallback(() => setClicked(true), []);
-    console.log(clicked);
+const NewRecordButton = ({ checkIfClicked }) => {
+    const handleClick = useCallback(() => {
+        checkIfClicked(true);
+    }, [checkIfClicked]);
 
     return (
         <Box padding="0px 0px 20px 0px">
