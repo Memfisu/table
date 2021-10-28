@@ -1,17 +1,18 @@
 import React from 'react';
-import { Box } from '../../../ui-kit/Containers';
+import { Grid } from '../../../ui-kit/Containers';
 import SearchInput from './fields/SearchInput';
 import SearchButton from './buttons/SearchButton';
 
 const TableFilter = () => {
     return (
-        <Box
+        <Grid
+            width="400px"
             padding="0px 0px 20px 0px"
-            display="flex"
+            gridColumns="repeat(2, minmax(40px, 1fr))"
         >
             <SearchInput />
             <SearchButton />
-        </Box>
+        </Grid>
     );
 };
 

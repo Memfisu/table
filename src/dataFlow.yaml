@@ -1,0 +1,51 @@
+App:
+  - отображает MainLayout
+MainLayout:
+  - отображает NewRecord, Table и RecordInfo
+
+NewRecord:
+  - по умолчанию отображает NewRecordButton
+  - если от NewRecordButton получена информация о клике, то скрывает NewRecordButton и отображает AddRecordForm, AddRecordButton, CancelButton
+  - если от CancelButton получена информация о клике, то скрывает AddRecordForm, AddRecordButton, CancelButton и отображает NewRecordButton
+NewRecordButton:
+  - по нажатию на кнопку информация о клике передаётся в NewRecord
+AddRecordForm:
+  - содержит поля для заполнения Id, FirstName, LastName, Email, Phone
+  - по нажатию на AddRecordButton получает от полей результаты валидации
+  - если данные во всех полях присутствуют и корректны, по нажатию на AddRecordButton объект newRecord со значениями полей отправляется в Table, и в каждый TableField передаётся команда очистить поле
+TableField:
+  - валидирует своё значение и передаёт информацию о результате в AddRecordForm
+  - очищается по команде от AddRecordForm
+AddRecordButton:
+  - по нажатию на кнопку информация о клике передаётся в AddRecordForm
+CancelButton:
+  - по нажатию на кнопку информация о клике передаётся в NewRecord
+
+Table:
+  - отображает TableFilter, TableHeader, TableRow и TablePagination
+  - загружает все данные о записях с сервера
+  - делит полученные данные на пакеты по 20 записей и по умолчанию передаёт в TableRow первые 20 записей
+  - получает строку для фильтрации из TableFilter и перерисовываепт таблицу, отображая только подходящие TableRow
+  - получает поля из AddRecordForm и отдаёт их в TableRow для отображения новой записи в таблице
+  - получает информацию о поле и направлении сортировки из TableHeader и сортирует данные прежде чем отдать их в TableRow по указанному полю и направлению
+  - по клику на пагинацию передаёт в TableRow предыдущие либо следующие 20 записей (в зависимости от нажатой кнопки направления)
+TableFilter:
+  - отображает SearchInput и SearchButton
+  - по нажатию на SearchButton получает от SearchInput введённую строку для фильтрации и отдаёт её в Table
+SearchInput:
+  - по нажатию на SearchButton передаёт в TableFilter введённую строку для фильтрации
+SearchButton:
+  - по нажатию на кнопку информация о клике передаётся в TableFilter
+TableHeader:
+  - содержит поля заголовка таблицы
+  - по клику на какое-либо поле отображает на этом поле признак и направление сортировки и передаёт информацию о поле и направлении в Table
+TableRow:
+  - содержит поля таблицы TableField. Получает данные о полях из Table
+  - по клику передаёт в RecordInfo информацию о выбранной записи
+TablePagination:
+  - back - передаёт в Table направление пагинации "назад"
+  - forward - передаёт в Table направление пагинации "вперёд"
+
+RecordInfo:
+  - по умолчанию скрыт
+  - отображает дополнительную информацию по выбранной записи после получения из TableRow информации о строке, на которую кликнули

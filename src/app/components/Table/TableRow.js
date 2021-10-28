@@ -10,11 +10,11 @@ const TableRow = ({ rowData }) => {
             padding="0px 0px 20px 0px"
             backgroundColor={constants.GREEN}
         >
-            {Object.values(rowData).map((item, index) =>
-                {
-                    return <TableField key={index} fieldData={item} />
-                }
-            )}
+            <TableField fieldData={rowData?.id} />
+            <TableField fieldData={rowData?.firstName} />
+            <TableField fieldData={rowData?.lastName} />
+            <TableField fieldData={rowData?.email} />
+            <TableField fieldData={rowData?.phone} />
         </Grid>
     );
 };
