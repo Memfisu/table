@@ -4,18 +4,24 @@ import TableHeader from '../app/components/Table/TableHeader';
 import TableRow from '../app/components/Table/TableRow';
 import TableFilter from '../app/components/Table/TableFilter';
 import TablePagination from '../app/components/Table/TablePagination';
-import { useGetTableData } from "../app/hooks/useGetTableData";
-import { Label } from "../ui-kit/Labels";
+import { useGetTableData } from '../app/hooks/useGetTableData';
+import { Label } from '../ui-kit/Labels';
+import {useDataSeparate} from '../app/hooks/useDataSeparate';
 
 const Table = () => {
     const { loaded, data } = useGetTableData();
+    const res = useDataSeparate({ data });
+
+    const temporaryPageNumber = 0;
+    // if (back && !temporaryPageNumber) temporaryPageNumber--;
+    // if (forward && temporaryPageNumber < res?.length) temporaryPageNumber++;
 
     return (
         <Box padding="0px 0px 20px 0px">
             <TableFilter />
             <TableHeader />
             {loaded ?
-                data.map((item, index) => <TableRow key={index} rowData={item} />)
+                res[temporaryPageNumber].map((item, index) => <TableRow key={index} rowData={item} />)
                 : <Label>Data is loading...</Label>
             }
             <TablePagination />
