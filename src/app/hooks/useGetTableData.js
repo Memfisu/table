@@ -1,7 +1,7 @@
 import axios from 'axios/index';
 import { useState, useEffect } from 'react';
 import { dispatch } from '../store';
-import { loadData } from '../reducers/reducers';
+import { loadData } from '../reducers/dataLoader';
 
 export const useGetTableData = () => {
     const [loaded, setLoaded] = useState(false);

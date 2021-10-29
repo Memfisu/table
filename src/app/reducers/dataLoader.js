@@ -23,7 +23,7 @@ const dataLoader = (state, { type, payload }) => {
                 payload
             }
         default:
-            return state;
+            return state || {};
     }
 };
 

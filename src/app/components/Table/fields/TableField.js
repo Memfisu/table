@@ -3,7 +3,7 @@ import { Box } from '../../../../ui-kit/Containers';
 
 const TableField = ({ fieldData }) => {
     return (
-        <Box padding="5px 0px 0px 5px">
+        <Box padding="5px 0px 0px 5px" cursor="pointer">
             {fieldData}
         </Box>
     );

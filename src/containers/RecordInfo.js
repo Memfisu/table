@@ -1,22 +1,55 @@
 import React from 'react';
-import { Grid } from '../ui-kit/Containers';
+import { connect } from 'react-redux';
+import { Box } from '../ui-kit/Containers';
 import { Label, Span } from '../ui-kit/Labels';
 
 const RecordInfo = ({ chosenRecord }) => {
-    return (
-        <Grid gridAutoRows="20px">
-            <Label>Выбран пользователь
-                <Span>
-                    {` ${chosenRecord?.firstName} ${chosenRecord?.lastName}`}
-                </Span>
-            </Label>
-            <Label>Описание: <Span>et lacus magna dolor...</Span></Label>
-            <Label>Адрес проживания: <Span>9792 Mattis Ct</Span></Label>
-            <Label>Город: <Span>Waukesha</Span></Label>
-            <Label>Провинция/штат: <Span>WI</Span></Label>
-            <Label>Индекс: <Span>22178</Span></Label>
-        </Grid>
-    );
+    return chosenRecord ? (
+        <Box>
+            <Box margin="10px 0px">
+                <Label>Выбран пользователь
+                    <Span>
+                        {` ${chosenRecord?.firstName} ${chosenRecord?.lastName}`}
+                    </Span>
+                </Label>
+            </Box>
+            <Box margin="10px 0px">
+                <Label>Описание:
+                    <Span>{` ${chosenRecord?.description}`}</Span>
+                </Label>
+            </Box>
+            <Box margin="10px 0px">
+                <Label>Адрес проживания:
+                    <Span>
+                        {` ${chosenRecord?.address?.streetAddress}`}
+                    </Span>
+                </Label>
+            </Box>
+            <Box margin="10px 0px">
+                <Label>Город:
+                    <Span>
+                        {` ${chosenRecord?.address?.city}`}
+                    </Span>
+                </Label>
+            </Box>
+            <Box margin="10px 0px">
+                <Label>Провинция/штат:
+                    <Span>
+                        {` ${chosenRecord?.address?.state}`}
+                    </Span>
+                </Label>
+            </Box>
+            <Box margin="10px 0px">
+                <Label>Индекс:
+                    <Span>
+                        {` ${chosenRecord?.address?.zip}`}
+                    </Span>
+                </Label>
+            </Box>
+        </Box>
+    ) : null;
 };
 
-export default RecordInfo;
+const mapStateToProps = (state) => state?.additionalInfo;
+
+export default connect(mapStateToProps)(RecordInfo);

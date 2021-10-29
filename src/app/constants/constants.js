@@ -11,24 +11,8 @@ const directions = {
 
 const actions = {
     LOAD: 'LOAD_DATA',
-    ADD: 'ADD_DATA'
+    ADD: 'ADD_DATA',
+    SHOW: 'SHOW_RECORD'
 }
 
-const temporaryData = [
-    {
-        id: 101,
-        firstName: 'Sue',
-        lastName: 'Corson',
-        email: 'DWhalley@in.gov',
-        phone: '(612)211-6296'
-    },
-    {
-        id: 102,
-        firstName: 'Joe',
-        lastName: 'Dow',
-        email: 'JDow@in.gov',
-        phone: '(612)333-333'
-    }
-];
-
-export { colors, directions, actions, temporaryData };
+export { colors, directions, actions };

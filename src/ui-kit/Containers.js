@@ -8,6 +8,7 @@ const Box = styled.div`
     background-color: ${props => props.backgroundColor};
     padding: ${props => props.padding};
     margin: ${props => props.margin};
+    cursor: ${props => props.cursor || 'auto'};
 `;
 
 const Grid = styled(Box)`
