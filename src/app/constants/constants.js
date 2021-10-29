@@ -1,12 +1,18 @@
-const constants = {
+const colors = {
     BLUE: '#e4eff6',
-    GREEN: '#e5fbe5'
+    GREEN: '#e5fbe5',
+    RED: '#ff0000'
 };
 
 const directions = {
     BACK: 'BACK',
     FORWARD: 'FORWARD'
 };
+
+const actions = {
+    LOAD: 'LOAD_DATA',
+    ADD: 'ADD_DATA'
+}
 
 const temporaryData = [
     {
@@ -25,4 +31,4 @@ const temporaryData = [
     }
 ];
 
-export { constants, directions, temporaryData };
+export { colors, directions, actions, temporaryData };

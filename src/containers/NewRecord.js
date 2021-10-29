@@ -14,19 +14,19 @@ const NewRecord = () => {
 
     return (
         <Box padding="0px 0px 20px 0px">
-            {!isFormVisible && <NewRecordButton checkIfClicked={checkIfClicked} />}
-            {isFormVisible &&
-                <Box>
+            {isFormVisible ?
+                (<Box>
                     <AddRecordForm />
                     <Grid
                         width="220px"
-                        padding="0px 0px 20px 0px"
+                        padding="25px 0px 5px 0px"
                         gridColumns="repeat(2, minmax(40px, 1fr))"
                     >
                         <AddRecordButton />
                         <CancelButton checkIfClicked={checkIfClicked} />
                     </Grid>
-                </Box>
+                </Box>) :
+                <NewRecordButton checkIfClicked={checkIfClicked} />
             }
         </Box>
     );

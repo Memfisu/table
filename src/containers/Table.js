@@ -7,13 +7,19 @@ import TablePagination from '../app/components/Table/TablePagination';
 import { useGetTableData } from '../app/hooks/useGetTableData';
 import { Label } from '../ui-kit/Labels';
 import {useDataSeparate} from '../app/hooks/useDataSeparate';
+import { getState } from '../app/store';
 
 const Table = () => {
     const { loaded, data } = useGetTableData();
     const res = useDataSeparate({ data });
 
+    // redux test
+    const { payload } = getState();
+    console.log(payload);
+
+    // pagination draft
     const temporaryPageNumber = 0;
-    // if (back && !temporaryPageNumber) temporaryPageNumber--;
+    // if (back && temporaryPageNumber) temporaryPageNumber--;
     // if (forward && temporaryPageNumber < res?.length) temporaryPageNumber++;
 
     return (
