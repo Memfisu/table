@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '../../../../ui-kit/Input';
 
-const Id = () => {
+const Id = ({ dispatchCallback }) => {
     const validateCallback = value => value.match(/^\d+$/g);
 
     return (
@@ -9,6 +9,7 @@ const Id = () => {
             placeholder="Id"
             type="text"
             validateCallback={validateCallback}
+            dispatchCallback={dispatchCallback}
         />
     );
 };

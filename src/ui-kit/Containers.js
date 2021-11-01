@@ -9,6 +9,9 @@ const Box = styled.div`
     padding: ${props => props.padding};
     margin: ${props => props.margin};
     cursor: ${props => props.cursor || 'auto'};
+    overflow: ${props => props.textOverflow};
+    text-overflow: ellipsis;
+}
 `;
 
 const Grid = styled(Box)`

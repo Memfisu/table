@@ -13,19 +13,13 @@ const addData = ({ newRecord }) => ({
 const dataLoader = (state, { type, payload }) => {
     switch (type) {
         case actions.LOAD:
-            return {
-                ...state,
-                payload
-            }
+            return [...payload];
         case actions.ADD:
-            return {
-                ...state,
-                payload
-            }
+            return [payload, ...state];
         default:
-            return state || {};
+            return state || [];
     }
 };
 
-export { loadData };
+export { loadData, addData };
 export default dataLoader;

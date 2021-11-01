@@ -1,7 +1,8 @@
 const colors = {
     BLUE: '#e4eff6',
     GREEN: '#e5fbe5',
-    RED: '#ff0000'
+    RED: '#ff0000',
+    BLACK: '#000000'
 };
 
 const directions = {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box } from './Containers';
 import { Label } from './Labels';
 import { colors } from '../app/constants/constants';
@@ -6,22 +6,25 @@ import { colors } from '../app/constants/constants';
 const Input = ({
   type,
   placeholder,
-  validateCallback
+  validateCallback,
+  dispatchCallback
 }) => {
     const [isError, setError] = useState(false);
-    const validate = (event) => {
+    
+    const handleBlur = useCallback((event) => {
         setError(!validateCallback(event.target.value));
-    }
+        if (!isError && dispatchCallback) dispatchCallback(event.target.value);
+    }, [dispatchCallback, isError, validateCallback]);
 
     return (
         <Box>
             <input
                 type={type}
                 placeholder={placeholder}
-                onBlur={validate}
+                onBlur={handleBlur}
             />
             {isError &&
-            <Box margin="20px 0px">
+            <Box margin="5px 0px 20px 0px">
                 <Label color={colors.RED}>
                     Check the data
                 </Label>

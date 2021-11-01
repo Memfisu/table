@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Grid } from '../../../ui-kit/Containers';
 import TableField from './fields/TableField';
 import { colors } from '../../constants/constants';
@@ -6,9 +6,9 @@ import { dispatch } from '../../store';
 import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
 
 const TableRow = ({ rowData }) => {
-    const handleCLick = () => {
+    const handleCLick = useCallback(() => {
         dispatch(setChosenRecord({ rowData }));
-    }
+    }, [rowData]);
 
     return (
         <Grid

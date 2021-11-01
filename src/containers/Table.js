@@ -4,18 +4,14 @@ import TableHeader from '../app/components/Table/TableHeader';
 import TableRow from '../app/components/Table/TableRow';
 import TableFilter from '../app/components/Table/TableFilter';
 import TablePagination from '../app/components/Table/TablePagination';
-import { useGetTableData } from '../app/hooks/useGetTableData';
+import { useLoadTableData } from '../app/hooks/useLoadTableData';
 import { Label } from '../ui-kit/Labels';
 import {useDataSeparate} from '../app/hooks/useDataSeparate';
-import { getState } from '../app/store';
+import { connect } from 'react-redux';
 
-const Table = () => {
-    const { loaded, data } = useGetTableData();
-    const res = useDataSeparate({ data });
-
-    // redux test
-    const { payload } = getState();
-    console.log(payload);
+const Table = ({ dataLoader: data }) => {
+    const { loaded } = useLoadTableData();
+    const separatedData = useDataSeparate({ data });
 
     // pagination draft
     const temporaryPageNumber = 0;
@@ -27,7 +23,7 @@ const Table = () => {
             <TableFilter />
             <TableHeader />
             {loaded ?
-                res[temporaryPageNumber].map((item, index) => <TableRow key={index} rowData={item} />)
+                separatedData[temporaryPageNumber]?.map((item, index) => <TableRow key={index} rowData={item} />)
                 : <Label>Data is loading...</Label>
             }
             <TablePagination />
@@ -35,4 +31,7 @@ const Table = () => {
     );
 };
 
-export default Table;
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps)(Table);
+
