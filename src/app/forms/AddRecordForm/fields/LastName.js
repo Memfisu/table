@@ -6,6 +6,7 @@ const LastName = () => {
 
     return (
         <Input
+            name="lastName"
             placeholder="LastName"
             type="text"
             validateCallback={validateCallback}

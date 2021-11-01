@@ -6,6 +6,7 @@ const FirstName = ({ dispatchCallback }) => {
 
     return (
         <Input
+            name="firstName"
             placeholder="FirstName"
             type="text"
             validateCallback={validateCallback}

@@ -7,6 +7,7 @@ const Phone = () => {
 
     return (
         <Input
+            name="phone"
             placeholder="Phone"
             type="tel"
             validateCallback={validateCallback}

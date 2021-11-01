@@ -2,19 +2,21 @@ import React, { useCallback, useState } from 'react';
 import { Box } from './Containers';
 import { Label } from './Labels';
 import { colors } from '../app/constants/constants';
+import { dispatch } from '../app/store';
+import { setNewRecord } from '../app/reducers/newRecordAppendor';
 
 const Input = ({
+  name,
   type,
   placeholder,
-  validateCallback,
-  dispatchCallback
+  validateCallback
 }) => {
     const [isError, setError] = useState(false);
     
     const handleBlur = useCallback((event) => {
         setError(!validateCallback(event.target.value));
-        if (!isError && dispatchCallback) dispatchCallback(event.target.value);
-    }, [dispatchCallback, isError, validateCallback]);
+        if (!isError) dispatch(setNewRecord({[name]: event.target.value}));
+    }, [isError, name, validateCallback]);
 
     return (
         <Box>

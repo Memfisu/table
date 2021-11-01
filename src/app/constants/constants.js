@@ -12,7 +12,9 @@ const directions = {
 
 const actions = {
     LOAD: 'LOAD_DATA',
-    ADD: 'ADD_DATA',
+    NEW: 'CREATE_NEW_DATA',
+    CLEAR: 'CLEAR_NEW_DATA',
+    ADD: 'ADD_NEW_DATA',
     SHOW: 'SHOW_RECORD'
 }
 

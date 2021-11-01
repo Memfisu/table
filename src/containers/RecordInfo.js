@@ -4,7 +4,9 @@ import { Box } from '../ui-kit/Containers';
 import { Label, Span } from '../ui-kit/Labels';
 
 const RecordInfo = ({ chosenRecord }) => {
-    return chosenRecord ? (
+    if (!chosenRecord) return null;
+
+    return (
         <Box>
             <Box margin="10px 0px 0px 0px">
                 <Label>Выбран пользователь
@@ -47,7 +49,7 @@ const RecordInfo = ({ chosenRecord }) => {
                 </Label>
             </Box>
         </Box>
-    ) : null;
+    );
 };
 
 const mapStateToProps = (state) => state?.additionalInfo;

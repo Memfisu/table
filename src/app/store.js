@@ -1,9 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 import dataLoader  from './reducers/dataLoader';
+import newRecordAppendor  from './reducers/newRecordAppendor';
 import { recordInfoDemonstrator as additionalInfo } from './reducers/recordInfoDemonstrator';
 
 const reducers = combineReducers ({
     dataLoader,
+    newRecordAppendor,
     additionalInfo
 });
 

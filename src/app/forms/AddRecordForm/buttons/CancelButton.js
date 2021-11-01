@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import Button from '../../../../ui-kit/Button';
 import { Box } from '../../../../ui-kit/Containers';
 
-const CancelButton = ({ checkIfClicked }) => {
+const CancelButton = ({ toggleFormVisibility }) => {
     const handleClick = useCallback(() => {
-        checkIfClicked(false);
-    }, [checkIfClicked]);
+        toggleFormVisibility(false);
+    }, [toggleFormVisibility]);
 
     return (
         <Box>
