@@ -1,9 +1,11 @@
 import axios from 'axios/index';
 import { useState, useEffect } from 'react';
-import { dispatch } from '../store';
+import { useDispatch } from 'react-redux'
 import { loadData } from '../reducers/dataLoader';
 
 export const useLoadTableData = () => {
+    const dispatch = useDispatch();
+    
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -18,7 +20,7 @@ export const useLoadTableData = () => {
             .finally(() => {
                 setLoaded(true);
             })
-    }, []);
+    }, [dispatch]);
 
     return { loaded };
 }

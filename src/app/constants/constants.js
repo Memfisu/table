@@ -14,8 +14,17 @@ const actions = {
     LOAD: 'LOAD_DATA',
     NEW: 'CREATE_NEW_DATA',
     CLEAR: 'CLEAR_NEW_DATA',
+    RESET: 'RESET_CHOSEN_RECORD',
     ADD: 'ADD_NEW_DATA',
     SHOW: 'SHOW_RECORD'
 }
 
-export { colors, directions, actions };
+const headerNames = [
+    "id",
+    "firstName",
+    "lastName",
+    "email",
+    "phone"
+];
+
+export { colors, directions, actions, headerNames };

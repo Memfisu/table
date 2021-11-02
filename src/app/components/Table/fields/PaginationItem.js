@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '../../../../ui-kit/Containers';
-import Button from '../../../../ui-kit/Button';
+import Button from '../../../utils/Button';
 import { directions } from '../../../constants/constants';
 
 const PaginationItem = ({ direction }) => {

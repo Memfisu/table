@@ -25,5 +25,3 @@ const store = createStore(
 saga.run(rootSaga);
 
 export default store;
-export const { dispatch } = store;
-export const { getState } = store;

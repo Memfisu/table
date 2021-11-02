@@ -4,6 +4,10 @@ const setChosenRecord = ({ rowData }) => ({
     type: actions.SHOW,
     payload: rowData
 });
+const resetChosenRecord = () => ({
+    type: actions.RESET,
+    payload: {}
+});
 
 export const recordInfoDemonstrator = (state, { type, payload }) => {
     switch (type) {
@@ -12,9 +16,11 @@ export const recordInfoDemonstrator = (state, { type, payload }) => {
                 ...state,
                 chosenRecord: payload
             }
+        case actions.RESET:
+            return {};
         default:
             return state || {};
     }
 };
 
-export { setChosenRecord };
+export { setChosenRecord, resetChosenRecord };

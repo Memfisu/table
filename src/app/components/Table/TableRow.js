@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux'
 import { Grid } from '../../../ui-kit/Containers';
 import TableField from './fields/TableField';
 import { colors } from '../../constants/constants';
-import { dispatch } from '../../store';
 import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
 
 const TableRow = ({ rowData }) => {
+    const dispatch = useDispatch();
+    
     const handleCLick = useCallback(() => {
         dispatch(setChosenRecord({ rowData }));
-    }, [rowData]);
+    }, [dispatch, rowData]);
 
     return (
         <Grid

@@ -1,29 +1,38 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid } from '../../../ui-kit/Containers';
-import Id from './fields/Id';
-import FirstName from './fields/FirstName';
-import LastName from './fields/LastName';
-import Email from './fields/Email';
-import Phone from './fields/Phone';
-import AddRecordButton from './buttons/AddRecordButton';
-import CancelButton from './buttons/CancelButton';
-import Button from '../../../ui-kit/Button';
-import { connect } from 'react-redux';
+import Button from '../../utils/Button';
+import ButtonWrapper from '../../hocs/ButtonWrapper';
+import { addData } from '../../reducers/dataLoader';
+import { clearNewRecord } from '../../reducers/newRecordAppendor';
+import InputWrapper from '../../hocs/InputWrapper';
+import InputWithValidation from '../../utils/InputWithValidation';
+import { callbacks } from '../../constants/validateCallbacks';
+import { newRecord } from '../../selectors/selectors';
 
-const AddRecordForm = ({ newRecordAppendor: newRecordData}) => {
+const AddRecordForm = () => {
+    const dispatch = useDispatch();
+    const newRecordData = useSelector(newRecord);
+
     const [isFormVisible, setFormVisible] = useState(false);
 
-    const toggleFormVisibility = isClicked => {
-        setFormVisible(isClicked);
+    const toggleFormVisibility = () => {
+        setFormVisible(!isFormVisible);
     };
 
-    const isButtonDisabled = Object.keys(newRecordData).length !== 5 ||
-        Object.values(newRecordData).some(item => !item);
+    const handleAddRecord = useCallback(() => {
+        dispatch(addData({ newRecord: newRecordData }));
+        dispatch(clearNewRecord());
+    }, [dispatch, newRecordData]);
+
+    const isButtonDisabled = useMemo(() => Object.keys(newRecordData).length !== 5 ||
+        Object.values(newRecordData).some(item => !item), [newRecordData]);
 
     if (!isFormVisible) {
         return (
             <Box padding="0px 0px 20px 0px">
-                <Button
+                <ButtonWrapper
+                    component={Button}
                     onClick={toggleFormVisibility}
                     disabled={false}
                     label="New record"
@@ -39,27 +48,62 @@ const AddRecordForm = ({ newRecordAppendor: newRecordData}) => {
             gridAutoRows="30px"
             padding="0px 0px 20px 0px"
         >
-            <Id />
-            <FirstName />
-            <LastName />
-            <Email />
-            <Phone />
+            <InputWrapper
+                component={InputWithValidation}
+                name="id"
+                placeholder="Id"
+                type="text"
+                validate={callbacks.number}
+            />
+            <InputWrapper
+                component={InputWithValidation}
+                name="firstName"
+                placeholder="FirstName"
+                type="text"
+                validate={callbacks.text}
+            />
+            <InputWrapper
+                component={InputWithValidation}
+                name="lastName"
+                placeholder="LastName"
+                type="text"
+                validate={callbacks.text}
+            />
+            <InputWrapper
+                component={InputWithValidation}
+                name="email"
+                placeholder="E-mail"
+                type="email"
+                validate={callbacks.email}
+            />
+            <InputWrapper
+                component={InputWithValidation}
+                name="phone"
+                placeholder="Phone"
+                type="tel"
+                validate={callbacks.phone}
+            />
         </Grid>
         <Grid
             width="220px"
             padding="25px 0px 5px 0px"
             gridColumns="repeat(2, minmax(40px, 1fr))"
+            gridAutoRows="25px"
         >
-            <AddRecordButton
+            <ButtonWrapper
+                component={Button}
+                onClick={handleAddRecord}
                 disabled={isButtonDisabled}
-                newRecordData={newRecordData}
+                label="Add record"
             />
-            <CancelButton toggleVisible={toggleFormVisibility} />
+            <ButtonWrapper
+                component={Button}
+                onClick={toggleFormVisibility}
+                label="Cancel"
+            />
         </Grid>
     </Box>
     );
 };
 
-const mapStateToProps = state => state;
-
-export default connect(mapStateToProps)(AddRecordForm);
+export default AddRecordForm;
