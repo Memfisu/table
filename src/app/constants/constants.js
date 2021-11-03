@@ -7,7 +7,9 @@ const colors = {
 
 const directions = {
     BACK: 'BACK',
-    FORWARD: 'FORWARD'
+    FORWARD: 'FORWARD',
+    UP: 'UP',
+    DOWN: 'DOWN'
 };
 
 const actions = {
@@ -16,7 +18,8 @@ const actions = {
     CLEAR: 'CLEAR_NEW_DATA',
     RESET: 'RESET_CHOSEN_RECORD',
     ADD: 'ADD_NEW_DATA',
-    SHOW: 'SHOW_RECORD'
+    SHOW: 'SHOW_RECORD',
+    SORT: 'SORT_DATA'
 }
 
 const headerNames = [

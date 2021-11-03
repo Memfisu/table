@@ -1,31 +1,25 @@
 import {Box} from "../../ui-kit/Containers";
 import ButtonWrapper from "../hocs/ButtonWrapper";
 import Button from "../utils/Button";
-import React, {useCallback, useState} from "react";
+import React, {useCallback} from "react";
 import axios from "axios";
-import {loadData} from "../reducers/dataLoader";
+import {addData, loadData} from "../reducers/dataLoader";
 import {useDispatch, useSelector} from "react-redux";
-import {setChosenRecord} from "../reducers/recordInfoDemonstrator";
+import {resetChosenRecord, setChosenRecord} from "../reducers/recordInfoDemonstrator";
 import {loadedData} from "../selectors/selectors";
 import {clearNewRecord} from "../reducers/newRecordAppendor";
+import {directions} from "../constants/constants";
+import {setSortingInfo} from "../reducers/dataSorter";
+import store from "../store";
 
-function* flowWorker (array) {
-    // yield array[0]();
-    // yield array[1]();
-    // yield array[2]();
-    yield console.log('adding a new record');
-    yield console.log('sort ascending');
-    yield console.log('sort descending');
-    // yield console.log('filter');
-    // yield console.log('pagination');
-}
-
-export const useGenerator = () => {
+const useActions = () => {
     const dispatch = useDispatch();
+    const tableData = useSelector(loadedData);
 
     const showLoader = useCallback(() => {
         console.log('loading...');
     }, []);
+
     const hideLoader = useCallback(() => {
         console.log('loaded');
     }, []);
@@ -44,26 +38,96 @@ export const useGenerator = () => {
             });
     }, [dispatch, hideLoader, showLoader]);
 
-    const chosenRecordInfo = useSelector(loadedData);
     const showAdditionalInfo = useCallback(() => {
-        dispatch(setChosenRecord({ rowData: chosenRecordInfo[0] }));
-    }, [chosenRecordInfo, dispatch]);
+        dispatch(setChosenRecord({ rowData: tableData[0] }));
+    }, [tableData, dispatch]);
 
     const hideAdditionalInfo = useCallback(() => {
-        dispatch(clearNewRecord());
+        dispatch(resetChosenRecord());
     }, [dispatch]);
 
-    return [() => console.log('dataLoad'), () => console.log('showAdditionalInfo'), () => console.log('hideAdditionalInfo')];
+    const addNewRecord = useCallback(() => {
+        const newRecordData = {
+            id: 101,
+            firstName: 'Sue',
+            lastName: 'Corson',
+            email: 'DWhalley@in.gov',
+            phone: '(612)211-6296'
+        };
+        dispatch(addData({ newRecord: newRecordData }));
+        dispatch(clearNewRecord());
+    }, [dispatch]);
+    
+    const sort = useCallback(() => {
+        const compareDescending = (a, b) => {
+            if (a[sortData.column] > b[sortData.column]) {
+                return -1;
+            }
+            if (a[sortData.column] < b[sortData.column]) {
+                return 1;
+            }
+            return 0;
+        };
+
+        const compareAscending = (a, b) => {
+            if (a[sortData.column] > b[sortData.column]) {
+                return 1;
+            }
+            if (a[sortData.column] < b[sortData.column]) {
+                return -1;
+            }
+            return 0;
+        };
+
+        showLoader();
+        dispatch(setSortingInfo({ sortingInfo: {
+                direction: directions.UP, // будет передаваться в зависимости от текущего направления
+                column: 'id' // column будет передаваться в зависимости от нажатого столбца, это хардкод для данного прототипа
+            }}));
+        
+        const { dataSorter: sortData } = store.getState();
+        
+        const sortedData = tableData.sort(sortData.direction === directions.UP ?
+            compareAscending : compareDescending);
+        
+        dispatch(loadData({data: sortedData}));
+        hideLoader();
+    }, [dispatch, hideLoader, showLoader, tableData]);
+
+    const filter = useCallback(() => {
+        console.log('filter');
+    }, []);
+
+    const paginationForward = useCallback(() => {
+        console.log('paginationForward');
+    }, []);
+
+    const paginationBack = useCallback(() => {
+        console.log('paginationBack');
+    }, []);
+
+    return [
+        dataLoad,
+        showAdditionalInfo,
+        hideAdditionalInfo,
+        addNewRecord,
+        sort,
+        filter,
+        paginationForward,
+        paginationBack
+    ];
 };
 
 let counter = 0;
 
 const DataFlowTest = () => {
-    const actions = useGenerator();
+    const actions = useActions();
 
     const handleClick = () => {
-        actions[counter]();
-        counter++;
+        if (counter < actions.length) {
+            actions[counter]();
+            counter++;
+        } else console.log('done!');
     };
 
     return (
