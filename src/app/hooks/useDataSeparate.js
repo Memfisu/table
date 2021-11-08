@@ -1,7 +1,7 @@
-export const useDataSeparate = ({ data = [], recordsAmount = 10 }) => {
+export const useDataSeparate = ({ data = [], recordsAmount = 10, pageNumber }) => {
     if (data.length <= recordsAmount) return data;
 
-    return data.reduce((accum, current, index, array) => {
+    const separatedData = data.reduce((accum, current, index, array) => {
         if ( !(index % recordsAmount)  ) {
             return [
                 ...accum,
@@ -10,4 +10,6 @@ export const useDataSeparate = ({ data = [], recordsAmount = 10 }) => {
         }
         return accum;
     }, []);
+
+    return separatedData[pageNumber];
 }

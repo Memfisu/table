@@ -19,7 +19,8 @@ const actions = {
     RESET: 'RESET_CHOSEN_RECORD',
     ADD: 'ADD_NEW_DATA',
     SHOW: 'SHOW_RECORD',
-    SORT: 'SORT_DATA'
+    SORT: 'SORT_DATA',
+    FILTER: 'FILTER_DATA'
 }
 
 const headerNames = [

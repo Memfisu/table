@@ -5,7 +5,8 @@ const InputWrapper = ({
     name,
     placeholder,
     type,
-    validate
+    validate,
+    onBlur
 }) => {
     return (
         <Component
@@ -13,6 +14,7 @@ const InputWrapper = ({
             placeholder={placeholder}
             type={type}
             validate={validate}
+            onBlur={onBlur}
         />
     );
 };

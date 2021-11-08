@@ -1,25 +1,13 @@
-import {directions} from "../constants/constants";
+import { directions } from '../constants/constants';
 
-export const getSortCallback = ({ key, direction }) => {
-    const compareDescending = (a, b) => {
+export const getSortCallback = ({ key, direction }) =>
+    (a, b) => {
+        const value = direction === directions.UP ? 1 : -1;
         if (a[key] > b[key]) {
-            return -1;
+            return value;
         }
         if (a[key] < b[key]) {
-            return 1;
+            return -value;
         }
         return 0;
     };
-
-    const compareAscending = (a, b) => {
-        if (a[key] > b[key]) {
-            return 1;
-        }
-        if (a[key] < b[key]) {
-            return -1;
-        }
-        return 0;
-    };
-
-    return direction === directions.UP ? compareAscending : compareDescending;
-}

@@ -84,7 +84,8 @@ const useActions = () => {
                 direction: directions.UP, // будет передаваться в зависимости от текущего направления
                 column: 'id' // column будет передаваться в зависимости от нажатого столбца, это хардкод для данного прототипа
             }}));
-        
+
+        // в реальной ситуации должен использоваться useSelector
         const { dataSorter: sortData } = store.getState();
         
         const sortedData = tableData.sort(sortData.direction === directions.UP ?
@@ -95,8 +96,21 @@ const useActions = () => {
     }, [dispatch, hideLoader, showLoader, tableData]);
 
     const filter = useCallback(() => {
-        console.log('filter');
-    }, []);
+        showLoader();
+        // строка будет передаваться из инпута фильтра по нажатию на кнопку
+        const filterString = '1';
+
+        const filteredData = tableData.filter(item =>
+            item.id.toString().includes(filterString) ||
+            item.firstName.includes(filterString) ||
+            item.lastName.includes(filterString) ||
+            item.email.includes(filterString) ||
+            item.phone.toString().includes(filterString)
+        );
+
+        dispatch(loadData({data: filteredData}));
+        hideLoader();
+    }, [dispatch, hideLoader, showLoader, tableData]);
 
     const paginationForward = useCallback(() => {
         console.log('paginationForward');

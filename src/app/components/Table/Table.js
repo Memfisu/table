@@ -16,16 +16,23 @@ const Table = () => {
     const dispatch = useDispatch();
     const data = useSelector(loadedData);
     const chosenRecordInfo = useSelector(chosenRecord);
-    const separatedData = useDataSeparate({ data });
 
-    // pagination draft
-    const temporaryPageNumber = 0;
+    const temporaryPageNumber = 0; // pagination draft
     // if (back && temporaryPageNumber) temporaryPageNumber--;
     // if (forward && temporaryPageNumber < res?.length) temporaryPageNumber++;
+    const separatedData = useDataSeparate({
+        data,
+        recordsAmount: '10',
+        pageNumber: temporaryPageNumber
+    });
 
     const handleBlur = () => {
         if (chosenRecordInfo) dispatch(resetChosenRecord());
     }
+
+    const dataComponent = separatedData?.length ? separatedData?.map(
+        (item, index) => <TableRow key={index} rowData={item} />) :
+        <Label>There is no data matching the filter</Label>;
 
     return (
         <Box
@@ -36,7 +43,7 @@ const Table = () => {
             <TableFilter />
             <TableHeader />
             {loaded ?
-                separatedData[temporaryPageNumber]?.map((item, index) => <TableRow key={index} rowData={item} />)
+                dataComponent
                 : <Label>Data is loading...</Label>
             }
             <TablePagination />
