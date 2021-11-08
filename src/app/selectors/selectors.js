@@ -6,3 +6,5 @@ export const chosenRecord = state => additionalInfo(state).chosenRecord;
 export const newRecord = state => state.newRecordAppendor;
 
 export const sortInfo = state => state.dataSorter;
+
+export const filterInfo = state => state.dataFilter;

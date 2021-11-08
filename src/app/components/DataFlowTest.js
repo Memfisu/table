@@ -11,10 +11,11 @@ import {clearNewRecord} from "../reducers/newRecordAppendor";
 import {directions} from "../constants/constants";
 import {setSortingInfo} from "../reducers/dataSorter";
 import store from "../store";
+import {setFilterInfo} from "../reducers/dataFilter";
 
 const useActions = () => {
     const dispatch = useDispatch();
-    const tableData = useSelector(loadedData);
+    let tableData = useSelector(loadedData);
 
     const showLoader = useCallback(() => {
         console.log('loading...');
@@ -97,18 +98,17 @@ const useActions = () => {
 
     const filter = useCallback(() => {
         showLoader();
-        // строка будет передаваться из инпута фильтра по нажатию на кнопку
-        const filterString = '1';
+        // строка для сравнения будет передаваться из инпута фильтра по нажатию на кнопку
+        const filterString = '14';
+        dispatch(setFilterInfo({filterInfo: filterString}))
 
-        const filteredData = tableData.filter(item =>
+        if (filterString) tableData = tableData.filter(item =>
             item.id.toString().includes(filterString) ||
             item.firstName.includes(filterString) ||
             item.lastName.includes(filterString) ||
             item.email.includes(filterString) ||
             item.phone.toString().includes(filterString)
         );
-
-        dispatch(loadData({data: filteredData}));
         hideLoader();
     }, [dispatch, hideLoader, showLoader, tableData]);
 

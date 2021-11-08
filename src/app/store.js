@@ -4,7 +4,8 @@ import dataLoader  from './reducers/dataLoader';
 import newRecordAppendor  from './reducers/newRecordAppendor';
 import { recordInfoDemonstrator as additionalInfo } from './reducers/recordInfoDemonstrator';
 import rootSaga from './sagas/rootSaga';
-import dataSorter from "./reducers/dataSorter";
+import dataSorter from './reducers/dataSorter';
+import dataFilter from './reducers/dataFilter';
 
 const saga = createSagaMiddleware();
 
@@ -12,7 +13,8 @@ const reducers = combineReducers ({
     dataLoader,
     newRecordAppendor,
     additionalInfo,
-    dataSorter
+    dataSorter,
+    dataFilter
 });
 
 const store = createStore(
