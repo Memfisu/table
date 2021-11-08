@@ -20,7 +20,8 @@ const actions = {
     ADD: 'ADD_NEW_DATA',
     SHOW: 'SHOW_RECORD',
     SORT: 'SORT_DATA',
-    FILTER: 'FILTER_DATA'
+    FILTER: 'FILTER_DATA',
+    PAGINATION: 'SET_PAGINATION_DIRECTION'
 }
 
 const headerNames = [

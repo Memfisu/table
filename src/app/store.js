@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga'
 import dataLoader  from './reducers/dataLoader';
 import newRecordAppendor  from './reducers/newRecordAppendor';
@@ -6,6 +6,8 @@ import { recordInfoDemonstrator as additionalInfo } from './reducers/recordInfoD
 import rootSaga from './sagas/rootSaga';
 import dataSorter from './reducers/dataSorter';
 import dataFilter from './reducers/dataFilter';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import pagination from './reducers/pagination';
 
 const saga = createSagaMiddleware();
 
@@ -14,16 +16,14 @@ const reducers = combineReducers ({
     newRecordAppendor,
     additionalInfo,
     dataSorter,
-    dataFilter
+    dataFilter,
+    pagination
 });
 
 const store = createStore(
     reducers,
     {},
-    compose(
-        applyMiddleware(saga),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+    composeWithDevTools(applyMiddleware(saga))
 );
 
 saga.run(rootSaga);

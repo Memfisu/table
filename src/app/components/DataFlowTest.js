@@ -12,6 +12,7 @@ import {directions} from "../constants/constants";
 import {setSortingInfo} from "../reducers/dataSorter";
 import store from "../store";
 import {setFilterInfo} from "../reducers/dataFilter";
+import {setPaginationDirection} from "../reducers/pagination";
 
 const useActions = () => {
     const dispatch = useDispatch();
@@ -113,8 +114,8 @@ const useActions = () => {
     }, [dispatch, hideLoader, showLoader, tableData]);
 
     const paginationForward = useCallback(() => {
-        console.log('paginationForward');
-    }, []);
+        dispatch(setPaginationDirection({direction: directions.FORWARD}));
+    }, [dispatch]);
 
     const paginationBack = useCallback(() => {
         console.log('paginationBack');
@@ -126,9 +127,9 @@ const useActions = () => {
         hideAdditionalInfo,
         addNewRecord,
         sort,
-        filter,
         paginationForward,
-        paginationBack
+        paginationBack,
+        filter
     ];
 };
 

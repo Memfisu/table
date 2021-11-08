@@ -8,3 +8,5 @@ export const newRecord = state => state.newRecordAppendor;
 export const sortInfo = state => state.dataSorter;
 
 export const filterInfo = state => state.dataFilter;
+
+export const paginationDirection = state => state.pagination;
