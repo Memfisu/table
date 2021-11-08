@@ -19,34 +19,34 @@ const RecordInfo = () => {
             </Box>
             <Box margin="10px 0px 0px 0px">
                 <Label>Описание:
-                    <Span>{` ${chosenRecordInfo?.description}`}</Span>
+                    <Span>{` ${chosenRecordInfo?.description || ''}`}</Span>
                 </Label>
             </Box>
             <Box margin="10px 0px 0px 0px">
                 <Label>Адрес проживания:
                     <Span>
-                        {` ${chosenRecordInfo?.address?.streetAddress}`}
+                        {` ${chosenRecordInfo?.address?.streetAddress || ''}`}
                     </Span>
                 </Label>
             </Box>
             <Box margin="10px 0px 0px 0px">
                 <Label>Город:
                     <Span>
-                        {` ${chosenRecordInfo?.address?.city}`}
+                        {` ${chosenRecordInfo?.address?.city || ''}`}
                     </Span>
                 </Label>
             </Box>
             <Box margin="10px 0px 0px 0px">
                 <Label>Провинция/штат:
                     <Span>
-                        {` ${chosenRecordInfo?.address?.state}`}
+                        {` ${chosenRecordInfo?.address?.state || ''}`}
                     </Span>
                 </Label>
             </Box>
             <Box margin="10px 0px 0px 0px">
                 <Label>Индекс:
                     <Span>
-                        {` ${chosenRecordInfo?.address?.zip}`}
+                        {` ${chosenRecordInfo?.address?.zip || ''}`}
                     </Span>
                 </Label>
             </Box>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box } from '../../../ui-kit/Containers';
 import TableHeader from './TableHeader';
@@ -9,15 +9,15 @@ import { useLoadTableData } from '../../hooks/useLoadTableData';
 import { Label } from '../../../ui-kit/Labels';
 import {useDataSeparate} from '../../hooks/useDataSeparate';
 import { resetChosenRecord } from '../../reducers/recordInfoDemonstrator';
-import { chosenRecord, loadedData, filterInfo, paginationDirection } from '../../selectors/selectors';
-import { directions } from '../../constants/constants';
+import { chosenRecord, loadedData, filterInfo, pagination } from '../../selectors/selectors';
+import { setCurrentPage } from '../../reducers/pagination';
 
 const Table = () => {
     const { loaded } = useLoadTableData();
     const dispatch = useDispatch();
     let data = useSelector(loadedData);
     const chosenRecordInfo = useSelector(chosenRecord);
-    const { direction } = useSelector(paginationDirection);
+    const { currentPage } = useSelector(pagination);
 
     const { filterString } = useSelector(filterInfo);
     if (filterString) data = data.filter(item =>
@@ -28,16 +28,13 @@ const Table = () => {
         item.phone.toString().includes(filterString)
     );
 
-    const [pageNumber, setPageNumber] = useState(0);
-    if (direction === directions.BACK && pageNumber) setPageNumber(pageNumber-1);
-    if (direction === directions.FORWARD) setPageNumber(pageNumber+1);
-    // как-то проверять, что впереди ещё есть куда листать
-    console.log(pageNumber);
+    useEffect(() => {
+        dispatch(setCurrentPage({currentPage: 0}));
+    }, [dispatch]);
 
     const separatedData = useDataSeparate({
         data,
-        recordsAmount: '10',
-        pageNumber: pageNumber
+        pageNumber: currentPage
     });
 
     const handleBlur = () => {

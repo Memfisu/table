@@ -21,7 +21,8 @@ const actions = {
     SHOW: 'SHOW_RECORD',
     SORT: 'SORT_DATA',
     FILTER: 'FILTER_DATA',
-    PAGINATION: 'SET_PAGINATION_DIRECTION'
+    PAGE: 'SET_CURRENT_PAGE',
+    LOADER: 'SET_LOADER'
 }
 
 const headerNames = [

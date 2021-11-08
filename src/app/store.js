@@ -8,6 +8,7 @@ import dataSorter from './reducers/dataSorter';
 import dataFilter from './reducers/dataFilter';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import pagination from './reducers/pagination';
+import showLoader from './reducers/showLoader';
 
 const saga = createSagaMiddleware();
 
@@ -17,7 +18,8 @@ const reducers = combineReducers ({
     additionalInfo,
     dataSorter,
     dataFilter,
-    pagination
+    pagination,
+    showLoader
 });
 
 const store = createStore(

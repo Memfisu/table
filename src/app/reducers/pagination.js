@@ -1,21 +1,21 @@
 import { actions } from '../constants/constants';
 
-const setPaginationDirection = ({ direction }) => ({
-    type: actions.PAGINATION,
-    payload: direction
+const setCurrentPage = ({ currentPage }) => ({
+    type: actions.PAGE,
+    payload: currentPage
 });
 
 const pagination = (state, { type, payload }) => {
     switch (type) {
-        case actions.PAGINATION:
+        case actions.PAGE:
             return {
                 ...state,
-                direction: payload
+                currentPage: payload
             }
         default:
             return state || {};
     }
 };
 
-export { setPaginationDirection };
+export { setCurrentPage };
 export default pagination;

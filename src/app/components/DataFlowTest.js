@@ -1,22 +1,23 @@
-import {Box} from "../../ui-kit/Containers";
-import ButtonWrapper from "../hocs/ButtonWrapper";
-import Button from "../utils/Button";
-import React, {useCallback} from "react";
-import axios from "axios";
-import {addData, loadData} from "../reducers/dataLoader";
-import {useDispatch, useSelector} from "react-redux";
-import {resetChosenRecord, setChosenRecord} from "../reducers/recordInfoDemonstrator";
-import {loadedData} from "../selectors/selectors";
-import {clearNewRecord} from "../reducers/newRecordAppendor";
-import {directions} from "../constants/constants";
-import {setSortingInfo} from "../reducers/dataSorter";
-import store from "../store";
-import {setFilterInfo} from "../reducers/dataFilter";
-import {setPaginationDirection} from "../reducers/pagination";
+import { Box } from '../../ui-kit/Containers';
+import ButtonWrapper from '../hocs/ButtonWrapper';
+import Button from '../utils/Button';
+import React, { useCallback } from 'react';
+import axios from 'axios';
+import { addData, loadData } from '../reducers/dataLoader';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetChosenRecord, setChosenRecord } from '../reducers/recordInfoDemonstrator';
+import { loadedData, pagination } from '../selectors/selectors';
+import { clearNewRecord } from '../reducers/newRecordAppendor';
+import { directions } from '../constants/constants';
+import { setSortingInfo } from '../reducers/dataSorter';
+import store from '../store';
+import { setFilterInfo } from '../reducers/dataFilter';
+import { setCurrentPage } from '../reducers/pagination';
 
 const useActions = () => {
     const dispatch = useDispatch();
     let tableData = useSelector(loadedData);
+    const { currentPage } = useSelector(pagination);
 
     const showLoader = useCallback(() => {
         console.log('loading...');
@@ -114,12 +115,16 @@ const useActions = () => {
     }, [dispatch, hideLoader, showLoader, tableData]);
 
     const paginationForward = useCallback(() => {
-        dispatch(setPaginationDirection({direction: directions.FORWARD}));
-    }, [dispatch]);
+        showLoader();
+        dispatch(setCurrentPage({currentPage: currentPage+1}));
+        hideLoader();
+    }, [currentPage, dispatch, hideLoader, showLoader]);
 
     const paginationBack = useCallback(() => {
-        console.log('paginationBack');
-    }, []);
+        showLoader();
+        dispatch(setCurrentPage({currentPage: currentPage-1}));
+        hideLoader();
+    }, [currentPage, dispatch, hideLoader, showLoader]);
 
     return [
         dataLoad,
