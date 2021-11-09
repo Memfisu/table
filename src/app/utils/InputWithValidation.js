@@ -12,9 +12,12 @@ const InputWithValidation = ({
   validate
 }) => {
     const dispatch = useDispatch();
-    
+
     const [isError, setError] = useState(false);
-    
+    /* todo
+    *   Это так не работает
+    *   https://stackblitz.com/edit/react-xz6zw8
+    * */
     const handleBlur = useCallback((event) => {
         setError(!validate(event.target.value));
         if (!isError) dispatch(setNewRecord({[name]: event.target.value}));

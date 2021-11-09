@@ -7,7 +7,7 @@ import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
 
 const TableRow = ({ rowData }) => {
     const dispatch = useDispatch();
-    
+
     const handleCLick = useCallback(() => {
         dispatch(setChosenRecord({ rowData }));
     }, [dispatch, rowData]);
@@ -18,7 +18,8 @@ const TableRow = ({ rowData }) => {
             padding="0px 0px 20px 0px"
             backgroundColor={colors.GREEN}
             onClick={handleCLick}
-        >
+        >{/* todo
+                DRY!! <TableField fieldData={rowData?.<......>} /> - пять раз*/}
             <TableField fieldData={rowData?.id} />
             <TableField fieldData={rowData?.firstName} />
             <TableField fieldData={rowData?.lastName} />
