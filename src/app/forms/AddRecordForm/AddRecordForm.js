@@ -2,12 +2,10 @@ import React, { useCallback, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid } from '../../../ui-kit/Containers';
 import Button from '../../utils/Button';
-import ButtonWrapper from '../../hocs/ButtonWrapper';
 import { addData } from '../../reducers/dataLoader';
 import { clearNewRecord } from '../../reducers/newRecordAppendor';
-import InputWrapper from '../../hocs/InputWrapper';
 import InputWithValidation from '../../utils/InputWithValidation';
-import { callbacks } from '../../constants/validateCallbacks';
+import { validate } from '../../utils/validate';
 import { newRecord } from '../../selectors/selectors';
 
 const AddRecordForm = () => {
@@ -31,10 +29,8 @@ const AddRecordForm = () => {
     if (!isFormVisible) {
         return (
             <Box padding="0px 0px 20px 0px">
-                <ButtonWrapper
-                    component={Button}
+                <Button
                     onClick={toggleFormVisibility}
-                    disabled={false}
                     label="New record"
                 />
             </Box>
@@ -48,40 +44,35 @@ const AddRecordForm = () => {
             gridAutoRows="30px"
             padding="0px 0px 20px 0px"
         >
-            <InputWrapper
-                component={InputWithValidation}
+            <InputWithValidation
                 name="id"
                 placeholder="Id"
                 type="text"
-                validate={callbacks.number}
+                validate={validate}
             />
-            <InputWrapper
-                component={InputWithValidation}
+            <InputWithValidation
                 name="firstName"
                 placeholder="FirstName"
                 type="text"
-                validate={callbacks.text}
+                validate={validate}
             />
-            <InputWrapper
-                component={InputWithValidation}
+            <InputWithValidation
                 name="lastName"
                 placeholder="LastName"
                 type="text"
-                validate={callbacks.text}
+                validate={validate}
             />
-            <InputWrapper
-                component={InputWithValidation}
+            <InputWithValidation
                 name="email"
                 placeholder="E-mail"
                 type="email"
-                validate={callbacks.email}
+                validate={validate}
             />
-            <InputWrapper
-                component={InputWithValidation}
+            <InputWithValidation
                 name="phone"
                 placeholder="Phone"
                 type="tel"
-                validate={callbacks.phone}
+                validate={validate}
             />
         </Grid>
         <Grid
@@ -90,14 +81,12 @@ const AddRecordForm = () => {
             gridColumns="repeat(2, minmax(40px, 1fr))"
             gridAutoRows="25px"
         >
-            <ButtonWrapper
-                component={Button}
+            <Button
                 onClick={handleAddRecord}
                 disabled={isButtonDisabled}
                 label="Add record"
             />
-            <ButtonWrapper
-                component={Button}
+            <Button
                 onClick={toggleFormVisibility}
                 label="Cancel"
             />

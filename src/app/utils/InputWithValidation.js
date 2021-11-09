@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box } from '../../ui-kit/Containers';
 import { Label } from '../../ui-kit/Labels';
@@ -14,11 +14,17 @@ const InputWithValidation = ({
     const dispatch = useDispatch();
     
     const [isError, setError] = useState(false);
+    const [value, setValue] = useState(false);
     
     const handleBlur = useCallback((event) => {
-        setError(!validate(event.target.value));
-        if (!isError) dispatch(setNewRecord({[name]: event.target.value}));
-    }, [dispatch, isError, name, validate]);
+        setError(!validate(name, event.target.value));
+        setValue(event.target.value);
+    }, [name, validate]);
+    
+    useEffect(() => {
+        if (!isError) dispatch(setNewRecord({[name]: value}));
+        else dispatch(setNewRecord({[name]: null}));
+    }, [dispatch, isError, name, value]);
 
     return (
         <Box>

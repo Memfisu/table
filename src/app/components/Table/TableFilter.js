@@ -1,8 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import { Grid } from '../../../ui-kit/Containers';
-import ButtonWrapper from '../../hocs/ButtonWrapper';
 import Button from '../../utils/Button';
-import InputWrapper from '../../hocs/InputWrapper';
 import Input from '../../utils/Input';
 import { useDispatch } from 'react-redux';
 import { setFilterInfo } from '../../reducers/dataFilter';
@@ -26,16 +24,13 @@ const TableFilter = () => {
             gridColumns="repeat(2, minmax(40px, 1fr))"
             gridAutoRows="25px"
         >
-            <InputWrapper
-                component={Input}
+            <Input
                 placeholder="Enter data to filter"
                 type="text"
                 onBlur={handleInputBlur}
             />
-            <ButtonWrapper
-                component={Button}
+            <Button
                 onClick={handleButtonClick}
-                disabled={false}
                 label="Filter"
             />
         </Grid>

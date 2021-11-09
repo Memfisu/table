@@ -1,5 +1,4 @@
 import { Box } from '../../ui-kit/Containers';
-import ButtonWrapper from '../hocs/ButtonWrapper';
 import Button from '../utils/Button';
 import React, { useCallback } from 'react';
 import axios from 'axios';
@@ -13,6 +12,7 @@ import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { setFilterInfo } from '../reducers/dataFilter';
 import { setCurrentPage } from '../reducers/pagination';
+import {setLoader} from "../reducers/showLoader";
 
 const useActions = () => {
     const dispatch = useDispatch();
@@ -20,12 +20,12 @@ const useActions = () => {
     const { currentPage } = useSelector(pagination);
 
     const showLoader = useCallback(() => {
-        console.log('loading...');
-    }, []);
+        dispatch(setLoader({ visibility: true }));
+    }, [dispatch]);
 
     const hideLoader = useCallback(() => {
-        console.log('loaded');
-    }, []);
+        dispatch(setLoader({ visibility: false }));
+    }, [dispatch]);
 
     const dataLoad = useCallback(() => {
         showLoader();
@@ -105,11 +105,7 @@ const useActions = () => {
         dispatch(setFilterInfo({filterInfo: filterString}))
 
         if (filterString) tableData = tableData.filter(item =>
-            item.id.toString().includes(filterString) ||
-            item.firstName.includes(filterString) ||
-            item.lastName.includes(filterString) ||
-            item.email.includes(filterString) ||
-            item.phone.toString().includes(filterString)
+            Object.values(item).slice(0, 5).some(elem => elem.toString().includes(filterString))
         );
         hideLoader();
     }, [dispatch, hideLoader, showLoader, tableData]);
@@ -152,10 +148,8 @@ const DataFlowTest = () => {
 
     return (
         <Box padding="0px 0px 20px 0px">
-            <ButtonWrapper
-                component={Button}
+            <Button
                 onClick={handleClick}
-                disabled={false}
                 label="== Data Flow Test =="
             />
         </Box>

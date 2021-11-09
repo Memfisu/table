@@ -7,30 +7,40 @@ import TableFilter from './TableFilter';
 import TablePagination from './TablePagination';
 import { useLoadTableData } from '../../hooks/useLoadTableData';
 import { Label } from '../../../ui-kit/Labels';
-import {useDataSeparate} from '../../hooks/useDataSeparate';
+import { useDataSeparate } from '../../hooks/useDataSeparate';
 import { resetChosenRecord } from '../../reducers/recordInfoDemonstrator';
-import { chosenRecord, loadedData, filterInfo, pagination } from '../../selectors/selectors';
+import { chosenRecord, loadedData, filterInfo, pagination, sortInfo } from '../../selectors/selectors';
 import { setCurrentPage } from '../../reducers/pagination';
+import { getSortCallback } from '../../utils/getSortCallback';
+import { loadData } from '../../reducers/dataLoader';
 
 const Table = () => {
     const { loaded } = useLoadTableData();
     const dispatch = useDispatch();
     let data = useSelector(loadedData);
+    let sortData = useSelector(sortInfo);
     const chosenRecordInfo = useSelector(chosenRecord);
     const { currentPage } = useSelector(pagination);
 
     const { filterString } = useSelector(filterInfo);
     if (filterString) data = data.filter(item =>
-        item.id.toString().includes(filterString) ||
-        item.firstName.includes(filterString) ||
-        item.lastName.includes(filterString) ||
-        item.email.includes(filterString) ||
-        item.phone.toString().includes(filterString)
+        Object.values(item).slice(0, 5).some(elem => elem.toString().includes(filterString))
     );
 
     useEffect(() => {
         dispatch(setCurrentPage({currentPage: 0}));
     }, [dispatch]);
+    
+    useEffect(() => {
+        const sortCallback = getSortCallback({
+            key: sortData?.column,
+            direction: sortData?.direction
+        });
+
+        const sortedData = data.sort(sortCallback);
+        dispatch(loadData({data: sortedData}));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, sortData?.column, sortData?.direction]);
 
     const separatedData = useDataSeparate({
         data,

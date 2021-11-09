@@ -12,6 +12,8 @@ const TableRow = ({ rowData }) => {
         dispatch(setChosenRecord({ rowData }));
     }, [dispatch, rowData]);
 
+    const fieldValues = Object.values(rowData).slice(0, 5);
+
     return (
         <Grid
             gridColumns="repeat(5, minmax(100px, 1fr))"
@@ -19,11 +21,7 @@ const TableRow = ({ rowData }) => {
             backgroundColor={colors.GREEN}
             onClick={handleCLick}
         >
-            <TableField fieldData={rowData?.id} />
-            <TableField fieldData={rowData?.firstName} />
-            <TableField fieldData={rowData?.lastName} />
-            <TableField fieldData={rowData?.email} />
-            <TableField fieldData={rowData?.phone} />
+            { fieldValues.map((item, index) => <TableField key={index} fieldData={item} />) }
         </Grid>
     );
 };
