@@ -1,3 +1,7 @@
+/*
+* todo
+*  DRY!!
+* */
 export const callbacks = {
     number: value => value.match(/^\d+$/g),
     text: value => value.match(/^[a-zA-Z]+$/g),

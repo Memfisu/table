@@ -28,6 +28,12 @@ const useActions = () => {
     }, []);
 
     const dataLoad = useCallback(() => {
+
+        /* todo
+            "Использовать селектор" замемчание 1
+            Это неправильный подход. Вы не должны запускать лоадер явно. Нужно рендерить лоадер при определенном состоянии данных в редаксе.
+            Решается через селектор.
+            */
         showLoader();
         axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then(res => {
@@ -60,7 +66,7 @@ const useActions = () => {
         dispatch(addData({ newRecord: newRecordData }));
         dispatch(clearNewRecord());
     }, [dispatch]);
-    
+
     const sort = useCallback(() => {
         const compareDescending = (a, b) => {
             if (a[sortData.column] > b[sortData.column]) {
@@ -81,7 +87,9 @@ const useActions = () => {
             }
             return 0;
         };
-
+        /*todo
+             "Использовать серектор" замечание 2
+        * */
         showLoader();
         dispatch(setSortingInfo({ sortingInfo: {
                 direction: directions.UP, // будет передаваться в зависимости от текущего направления
@@ -90,39 +98,63 @@ const useActions = () => {
 
         // в реальной ситуации должен использоваться useSelector
         const { dataSorter: sortData } = store.getState();
-        
+
         const sortedData = tableData.sort(sortData.direction === directions.UP ?
             compareAscending : compareDescending);
-        
+
         dispatch(loadData({data: sortedData}));
         hideLoader();
     }, [dispatch, hideLoader, showLoader, tableData]);
 
     const filter = useCallback(() => {
+        /*todo
+             "Использовать серектор" замечание 3
+        * */
         showLoader();
         // строка для сравнения будет передаваться из инпута фильтра по нажатию на кнопку
         const filterString = '14';
         dispatch(setFilterInfo({filterInfo: filterString}))
 
         if (filterString) tableData = tableData.filter(item =>
+            /* todo
+                DRY!! Пять раз набор символов includes(filterString)
+                нужен код, где это встретиться один раз
+                И такой код желательно писать сразу, такие повторения в комит по хорошему попадать не должны
+            */
+
             item.id.toString().includes(filterString) ||
             item.firstName.includes(filterString) ||
             item.lastName.includes(filterString) ||
             item.email.includes(filterString) ||
             item.phone.toString().includes(filterString)
         );
+        /*todo
+             "Использовать серектор" замечание 4
+        * */
         hideLoader();
     }, [dispatch, hideLoader, showLoader, tableData]);
 
     const paginationForward = useCallback(() => {
+        /*todo
+             "Использовать серектор" замечание 5
+        * */
         showLoader();
         dispatch(setCurrentPage({currentPage: currentPage+1}));
+        /*todo
+             "Использовать серектор" замечание 6
+        * */
         hideLoader();
     }, [currentPage, dispatch, hideLoader, showLoader]);
 
     const paginationBack = useCallback(() => {
+        /*todo
+             "Использовать серектор" замечание 7
+        * */
         showLoader();
         dispatch(setCurrentPage({currentPage: currentPage-1}));
+        /*todo
+             "Использовать серектор" замечание 8
+        * */
         hideLoader();
     }, [currentPage, dispatch, hideLoader, showLoader]);
 
@@ -151,6 +183,10 @@ const DataFlowTest = () => {
     };
 
     return (
+        /*
+        Передавать стили через пропсы - очень плохо.
+        Задача: назовите минимум две причины, почему это плохо.
+        */
         <Box padding="0px 0px 20px 0px">
             <ButtonWrapper
                 component={Button}

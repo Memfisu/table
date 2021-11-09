@@ -32,6 +32,11 @@ const TableFilter = () => {
                 type="text"
                 onBlur={handleInputBlur}
             />
+            {/* todo
+                    Для того, чтобы не писать disabled={false}
+                    нужно использовать параметры по умолчанию во враппере
+
+            */}
             <ButtonWrapper
                 component={Button}
                 onClick={handleButtonClick}
