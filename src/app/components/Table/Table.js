@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '../../../ui-kit/Containers';
+import Box from '../../utils/Box';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import TableFilter from './TableFilter';
 import TablePagination from './TablePagination';
 import { useLoadTableData } from '../../hooks/useLoadTableData';
-import { Label } from '../../../ui-kit/Labels';
+import Label from '../../utils/Label';
 import { useDataSeparate } from '../../hooks/useDataSeparate';
 import { resetChosenRecord } from '../../reducers/recordInfoDemonstrator';
 import { chosenRecord, loadedData, filterInfo, pagination, sortInfo } from '../../selectors/selectors';
@@ -56,11 +56,7 @@ const Table = () => {
         <Label>There is no data matching the filter</Label>;
 
     return (
-        <Box
-            padding="0px 0px 20px 0px"
-            tabIndex={1}
-            onBlur={handleBlur}
-        >
+        <Box className="tableBody" onBlur={handleBlur}>
             <TableFilter />
             <TableHeader />
             {loaded ?

@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux'
-import { Grid } from '../../../ui-kit/Containers';
-import TableField from './fields/TableField';
-import { colors } from '../../constants/constants';
+import Box from '../../utils/Box';
 import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
 
 const TableRow = ({ rowData }) => {
@@ -15,14 +13,14 @@ const TableRow = ({ rowData }) => {
     const fieldValues = Object.values(rowData).slice(0, 5);
 
     return (
-        <Grid
-            gridColumns="repeat(5, minmax(100px, 1fr))"
-            padding="0px 0px 20px 0px"
-            backgroundColor={colors.GREEN}
+        <Box
+            className="tableRow"
             onClick={handleCLick}
         >
-            { fieldValues.map((item, index) => <TableField key={index} fieldData={item} />) }
-        </Grid>
+            { fieldValues.map((item, index) =>
+                <Box className="tableField" key={index}>{item}</Box>)
+            }
+        </Box>
     );
 };
 

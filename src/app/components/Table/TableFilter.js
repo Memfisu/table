@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import { Grid } from '../../../ui-kit/Containers';
+import Box from '../../utils/Box';
 import Button from '../../utils/Button';
 import Input from '../../utils/Input';
 import { useDispatch } from 'react-redux';
@@ -18,12 +18,7 @@ const TableFilter = () => {
         [dispatch, inputValue]);
 
     return (
-        <Grid
-            width="400px"
-            padding="0px 0px 20px 0px"
-            gridColumns="repeat(2, minmax(40px, 1fr))"
-            gridAutoRows="25px"
-        >
+        <Box className="tableFilter">
             <Input
                 placeholder="Enter data to filter"
                 type="text"
@@ -33,7 +28,7 @@ const TableFilter = () => {
                 onClick={handleButtonClick}
                 label="Filter"
             />
-        </Grid>
+        </Box>
     );
 };
 

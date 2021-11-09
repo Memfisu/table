@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Box } from '../../../../ui-kit/Containers';
+import Box from '../../../utils/Box';
 import Button from '../../../utils/Button';
 import { directions } from '../../../constants/constants';
 import { setCurrentPage } from '../../../reducers/pagination';
@@ -19,7 +19,7 @@ const PaginationItem = ({ direction }) => {
     }, [currentPage, direction, dispatch]);
 
     return (
-        <Box padding="5px 0px 0px 5px">
+        <Box className="paginationItem">
           <Button
               label={direction === directions.BACK ? "<<" : ">>"}
               onClick={handleClick}

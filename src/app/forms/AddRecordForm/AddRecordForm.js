@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid } from '../../../ui-kit/Containers';
+import Box from '../../utils/Box';
 import Button from '../../utils/Button';
 import { addData } from '../../reducers/dataLoader';
 import { clearNewRecord } from '../../reducers/newRecordAppendor';
@@ -28,7 +28,7 @@ const AddRecordForm = () => {
 
     if (!isFormVisible) {
         return (
-            <Box padding="0px 0px 20px 0px">
+            <Box className="formWrapper">
                 <Button
                     onClick={toggleFormVisibility}
                     label="New record"
@@ -38,12 +38,8 @@ const AddRecordForm = () => {
     }
 
     return (
-        <Box padding="0px 0px 20px 0px">
-        <Grid
-            gridColumns="repeat(5, minmax(100px, 1fr))"
-            gridAutoRows="30px"
-            padding="0px 0px 20px 0px"
-        >
+        <Box className="formWrapper">
+        <Box className="formFields">
             <InputWithValidation
                 name="id"
                 placeholder="Id"
@@ -74,13 +70,8 @@ const AddRecordForm = () => {
                 type="tel"
                 validate={validate}
             />
-        </Grid>
-        <Grid
-            width="220px"
-            padding="25px 0px 5px 0px"
-            gridColumns="repeat(2, minmax(40px, 1fr))"
-            gridAutoRows="25px"
-        >
+        </Box>
+        <Box className="formButtons">
             <Button
                 onClick={handleAddRecord}
                 disabled={isButtonDisabled}
@@ -90,7 +81,7 @@ const AddRecordForm = () => {
                 onClick={toggleFormVisibility}
                 label="Cancel"
             />
-        </Grid>
+        </Box>
     </Box>
     );
 };

@@ -1,8 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box } from '../../ui-kit/Containers';
-import { Label } from '../../ui-kit/Labels';
-import { colors } from '../constants/constants';
+import Box from './Box';
+import Label from './Label';
 import { setNewRecord } from '../reducers/newRecordAppendor';
 
 const InputWithValidation = ({
@@ -34,8 +33,8 @@ const InputWithValidation = ({
                 onBlur={handleBlur}
             />
             {isError &&
-            <Box margin="5px 0px 20px 0px">
-                <Label color={colors.RED}>
+            <Box className="errorBox">
+                <Label className="redText">
                     Check the data
                 </Label>
             </Box>}

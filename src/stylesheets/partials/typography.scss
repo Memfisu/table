@@ -1,0 +1,16 @@
+$font: Roboto, sans-serif;
+$blackColor: #000000;
+$redColor: #ff0000;
+
+body {
+  font: 100% $font;
+  color: $blackColor;
+}
+
+.redText {
+  color: $redColor;
+}
+
+.boldText {
+  font-weight: bold;
+}

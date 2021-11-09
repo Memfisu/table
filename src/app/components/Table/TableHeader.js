@@ -1,19 +1,15 @@
 import React from 'react';
-import { Grid } from '../../../ui-kit/Containers';
+import Box from '../../utils/Box';
 import TableHeaderItem from './fields/TableHeaderItem';
-import {colors, headerNames} from '../../constants/constants';
+import { headerNames } from '../../constants/constants';
 
 const TableHeader = () => {
     return (
-        <Grid
-            gridColumns="repeat(5, minmax(100px, 1fr))"
-            gridAutoRows="50px"
-            backgroundColor={colors.BLUE}
-        >
+        <Box className="tableHeader">
             {headerNames.map((item, index) =>
                 <TableHeaderItem key={index} itemName={item}/>
             )}
-        </Grid>
+        </Box>
     );
 };
 

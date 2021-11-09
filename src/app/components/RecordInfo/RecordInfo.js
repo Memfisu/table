@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Box } from '../../../ui-kit/Containers';
-import { Label, Span } from '../../../ui-kit/Labels';
+import Box from '../../utils/Box';
+import Label from '../../utils/Label';
+import Span from '../../utils/Span';
 import { chosenRecord } from '../../selectors/selectors';
 
 const RecordInfo = () => {
@@ -10,42 +11,44 @@ const RecordInfo = () => {
 
     return (
         <Box>
-            <Box margin="10px 0px 0px 0px">
+            <Box className="recordInfo">
                 <Label>Выбран пользователь
-                    <Span>
+                    <Span className="boldText">
                         {` ${chosenRecordInfo?.firstName} ${chosenRecordInfo?.lastName}`}
                     </Span>
                 </Label>
             </Box>
-            <Box margin="10px 0px 0px 0px">
+            <Box className="recordInfo">
                 <Label>Описание:
-                    <Span>{` ${chosenRecordInfo?.description || ''}`}</Span>
+                    <Span className="boldText">
+                        {` ${chosenRecordInfo?.description || ''}`}
+                    </Span>
                 </Label>
             </Box>
-            <Box margin="10px 0px 0px 0px">
+            <Box className="recordInfo">
                 <Label>Адрес проживания:
-                    <Span>
+                    <Span className="boldText">
                         {` ${chosenRecordInfo?.address?.streetAddress || ''}`}
                     </Span>
                 </Label>
             </Box>
-            <Box margin="10px 0px 0px 0px">
+            <Box className="recordInfo">
                 <Label>Город:
-                    <Span>
+                    <Span className="boldText">
                         {` ${chosenRecordInfo?.address?.city || ''}`}
                     </Span>
                 </Label>
             </Box>
-            <Box margin="10px 0px 0px 0px">
+            <Box className="recordInfo">
                 <Label>Провинция/штат:
-                    <Span>
+                    <Span className="boldText">
                         {` ${chosenRecordInfo?.address?.state || ''}`}
                     </Span>
                 </Label>
             </Box>
-            <Box margin="10px 0px 0px 0px">
+            <Box className="recordInfo">
                 <Label>Индекс:
-                    <Span>
+                    <Span className="boldText">
                         {` ${chosenRecordInfo?.address?.zip || ''}`}
                     </Span>
                 </Label>

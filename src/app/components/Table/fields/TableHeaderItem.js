@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortInfo } from '../../../selectors/selectors';
-import { Box } from '../../../../ui-kit/Containers';
+import Box from '../../../utils/Box';
 import { directions } from '../../../constants/constants';
 import { setSortingInfo } from '../../../reducers/dataSorter';
 
@@ -20,7 +20,7 @@ const TableHeaderItem = ({ itemName }) => {
 
     return (
         <Box
-            padding="10px 0px 0px 5px"
+            className="tableHeaderItem"
             onClick={handleClick}
         >
             {itemName}

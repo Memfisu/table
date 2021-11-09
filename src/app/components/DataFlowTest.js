@@ -1,4 +1,4 @@
-import { Box } from '../../ui-kit/Containers';
+import Box from '../utils/Box';
 import Button from '../utils/Button';
 import React, { useCallback } from 'react';
 import axios from 'axios';
@@ -12,7 +12,7 @@ import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { setFilterInfo } from '../reducers/dataFilter';
 import { setCurrentPage } from '../reducers/pagination';
-import {setLoader} from "../reducers/showLoader";
+import { setLoader } from '../reducers/showLoader';
 
 const useActions = () => {
     const dispatch = useDispatch();
@@ -147,7 +147,7 @@ const DataFlowTest = () => {
     };
 
     return (
-        <Box padding="0px 0px 20px 0px">
+        <Box className="dataFlowButtonWrapper">
             <Button
                 onClick={handleClick}
                 label="== Data Flow Test =="

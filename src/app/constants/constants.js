@@ -1,10 +1,3 @@
-const colors = {
-    BLUE: '#e4eff6',
-    GREEN: '#e5fbe5',
-    RED: '#ff0000',
-    BLACK: '#000000'
-};
-
 const directions = {
     BACK: 'BACK',
     FORWARD: 'FORWARD',
@@ -33,4 +26,4 @@ const headerNames = [
     "phone"
 ];
 
-export { colors, directions, actions, headerNames };
+export { directions, actions, headerNames };
