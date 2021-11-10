@@ -30,6 +30,12 @@
   background-color: $darkestTealColor;
 }
 
+.commonButton:disabled {
+  @extend %commonText;
+  cursor: auto;
+  background-color: $lightTealColor;
+}
+
 .filterButton {
   border: none;
   outline: none;
@@ -37,7 +43,7 @@
   height: 33px;
   width: 40px;
   position: absolute;
-  top: 8px;
+  top: 5px;
   right: 8px;
   background: $lightTealColor;
   cursor: pointer;

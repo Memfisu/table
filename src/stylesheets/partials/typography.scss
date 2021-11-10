@@ -4,6 +4,9 @@ $font: Roboto, sans-serif;
 
 body {
   font: 100% $font;
+}
+
+body, %commonText {
   color: $blackColor;
 }
 

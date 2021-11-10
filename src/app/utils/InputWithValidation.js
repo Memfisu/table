@@ -34,7 +34,7 @@ const InputWithValidation = ({
             />
             {isError &&
             <Box className="errorBox">
-                <Label className="redText">
+                <Label>
                     Check the data
                 </Label>
             </Box>}

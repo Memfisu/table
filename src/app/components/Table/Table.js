@@ -52,9 +52,11 @@ const Table = () => {
         if (chosenRecordInfo) dispatch(resetChosenRecord());
     }
 
-    const tableData = separatedData?.length ? separatedData?.map(
-        (item, index) => <TableRow key={index} rowData={item} />) :
-        <Label>There is no data matching the filter</Label>;
+    const tableData = separatedData?.length ?
+        separatedData?.map((item, index) => <TableRow key={index} rowData={item} />)
+        : <Box className="informationWrapper">
+            <Label>There is no data matching the filter</Label>
+        </Box>;
 
     return (
         <Box className="tableBody" onBlur={handleBlur}>
@@ -65,7 +67,9 @@ const Table = () => {
             <TableHeader />
             {loaded ?
                 tableData
-                : <Label>Data is loading...</Label>
+            : <Box className="informationWrapper">
+                    <Label>Data is loading...</Label>
+              </Box>
             }
             <TablePagination />
         </Box>

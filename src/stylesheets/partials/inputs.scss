@@ -2,12 +2,13 @@
 
 $font: Roboto, sans-serif;
 
-.filterInput {
+.filterInput,
+.formFields input {
   border: none;
   outline: none;
   border-radius: 3px;
   width: 100%;
-  height: 48px;
+  height: 40px;
   background: $lightTealColor;
   padding-left: 15px;
   font-family: $font;

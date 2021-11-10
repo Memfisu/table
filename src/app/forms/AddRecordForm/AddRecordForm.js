@@ -74,11 +74,13 @@ const AddRecordForm = () => {
         </Box>
         <Box className="formButtons">
             <Button
+                className="commonButton"
                 onClick={handleAddRecord}
                 disabled={isButtonDisabled}
                 label="Add record"
             />
             <Button
+                className="commonButton"
                 onClick={toggleFormVisibility}
                 label="Cancel"
             />
