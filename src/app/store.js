@@ -9,6 +9,7 @@ import dataFilter from './reducers/dataFilter';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import pagination from './reducers/pagination';
 import showLoader from './reducers/showLoader';
+import {formDemonstrator} from "./reducers/formDemonstrator";
 
 const saga = createSagaMiddleware();
 
@@ -19,6 +20,7 @@ const reducers = combineReducers ({
     dataSorter,
     dataFilter,
     pagination,
+    formDemonstrator,
     showLoader
 });
 

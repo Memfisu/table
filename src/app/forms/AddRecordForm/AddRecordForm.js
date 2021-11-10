@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '../../utils/Box';
 import Button from '../../utils/Button';
@@ -6,16 +6,16 @@ import { addData } from '../../reducers/dataLoader';
 import { clearNewRecord } from '../../reducers/newRecordAppendor';
 import InputWithValidation from '../../utils/InputWithValidation';
 import { validate } from '../../utils/validate';
-import { newRecord } from '../../selectors/selectors';
+import { formVisibility, newRecord } from '../../selectors/selectors';
+import { setFormVisibility } from '../../reducers/formDemonstrator';
 
 const AddRecordForm = () => {
     const dispatch = useDispatch();
     const newRecordData = useSelector(newRecord);
-
-    const [isFormVisible, setFormVisible] = useState(false);
+    const { visibility } = useSelector(formVisibility);
 
     const toggleFormVisibility = () => {
-        setFormVisible(!isFormVisible);
+        dispatch(setFormVisibility({ visibility: false }));
     };
 
     const handleAddRecord = useCallback(() => {
@@ -26,17 +26,7 @@ const AddRecordForm = () => {
     const isButtonDisabled = useMemo(() => Object.keys(newRecordData).length !== 5 ||
         Object.values(newRecordData).some(item => !item), [newRecordData]);
 
-    if (!isFormVisible) {
-        return (
-            <Box className="formWrapper">
-                <Button
-                    className="commonButton"
-                    onClick={toggleFormVisibility}
-                    label="+ New record"
-                />
-            </Box>
-        )
-    }
+    if (!visibility) return null;
 
     return (
         <Box className="formWrapper">

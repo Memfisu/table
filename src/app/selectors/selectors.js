@@ -12,3 +12,5 @@ export const filterInfo = state => state.dataFilter;
 export const pagination = state => state.pagination;
 
 export const loaderVisibility = state => state.showLoader;
+
+export const formVisibility = state => state.formDemonstrator;

@@ -13,7 +13,9 @@ import { chosenRecord, loadedData, filterInfo, pagination, sortInfo } from '../.
 import { setCurrentPage } from '../../reducers/pagination';
 import { getSortCallback } from '../../utils/getSortCallback';
 import { loadData } from '../../reducers/dataLoader';
-import AddRecordForm from "../../forms/AddRecordForm/AddRecordForm";
+import AddRecordForm from '../../forms/AddRecordForm/AddRecordForm';
+import AddRecordButton from '../../forms/AddRecordForm/AddRecordButton';
+import { setFormVisibility } from '../../reducers/formDemonstrator';
 
 const Table = () => {
     const { loaded } = useLoadTableData();
@@ -30,6 +32,7 @@ const Table = () => {
 
     useEffect(() => {
         dispatch(setCurrentPage({currentPage: 0}));
+        dispatch(setFormVisibility({ visibility: false }));
     }, [dispatch]);
     
     useEffect(() => {
@@ -62,8 +65,9 @@ const Table = () => {
         <Box className="tableBody" onBlur={handleBlur}>
             <Box className="tableInstruments">
                 <TableFilter />
-                <AddRecordForm />
+                <AddRecordButton />
             </Box>
+            <AddRecordForm />
             <TableHeader />
             {loaded ?
                 tableData

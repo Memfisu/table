@@ -12,6 +12,7 @@ const actions = {
     RESET: 'RESET_CHOSEN_RECORD',
     ADD: 'ADD_NEW_DATA',
     SHOW: 'SHOW_RECORD',
+    FORM: 'SHOW_FORM',
     SORT: 'SORT_DATA',
     FILTER: 'FILTER_DATA',
     PAGE: 'SET_CURRENT_PAGE',
