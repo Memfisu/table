@@ -1,16 +1,20 @@
+@import '../modules/colors';
+
 $font: Roboto, sans-serif;
-$blackColor: #000000;
-$redColor: #ff0000;
 
 body {
   font: 100% $font;
   color: $blackColor;
 }
 
-.redText {
-  color: $redColor;
+%redText {
+  color: $darkRedColor;
 }
 
-.boldText {
+%whiteText {
+  color: $whiteColor;
+}
+
+%boldText {
   font-weight: bold;
 }

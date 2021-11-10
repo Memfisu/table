@@ -1,0 +1,14 @@
+@import '../modules/colors';
+
+$font: Roboto, sans-serif;
+
+.filterInput {
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  width: 100%;
+  height: 48px;
+  background: $lightTealColor;
+  padding-left: 15px;
+  font-family: $font;
+}

@@ -13,6 +13,7 @@ import { chosenRecord, loadedData, filterInfo, pagination, sortInfo } from '../.
 import { setCurrentPage } from '../../reducers/pagination';
 import { getSortCallback } from '../../utils/getSortCallback';
 import { loadData } from '../../reducers/dataLoader';
+import AddRecordForm from "../../forms/AddRecordForm/AddRecordForm";
 
 const Table = () => {
     const { loaded } = useLoadTableData();
@@ -57,7 +58,10 @@ const Table = () => {
 
     return (
         <Box className="tableBody" onBlur={handleBlur}>
-            <TableFilter />
+            <Box className="tableInstruments">
+                <TableFilter />
+                <AddRecordForm />
+            </Box>
             <TableHeader />
             {loaded ?
                 tableData

@@ -30,8 +30,9 @@ const AddRecordForm = () => {
         return (
             <Box className="formWrapper">
                 <Button
+                    className="commonButton"
                     onClick={toggleFormVisibility}
-                    label="New record"
+                    label="+ New record"
                 />
             </Box>
         )

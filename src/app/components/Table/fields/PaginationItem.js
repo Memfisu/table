@@ -21,6 +21,7 @@ const PaginationItem = ({ direction }) => {
     return (
         <Box className="paginationItem">
           <Button
+              className="commonButton"
               label={direction === directions.BACK ? "<<" : ">>"}
               onClick={handleClick}
           />

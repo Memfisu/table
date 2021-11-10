@@ -11,44 +11,44 @@ const RecordInfo = () => {
 
     return (
         <Box>
-            <Box className="recordInfo">
-                <Label>Выбран пользователь
-                    <Span className="boldText">
+            <Box className="recordInfoWrapper">
+                <Label>Выбран пользователь:
+                    <Span className="recordInfo">
                         {` ${chosenRecordInfo?.firstName} ${chosenRecordInfo?.lastName}`}
                     </Span>
                 </Label>
             </Box>
-            <Box className="recordInfo">
+            <Box className="recordInfoWrapper">
                 <Label>Описание:
-                    <Span className="boldText">
+                    <Span className="recordInfo">
                         {` ${chosenRecordInfo?.description || ''}`}
                     </Span>
                 </Label>
             </Box>
-            <Box className="recordInfo">
+            <Box className="recordInfoWrapper">
                 <Label>Адрес проживания:
-                    <Span className="boldText">
+                    <Span className="recordInfo">
                         {` ${chosenRecordInfo?.address?.streetAddress || ''}`}
                     </Span>
                 </Label>
             </Box>
-            <Box className="recordInfo">
+            <Box className="recordInfoWrapper">
                 <Label>Город:
-                    <Span className="boldText">
+                    <Span className="recordInfo">
                         {` ${chosenRecordInfo?.address?.city || ''}`}
                     </Span>
                 </Label>
             </Box>
-            <Box className="recordInfo">
+            <Box className="recordInfoWrapper">
                 <Label>Провинция/штат:
-                    <Span className="boldText">
+                    <Span className="recordInfo">
                         {` ${chosenRecordInfo?.address?.state || ''}`}
                     </Span>
                 </Label>
             </Box>
-            <Box className="recordInfo">
+            <Box className="recordInfoWrapper">
                 <Label>Индекс:
-                    <Span className="boldText">
+                    <Span className="recordInfo">
                         {` ${chosenRecordInfo?.address?.zip || ''}`}
                     </Span>
                 </Label>

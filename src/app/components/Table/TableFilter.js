@@ -20,13 +20,14 @@ const TableFilter = () => {
     return (
         <Box className="tableFilter">
             <Input
+                className="filterInput"
                 placeholder="Enter data to filter"
                 type="text"
                 onBlur={handleInputBlur}
             />
             <Button
+                className="filterButton"
                 onClick={handleButtonClick}
-                label="Filter"
             />
         </Box>
     );
