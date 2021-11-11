@@ -28,6 +28,12 @@ const AddRecordForm = () => {
 
     if (!visibility) return null;
 
+    /*
+    * todo
+    *  DRY.
+    *   развернуть структуру через map, переработать InputWithValidation c использованием параметров по умолчанию
+    *  */
+
     return (
         <Box className="formWrapper">
         <Box className="formFields">

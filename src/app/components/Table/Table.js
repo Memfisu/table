@@ -27,6 +27,11 @@ const Table = () => {
 
     const { filterString } = useSelector(filterInfo);
     if (filterString) data = data.filter(item =>
+        /*
+        * todo
+        *   такие функции для удобства чтения лучше выность в хелпер, даже если используются один раз
+        *   например checkInclude = (obj, searchStr) => Object.values(item).slice(0, 5).some(elem => elem.toString().includes(filterString))
+        * */
         Object.values(item).slice(0, 5).some(elem => elem.toString().includes(filterString))
     );
 
@@ -34,7 +39,7 @@ const Table = () => {
         dispatch(setCurrentPage({currentPage: 0}));
         dispatch(setFormVisibility({ visibility: false }));
     }, [dispatch]);
-    
+
     useEffect(() => {
         const sortCallback = getSortCallback({
             key: sortData?.column,

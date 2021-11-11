@@ -9,6 +9,11 @@ const RecordInfo = () => {
     const chosenRecordInfo = useSelector(chosenRecord);
     if (!chosenRecordInfo) return null;
 
+    /*
+    * todo
+    *  DRY. Развернуть всю структуру через .map, минимизировать код, использовать параметры по умолчанию
+    * */
+
     return (
         <Box className="additionalInfo">
             <Box className="recordInfoWrapper">
