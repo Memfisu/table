@@ -27,9 +27,11 @@ div {
 .formButtons {
   @extend %grid;
   grid-template-columns: repeat(2, minmax(40px, 1fr));
+  grid-auto-rows: 35px;
   width: 220px;
   padding: 25px 5px;
-  margin-top: 20px;
+  margin-top: 30px;
+  margin-left: auto;
 }
 
 .tableInstruments {
@@ -107,11 +109,40 @@ div {
   tab-index: 1;
 }
 
+.tableHeaderWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tableHeaderSort {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  background: $tealColor;
+  cursor: pointer;
+}
+.tableHeaderSort::after {
+  content: "";
+  background-image: url('../../icons/arrow.png');
+  position: absolute;
+  left: -10px;
+  top: 15px;
+  width: 15px;
+  height: 15px;
+  background-size: cover;
+}
+.tableHeaderSortUp::after {
+  transform: rotate(180deg);
+}
+.tableHeaderSortFilled::after {
+  background-image: url('../../icons/arrow_filled.png');
+}
+
 .tableHeaderItem {
   padding: 15px 0 0 5px;
 }
 
-.tableHeaderItem:first-child,
+.tableHeaderWrapper:first-child,
 .tableField:first-child {
   padding-left: 20px;
 }
@@ -124,7 +155,12 @@ div {
 
 .errorBox {
   @extend %redText;
-  margin: 5px 20px;
+  margin: 5px 20px 5px 15px;
+}
+
+.additionalInfo {
+  background-color: $lightYellow;
+  padding: 15px;
 }
 
 .recordInfoWrapper {

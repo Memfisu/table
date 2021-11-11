@@ -18,12 +18,22 @@ const TableHeaderItem = ({ itemName }) => {
             }}));
     }, [direction, dispatch, itemName]);
 
+    const getClass = () => {
+        let className = "tableHeaderSort";
+        if (sortData?.column === itemName) className = className + " tableHeaderSortFilled";
+        if (direction === directions.UP && sortData?.column === itemName) className = className+ " tableHeaderSortUp";
+        return className;
+    };
+
     return (
-        <Box
-            className="tableHeaderItem"
-            onClick={handleClick}
-        >
-            {itemName}
+        <Box className="tableHeaderWrapper">
+            <Box className="tableHeaderItem">
+                {itemName}
+            </Box>
+            <Box
+                className={getClass()}
+                onClick={handleClick}
+            />
         </Box>
     );
 };

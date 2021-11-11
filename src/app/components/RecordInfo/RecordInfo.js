@@ -10,7 +10,7 @@ const RecordInfo = () => {
     if (!chosenRecordInfo) return null;
 
     return (
-        <Box>
+        <Box className="additionalInfo">
             <Box className="recordInfoWrapper">
                 <Label>Выбран пользователь:
                     <Span className="recordInfo">

@@ -1,8 +1,9 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Box from './Box';
 import Label from './Label';
 import { setNewRecord } from '../reducers/newRecordAppendor';
+import { newRecord } from '../selectors/selectors';
 
 const InputWithValidation = ({
   name,
@@ -11,11 +12,12 @@ const InputWithValidation = ({
   validate
 }) => {
     const dispatch = useDispatch();
+    const newRecordData = useSelector(newRecord);
     
     const [isError, setError] = useState(false);
-    const [value, setValue] = useState(false);
+    const [value, setValue] = useState('');
     
-    const handleBlur = useCallback((event) => {
+    const handleChange = useCallback((event) => {
         setError(!validate(name, event.target.value));
         setValue(event.target.value);
     }, [name, validate]);
@@ -25,12 +27,17 @@ const InputWithValidation = ({
         else dispatch(setNewRecord({[name]: null}));
     }, [dispatch, isError, name, value]);
 
+    useEffect(() => {
+        if (Object.values(newRecordData).every(item => !item)) setValue('');
+    }, [newRecordData]);
+
     return (
         <Box>
             <input
                 type={type}
                 placeholder={placeholder}
-                onBlur={handleBlur}
+                onChange={handleChange}
+                value={value}
             />
             {isError &&
             <Box className="errorBox">
