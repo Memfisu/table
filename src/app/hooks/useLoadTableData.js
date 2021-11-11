@@ -2,14 +2,13 @@ import axios from 'axios/index';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { loadData } from '../reducers/dataLoader';
-import { setLoader } from '../reducers/showLoader';
 
 export const useLoadTableData = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setLoader({ visibility: true }));
-        axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
+        // dispatch(setLoader({ visibility: true }));
+        axios.get('http://www.filltext.com/?rows=1000&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D')
             .then(res => {
                 dispatch(loadData({data: res.data}));
             })
@@ -17,7 +16,7 @@ export const useLoadTableData = () => {
                 console.log(err);
             })
             .finally(() => {
-                dispatch(setLoader({ visibility: false }));
+                // dispatch(setLoader({ visibility: false }));
             })
     }, [dispatch]);
 }

@@ -1,14 +1,17 @@
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, put, fork, select } from 'redux-saga/effects';
 import { actions } from '../constants/constants';
+import { setLoader } from '../reducers/showLoader';
 
 export function* sagaWorker () {
-    yield console.log('saga test');
+    yield put(setLoader({ visibility: true }));
+    const { dataLoader } = yield select(store => store);
+    if (dataLoader?.length) yield put(setLoader({ visibility: false }));
 }
 
-export function* sagaWatcher () {
-    yield takeEvery(actions.ADD, sagaWorker);
+export function* watchLoadData () {
+    yield takeEvery(actions.LOAD, sagaWorker);
 }
 
 export default function* rootSaga () {
-    yield sagaWatcher();
+    yield fork(watchLoadData);
 }
