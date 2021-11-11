@@ -6,7 +6,6 @@ import TableRow from './TableRow';
 import TableFilter from './TableFilter';
 import TablePagination from './TablePagination';
 import { useLoadTableData } from '../../hooks/useLoadTableData';
-import Label from '../../utils/Label';
 import { useDataSeparate } from '../../hooks/useDataSeparate';
 import { resetChosenRecord } from '../../reducers/recordInfoDemonstrator';
 import { chosenRecord, loadedData, filterInfo, pagination, sortInfo } from '../../selectors/selectors';
@@ -16,9 +15,10 @@ import { loadData } from '../../reducers/dataLoader';
 import AddRecordForm from '../../forms/AddRecordForm/AddRecordForm';
 import AddRecordButton from '../../forms/AddRecordForm/AddRecordButton';
 import { setFormVisibility } from '../../reducers/formDemonstrator';
+import Loader from '../Loader/Loader';
 
 const Table = () => {
-    const { loaded } = useLoadTableData();
+    useLoadTableData();
     const dispatch = useDispatch();
     let data = useSelector(loadedData);
     let sortData = useSelector(sortInfo);
@@ -55,11 +55,8 @@ const Table = () => {
         if (chosenRecordInfo) dispatch(resetChosenRecord());
     }
 
-    const tableData = separatedData?.length ?
-        separatedData?.map((item, index) => <TableRow key={index} rowData={item} />)
-        : <Box className="informationWrapper">
-            <Label>There is no data matching the filter</Label>
-        </Box>;
+    const tableData =
+        separatedData?.map((item, index) => <TableRow key={index} rowData={item} />);
 
     return (
         <Box className="tableBody" onBlur={handleBlur}>
@@ -69,12 +66,8 @@ const Table = () => {
             </Box>
             <AddRecordForm />
             <TableHeader />
-            {loaded ?
-                tableData
-            : <Box className="informationWrapper">
-                    <Label>Data is loading...</Label>
-              </Box>
-            }
+            <Loader />
+            {tableData}
             <TablePagination />
         </Box>
     );

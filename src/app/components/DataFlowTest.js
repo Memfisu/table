@@ -19,16 +19,8 @@ const useActions = () => {
     let tableData = useSelector(loadedData);
     const { currentPage } = useSelector(pagination);
 
-    const showLoader = useCallback(() => {
-        dispatch(setLoader({ visibility: true }));
-    }, [dispatch]);
-
-    const hideLoader = useCallback(() => {
-        dispatch(setLoader({ visibility: false }));
-    }, [dispatch]);
-
     const dataLoad = useCallback(() => {
-        showLoader();
+        dispatch(setLoader({ visibility: true }));
         axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then(res => {
                 dispatch(loadData({data: res.data}));
@@ -37,9 +29,9 @@ const useActions = () => {
                 console.log(err);
             })
             .finally(() => {
-                hideLoader();
+                dispatch(setLoader({ visibility: false }));
             });
-    }, [dispatch, hideLoader, showLoader]);
+    }, [dispatch]);
 
     const showAdditionalInfo = useCallback(() => {
         dispatch(setChosenRecord({ rowData: tableData[0] }));
@@ -82,7 +74,6 @@ const useActions = () => {
             return 0;
         };
 
-        showLoader();
         dispatch(setSortingInfo({ sortingInfo: {
                 direction: directions.UP, // будет передаваться в зависимости от текущего направления
                 column: 'id' // column будет передаваться в зависимости от нажатого столбца, это хардкод для данного прототипа
@@ -95,11 +86,9 @@ const useActions = () => {
             compareAscending : compareDescending);
         
         dispatch(loadData({data: sortedData}));
-        hideLoader();
-    }, [dispatch, hideLoader, showLoader, tableData]);
+    }, [dispatch, tableData]);
 
     const filter = useCallback(() => {
-        showLoader();
         // строка для сравнения будет передаваться из инпута фильтра по нажатию на кнопку
         const filterString = '14';
         dispatch(setFilterInfo({filterInfo: filterString}))
@@ -107,20 +96,15 @@ const useActions = () => {
         if (filterString) tableData = tableData.filter(item =>
             Object.values(item).slice(0, 5).some(elem => elem.toString().includes(filterString))
         );
-        hideLoader();
-    }, [dispatch, hideLoader, showLoader, tableData]);
+    }, [dispatch, tableData]);
 
     const paginationForward = useCallback(() => {
-        showLoader();
         dispatch(setCurrentPage({currentPage: currentPage+1}));
-        hideLoader();
-    }, [currentPage, dispatch, hideLoader, showLoader]);
+    }, [currentPage, dispatch]);
 
     const paginationBack = useCallback(() => {
-        showLoader();
         dispatch(setCurrentPage({currentPage: currentPage-1}));
-        hideLoader();
-    }, [currentPage, dispatch, hideLoader, showLoader]);
+    }, [currentPage, dispatch]);
 
     return [
         dataLoad,

@@ -1,5 +1,5 @@
+import React from 'react';
 import Box from '../../utils/Box';
-import Label from '../../utils/Label';
 import { useSelector } from 'react-redux';
 import { loaderVisibility } from '../../selectors/selectors';
 
@@ -9,8 +9,8 @@ const Loader = () => {
     if (!visibility) return null;
 
     return (
-        <Box>
-            <Label>Loading...</Label>
+        <Box className="loaderWrapper">
+            <Box className="loader" />
         </Box>
     );
 };

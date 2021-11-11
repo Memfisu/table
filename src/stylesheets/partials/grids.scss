@@ -14,6 +14,12 @@ div {
   grid-auto-rows: 25px;
 }
 
+@media screen and (max-width: 650px) {
+  //.tableBody {
+  //  overflow-x: auto;
+  //}
+}
+
 .main {
   padding: 25px 50px 50px 50px;
 }
@@ -54,15 +60,17 @@ div {
   background-color: $tealColor;
 }
 
-.informationWrapper {
-  padding: 50px;
-
-  p {
-    text-align: center;
-    font-size: 20px;
-    display: block;
-    margin: 0 auto;
-  }
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, .5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
 }
 
 .tableRow {
@@ -106,7 +114,7 @@ div {
 }
 
 .tableBody {
-  tab-index: 1;
+  margin-bottom: 20px;
 }
 
 .tableHeaderWrapper {
