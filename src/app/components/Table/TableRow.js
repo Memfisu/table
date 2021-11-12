@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux'
 import Box from '../../utils/Box';
 import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
+import { headerNames } from '../../constants/constants';
 
 const TableRow = ({ rowData }) => {
     const dispatch = useDispatch();
@@ -10,15 +11,15 @@ const TableRow = ({ rowData }) => {
         dispatch(setChosenRecord({ rowData }));
     }, [dispatch, rowData]);
 
-    const fieldValues = Object.values(rowData).slice(0, 5);
+    const preparedRow = Object.entries(rowData).filter(([key]) => headerNames.includes(key));
 
     return (
         <Box
             className="tableRow"
             onClick={handleCLick}
         >
-            { fieldValues.map((item, index) =>
-                <Box className="tableField" key={index}>{item}</Box>)
+            {preparedRow.map(([key, value]) =>
+                <Box className="tableField" key={key}>{value}</Box>)
             }
         </Box>
     );

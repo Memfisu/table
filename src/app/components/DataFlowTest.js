@@ -94,7 +94,7 @@ const useActions = () => {
         dispatch(setFilterInfo({filterInfo: filterString}))
 
         if (filterString) tableData = tableData.filter(item =>
-            Object.values(item).slice(0, 5).some(elem => elem.toString().includes(filterString))
+            Object.values(item).some(elem => elem.toString().includes(filterString))
         );
     }, [dispatch, tableData]);
 

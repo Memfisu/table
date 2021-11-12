@@ -3,10 +3,10 @@ import { actions } from '../constants/constants';
 import { setLoader } from '../reducers/showLoader';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
-import { loadedData, sortInfo } from '../selectors/selectors';
+import {loadedData, sortInfo} from '../selectors/selectors';
 import { getSortCallback } from '../utils/getSortCallback';
 import { loadData } from '../reducers/dataLoader';
-import axios from "axios";
+import axios from 'axios';
 
 export function* loadDataSagaWorker () {
     yield put(setLoader({ visibility: true }));
@@ -35,6 +35,21 @@ export function* sortDataSagaWorker () {
 export function* watchSortData () {
     yield takeEvery(actions.SORT, sortDataSagaWorker);
 }
+
+// filtering draft
+// для нормальной реализации нужно отдельно хранить в сторе отфильтрованный список?
+// иначе отфильтрованный список перезаписывает собой загруженные изначальные данные
+
+// const checkInclude = (obj, searchString) => Object.values(obj).slice(0, 5).some(elem => elem.toString().includes(searchString));
+// export function* filterDataSagaWorker () {
+//     let data = yield select(loadedData);
+//     const { filterString } = yield select(filterInfo);
+//     if (filterString) data = data.filter(item => checkInclude(item, filterString));
+//     yield put(loadData({ data }));
+// }
+// export function* watchFilterData () {
+//     yield takeEvery(actions.FILTER, filterDataSagaWorker);
+// }
 
 export default function* rootSaga () {
     const sagas = [watchLoadData, watchSortData];

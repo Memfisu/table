@@ -21,7 +21,7 @@ const dataLoader = (state, { type, payload }) => {
         case actions.ADD:
             return [payload, ...state];
         case actions.INIT:
-            return state || [];
+            return [];
         default:
             return state || [];
     }

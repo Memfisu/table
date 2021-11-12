@@ -12,7 +12,7 @@ import AddRecordForm from '../../forms/AddRecordForm/AddRecordForm';
 import AddRecordButton from '../../forms/AddRecordForm/AddRecordButton';
 import Loader from '../Loader/Loader';
 
-const checkInclude = (obj, searchString) => Object.values(obj).slice(0, 5).some(elem => elem.toString().includes(searchString));
+const checkInclude = (obj, searchString) => Object.values(obj).some(elem => elem.toString().includes(searchString));
 
 const Table = () => {
     const dispatch = useDispatch();
@@ -27,13 +27,12 @@ const Table = () => {
         data,
         pageNumber: currentPage
     });
+    const tableData =
+        separatedData?.map((item, index) => <TableRow key={index} rowData={item} />);
 
     const handleBlur = () => {
         if (chosenRecordInfo) dispatch(resetChosenRecord());
     }
-
-    const tableData =
-        separatedData?.map((item, index) => <TableRow key={index} rowData={item} />);
 
     return (
         <Box className="tableBody" onBlur={handleBlur}>
