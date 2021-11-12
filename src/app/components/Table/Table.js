@@ -35,7 +35,7 @@ const Table = () => {
     }
 
     return (
-        <Box className="tableBody" onBlur={handleBlur}>
+        <Box className="tableBody" tabIndex={1} onBlur={handleBlur}>
             <Box className="tableInstruments">
                 <TableFilter />
                 <AddRecordButton />

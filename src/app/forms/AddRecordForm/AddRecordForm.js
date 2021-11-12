@@ -8,7 +8,7 @@ import InputWithValidation from '../../utils/InputWithValidation';
 import { validate } from '../../utils/validate';
 import { formVisibility, newRecord } from '../../selectors/selectors';
 import { setFormVisibility } from '../../reducers/formDemonstrator';
-import { headerNames } from '../../constants/constants';
+import { headerNames, statuses } from '../../constants/constants';
 
 const AddRecordForm = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const AddRecordForm = () => {
     };
 
     const handleAddRecord = useCallback(() => {
-        dispatch(addData({ newRecord: newRecordData }));
+        dispatch(addData({ newRecord: newRecordData, status: statuses.DONE }));
         dispatch(clearNewRecord());
     }, [dispatch, newRecordData]);
 

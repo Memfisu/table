@@ -7,12 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetChosenRecord, setChosenRecord } from '../reducers/recordInfoDemonstrator';
 import { loadedData, pagination } from '../selectors/selectors';
 import { clearNewRecord } from '../reducers/newRecordAppendor';
-import { directions } from '../constants/constants';
+import { directions, statuses } from '../constants/constants';
 import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { setFilterInfo } from '../reducers/dataFilter';
 import { setCurrentPage } from '../reducers/pagination';
-import { setLoader } from '../reducers/showLoader';
 
 const useActions = () => {
     const dispatch = useDispatch();
@@ -20,7 +19,6 @@ const useActions = () => {
     const { currentPage } = useSelector(pagination);
 
     const dataLoad = useCallback(() => {
-        dispatch(setLoader({ visibility: true }));
         axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then(res => {
                 dispatch(loadData({data: res.data}));
@@ -29,7 +27,7 @@ const useActions = () => {
                 console.log(err);
             })
             .finally(() => {
-                dispatch(setLoader({ visibility: false }));
+                dispatch(loadData({status: statuses.FETCHED}));
             });
     }, [dispatch]);
 
@@ -49,7 +47,7 @@ const useActions = () => {
             email: 'DWhalley@in.gov',
             phone: '(612)211-6296'
         };
-        dispatch(addData({ newRecord: newRecordData }));
+        dispatch(addData({ newRecord: newRecordData, status: statuses.DONE }));
         dispatch(clearNewRecord());
     }, [dispatch]);
     
@@ -85,7 +83,7 @@ const useActions = () => {
         const sortedData = tableData.sort(sortData.direction === directions.UP ?
             compareAscending : compareDescending);
         
-        dispatch(loadData({data: sortedData}));
+        dispatch(loadData({ data: sortedData, status: statuses.DONE }));
     }, [dispatch, tableData]);
 
     const filter = useCallback(() => {
@@ -107,7 +105,7 @@ const useActions = () => {
     }, [currentPage, dispatch]);
 
     return [
-        dataLoad,
+        // dataLoad,
         showAdditionalInfo,
         hideAdditionalInfo,
         addNewRecord,

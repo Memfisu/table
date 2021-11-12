@@ -1,25 +1,20 @@
 import { takeEvery, takeLatest, put, all, select, spawn, call } from 'redux-saga/effects';
-import { actions } from '../constants/constants';
-import { setLoader } from '../reducers/showLoader';
+import { actions, statuses } from '../constants/constants';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
-import {loadedData, sortInfo} from '../selectors/selectors';
+import { loadedData, sortInfo } from '../selectors/selectors';
 import { getSortCallback } from '../utils/getSortCallback';
 import { loadData } from '../reducers/dataLoader';
 import axios from 'axios';
 
-export function* loadDataSagaWorker () {
-    yield put(setLoader({ visibility: true }));
-    const { data } = yield axios.get('http://www.filltext.com/?rows=1000&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D');
+export function* initDataSagaWorker () {
+    const { data } = yield axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
     yield put(setCurrentPage({ currentPage: 0 }));
     yield put(setFormVisibility({ visibility: false }));
-    if (data?.length) {
-        yield put(loadData({ data }));
-        yield put(setLoader({ visibility: false }));
-    }
+    if (data?.length) yield put(loadData({ data, status: statuses.FETCHED }));
 }
-export function* watchLoadData () {
-    yield takeLatest(actions.INIT, loadDataSagaWorker);
+export function* watchInitData () {
+    yield takeLatest(actions.INIT, initDataSagaWorker);
 }
 
 export function* sortDataSagaWorker () {
@@ -30,7 +25,7 @@ export function* sortDataSagaWorker () {
         direction: sortData?.direction
     });
     const sortedData = yield data.sort(sortCallback);
-    yield put(loadData({ data: sortedData }));
+    yield put(loadData({ data: sortedData, status: statuses.DONE }));
 }
 export function* watchSortData () {
     yield takeEvery(actions.SORT, sortDataSagaWorker);
@@ -45,14 +40,14 @@ export function* watchSortData () {
 //     let data = yield select(loadedData);
 //     const { filterString } = yield select(filterInfo);
 //     if (filterString) data = data.filter(item => checkInclude(item, filterString));
-//     yield put(loadData({ data }));
+//     yield put(loadData({ data, status: statuses.DONE }));
 // }
 // export function* watchFilterData () {
 //     yield takeEvery(actions.FILTER, filterDataSagaWorker);
 // }
 
 export default function* rootSaga () {
-    const sagas = [watchLoadData, watchSortData];
+    const sagas = [watchInitData, watchSortData];
 
     const retrySagas = yield sagas.map(saga => {
         return spawn(function* () {

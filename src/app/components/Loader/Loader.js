@@ -1,12 +1,13 @@
 import React from 'react';
 import Box from '../../utils/Box';
 import { useSelector } from 'react-redux';
-import { loaderVisibility } from '../../selectors/selectors';
+import { loadingStatus } from '../../selectors/selectors';
+import { statuses } from '../../constants/constants';
 
 const Loader = () => {
-    const { visibility } = useSelector(loaderVisibility);
+    const status = useSelector(loadingStatus);
 
-    if (!visibility) return null;
+    if (status === statuses.FETCHED || status === statuses.DONE) return null;
 
     return (
         <Box className="loaderWrapper">

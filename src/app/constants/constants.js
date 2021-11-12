@@ -28,4 +28,11 @@ const headerNames = [
     "phone"
 ];
 
-export { directions, actions, headerNames };
+const statuses = {
+    'ERROR': 'ERROR',
+    'EMPTY': 'EMPTY',
+    'FETCHED': 'FETCHED',
+    'DONE': 'DONE'
+}
+
+export { directions, actions, headerNames, statuses };
