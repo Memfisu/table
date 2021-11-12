@@ -21,6 +21,17 @@ const useActions = () => {
 
     const dataLoad = useCallback(() => {
         dispatch(setLoader({ visibility: true }));
+        /*
+        * todo
+        *  не должно быть редьюсера showLoader, соответствующих экшенов
+        * лоадер должен рендериться в ответ на состояние данных, загружаемых в таблицу
+        * Пример структуры данных таблицы:
+        * type ITable = {
+        *   status: 'empty' | 'fetched' | 'done' | 'error;
+        *   data: ITable
+        * }
+        * И если мы видим статус 'fetched' мы рендерим лоядер
+        * */
         axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then(res => {
                 dispatch(loadData({data: res.data}));
@@ -52,7 +63,7 @@ const useActions = () => {
         dispatch(addData({ newRecord: newRecordData }));
         dispatch(clearNewRecord());
     }, [dispatch]);
-    
+
     const sort = useCallback(() => {
         const compareDescending = (a, b) => {
             if (a[sortData.column] > b[sortData.column]) {
@@ -81,10 +92,10 @@ const useActions = () => {
 
         // в реальной ситуации должен использоваться useSelector
         const { dataSorter: sortData } = store.getState();
-        
+
         const sortedData = tableData.sort(sortData.direction === directions.UP ?
             compareAscending : compareDescending);
-        
+
         dispatch(loadData({data: sortedData}));
     }, [dispatch, tableData]);
 

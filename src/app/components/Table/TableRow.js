@@ -5,10 +5,15 @@ import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
 
 const TableRow = ({ rowData }) => {
     const dispatch = useDispatch();
-    
+
     const handleCLick = useCallback(() => {
         dispatch(setChosenRecord({ rowData }));
     }, [dispatch, rowData]);
+
+    /*
+    * todo
+    *  slice(0, 5) - в чем идея?
+    * */
 
     const fieldValues = Object.values(rowData).slice(0, 5);
 
