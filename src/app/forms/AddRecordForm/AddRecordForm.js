@@ -8,6 +8,7 @@ import InputWithValidation from '../../utils/InputWithValidation';
 import { validate } from '../../utils/validate';
 import { formVisibility, newRecord } from '../../selectors/selectors';
 import { setFormVisibility } from '../../reducers/formDemonstrator';
+import { headerNames } from '../../constants/constants';
 
 const AddRecordForm = () => {
     const dispatch = useDispatch();
@@ -31,36 +32,14 @@ const AddRecordForm = () => {
     return (
         <Box className="formWrapper">
         <Box className="formFields">
-            <InputWithValidation
-                name="id"
-                placeholder="Id"
-                type="text"
-                validate={validate}
-            />
-            <InputWithValidation
-                name="firstName"
-                placeholder="FirstName"
-                type="text"
-                validate={validate}
-            />
-            <InputWithValidation
-                name="lastName"
-                placeholder="LastName"
-                type="text"
-                validate={validate}
-            />
-            <InputWithValidation
-                name="email"
-                placeholder="E-mail"
-                type="email"
-                validate={validate}
-            />
-            <InputWithValidation
-                name="phone"
-                placeholder="Phone"
-                type="tel"
-                validate={validate}
-            />
+            {headerNames.map((name, index) => (
+                <InputWithValidation
+                    key={index}
+                    name={name}
+                    placeholder={name}
+                    validate={validate}
+                />
+            ))}
         </Box>
         <Box className="formButtons">
             <Button

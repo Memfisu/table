@@ -9,52 +9,37 @@ const RecordInfo = () => {
     const chosenRecordInfo = useSelector(chosenRecord);
     if (!chosenRecordInfo) return null;
 
-    return (
-        <Box className="additionalInfo">
-            <Box className="recordInfoWrapper">
-                <Label>Выбран пользователь:
-                    <Span className="recordInfo">
-                        {` ${chosenRecordInfo?.firstName} ${chosenRecordInfo?.lastName}`}
-                    </Span>
-                </Label>
-            </Box>
-            <Box className="recordInfoWrapper">
-                <Label>Описание:
-                    <Span className="recordInfo">
-                        {` ${chosenRecordInfo?.description || ''}`}
-                    </Span>
-                </Label>
-            </Box>
-            <Box className="recordInfoWrapper">
-                <Label>Адрес проживания:
-                    <Span className="recordInfo">
-                        {` ${chosenRecordInfo?.address?.streetAddress || ''}`}
-                    </Span>
-                </Label>
-            </Box>
-            <Box className="recordInfoWrapper">
-                <Label>Город:
-                    <Span className="recordInfo">
-                        {` ${chosenRecordInfo?.address?.city || ''}`}
-                    </Span>
-                </Label>
-            </Box>
-            <Box className="recordInfoWrapper">
-                <Label>Провинция/штат:
-                    <Span className="recordInfo">
-                        {` ${chosenRecordInfo?.address?.state || ''}`}
-                    </Span>
-                </Label>
-            </Box>
-            <Box className="recordInfoWrapper">
-                <Label>Индекс:
-                    <Span className="recordInfo">
-                        {` ${chosenRecordInfo?.address?.zip || ''}`}
-                    </Span>
-                </Label>
-            </Box>
-        </Box>
-    );
+    const labels = [
+        'Выбран пользователь:',
+        'Описание:',
+        'Адрес проживания:',
+        'Город:',
+        'Провинция/штат:',
+        'Индекс:'
+    ];
+
+   const spans = [
+       ` ${chosenRecordInfo?.firstName} ${chosenRecordInfo?.lastName}`,
+       ` ${chosenRecordInfo?.description || ''}`,
+       ` ${chosenRecordInfo?.address?.streetAddress || ''}`,
+       ` ${chosenRecordInfo?.address?.city || ''}`,
+       ` ${chosenRecordInfo?.address?.state || ''}`,
+       ` ${chosenRecordInfo?.address?.zip || ''}`
+   ];
+
+   return (
+       <Box className="additionalInfo">
+           {labels.map((item, index) => (
+               <Box className="recordInfoWrapper" key={index}>
+                   <Label>{item}
+                       <Span className="recordInfo">
+                           {spans[index]}
+                       </Span>
+                   </Label>
+               </Box>
+            ))}
+       </Box>
+   );
 };
 
 export default RecordInfo;

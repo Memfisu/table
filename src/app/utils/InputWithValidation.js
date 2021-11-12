@@ -7,7 +7,7 @@ import { newRecord } from '../selectors/selectors';
 
 const InputWithValidation = ({
   name,
-  type,
+  type= "text",
   placeholder,
   validate
 }) => {

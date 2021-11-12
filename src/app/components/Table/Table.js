@@ -17,6 +17,8 @@ import AddRecordButton from '../../forms/AddRecordForm/AddRecordButton';
 import { setFormVisibility } from '../../reducers/formDemonstrator';
 import Loader from '../Loader/Loader';
 
+const checkInclude = (obj, searchString) => Object.values(obj).slice(0, 5).some(elem => elem.toString().includes(searchString));
+
 const Table = () => {
     useLoadTableData();
     const dispatch = useDispatch();
@@ -26,9 +28,7 @@ const Table = () => {
     const { currentPage } = useSelector(pagination);
 
     const { filterString } = useSelector(filterInfo);
-    if (filterString) data = data.filter(item =>
-        Object.values(item).slice(0, 5).some(elem => elem.toString().includes(filterString))
-    );
+    if (filterString) data = data.filter(item => checkInclude(item, filterString));
 
     useEffect(() => {
         dispatch(setCurrentPage({currentPage: 0}));
