@@ -6,6 +6,7 @@ const directions = {
 };
 
 const actions = {
+    INIT: 'INITIAL_DATA',
     LOAD: 'LOAD_DATA',
     NEW: 'CREATE_NEW_DATA',
     CLEAR: 'CLEAR_NEW_DATA',

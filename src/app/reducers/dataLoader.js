@@ -1,5 +1,9 @@
 import { actions } from '../constants/constants';
 
+const init = () => ({
+    type: actions.INIT
+});
+
 const loadData = ({ data }) => ({
     type: actions.LOAD,
     payload: data
@@ -16,10 +20,12 @@ const dataLoader = (state, { type, payload }) => {
             return [...payload];
         case actions.ADD:
             return [payload, ...state];
+        case actions.INIT:
+            return state || [];
         default:
             return state || [];
     }
 };
 
-export { loadData, addData };
+export { init, loadData, addData };
 export default dataLoader;
