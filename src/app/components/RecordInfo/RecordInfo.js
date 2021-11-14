@@ -11,22 +11,22 @@ const RecordInfo = () => {
 
    const { address } = chosenRecordInfo;
 
-   const labels = {
-       [`${chosenRecordInfo?.firstName} ${chosenRecordInfo?.lastName}`]: 'Выбран пользователь: ',
-       [chosenRecordInfo?.description]: 'Описание: ',
-       [address?.streetAddress]: 'Адрес проживания: ',
-       [address?.city]: 'Город: ',
-       [address?.state]: 'Провинция/штат: ',
-       [address?.zip]: 'Индекс: '
-   };
+   const labels = [
+       [`${chosenRecordInfo?.firstName} ${chosenRecordInfo?.lastName}`, 'Выбран пользователь: '],
+       [chosenRecordInfo?.description, 'Описание: '],
+       [address?.streetAddress, 'Адрес проживания: '],
+       [address?.city, 'Город: '],
+       [address?.state, 'Провинция/штат: '],
+       [address?.zip, 'Индекс: ']
+   ];
 
    return (
        <Box className="additionalInfo">
-           {Object.keys(labels).map((item, index) => (
+           {labels.map(([key, value], index) => (
                    <Box className="recordInfoWrapper" key={index}>
-                       <Label>{labels[item]}
+                       <Label>{value}
                            <Span className="recordInfo">
-                               {item}
+                               {key}
                            </Span>
                        </Label>
                    </Box>
