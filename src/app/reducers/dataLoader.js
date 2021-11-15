@@ -1,8 +1,4 @@
-import {actions, statuses} from '../constants/constants';
-
-const init = () => ({
-    type: actions.INIT
-});
+import { actions } from '../constants/constants';
 
 const loadData = ({ data, status }) => ({
     type: actions.LOAD,
@@ -26,15 +22,10 @@ const dataLoader = (state, { type, payload }) => {
                 data: [payload.newRecord, ...state.data],
                 status: payload.status
             };
-        case actions.INIT:
-            return {
-                data: [],
-                status: statuses.EMPTY
-            };
         default:
             return state || {};
     }
 };
 
-export { init, loadData, addData };
+export { loadData, addData };
 export default dataLoader;

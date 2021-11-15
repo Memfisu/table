@@ -2,7 +2,7 @@ import Box from '../utils/Box';
 import Button from '../utils/Button';
 import React, { useCallback } from 'react';
 import axios from 'axios';
-import {addData, init, loadData} from '../reducers/dataLoader';
+import {addData, loadData} from '../reducers/dataLoader';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetChosenRecord, setChosenRecord } from '../reducers/recordInfoDemonstrator';
 import { loadedData, pagination } from '../selectors/selectors';
@@ -19,8 +19,6 @@ const useActions = () => {
     const { currentPage } = useSelector(pagination);
 
     const dataLoad = useCallback(() => {
-        dispatch(init());
-
         axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then(res => {
                 dispatch(loadData({ data: res.data, status: statuses.FETCHED }));

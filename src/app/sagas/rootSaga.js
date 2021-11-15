@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, put, all, select, spawn, call } from 'redux-saga/effects';
+import { takeEvery, put, all, select, spawn, call } from 'redux-saga/effects';
 import { actions, statuses } from '../constants/constants';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
@@ -8,13 +8,11 @@ import { loadData } from '../reducers/dataLoader';
 import axios from 'axios';
 
 export function* initDataSagaWorker () {
+    yield put(loadData({ data: [], status: statuses.EMPTY }));
     const { data } = yield axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
     yield put(setCurrentPage({ currentPage: 0 }));
     yield put(setFormVisibility({ visibility: false }));
     if (data?.length) yield put(loadData({ data, status: statuses.FETCHED }));
-}
-export function* watchInitData () {
-    yield takeLatest(actions.INIT, initDataSagaWorker);
 }
 
 export function* sortDataSagaWorker () {
@@ -47,7 +45,7 @@ export function* watchSortData () {
 // }
 
 export default function* rootSaga () {
-    const sagas = [watchInitData, watchSortData];
+    const sagas = [initDataSagaWorker, watchSortData];
 
     const retrySagas = yield sagas.map(saga => {
         return spawn(function* () {
