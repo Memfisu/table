@@ -8,8 +8,12 @@ import { loadData } from '../reducers/dataLoader';
 import axios from 'axios';
 
 export function* initDataSagaWorker () {
+    /*todo
+    *  экшены должны называться fetchData и setData, и не должный иметь в параметрах значение статуса
+    *  текущая реализация превращает экшены в пустую обертку, которая ничего не делает и ничего не поясняет
+    * */
     yield put(loadData({ data: [], status: statuses.EMPTY }));
-    const { data } = yield axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
+    const { data } = yield axios.get('https://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
     yield put(setCurrentPage({ currentPage: 0 }));
     yield put(setFormVisibility({ visibility: false }));
     if (data?.length) yield put(loadData({ data, status: statuses.FETCHED }));
