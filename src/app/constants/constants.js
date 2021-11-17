@@ -6,17 +6,19 @@ const directions = {
 };
 
 const actions = {
+    INIT: 'INIT_DATA',
     FETCH: 'FETCH_DATA',
     NEW: 'CREATE_NEW_DATA',
     CLEAR: 'CLEAR_NEW_DATA',
     RESET: 'RESET_CHOSEN_RECORD',
-    SET: 'SET_NEW_DATA',
+    ADD: 'ADD_NEW_RECORD',
     SHOW: 'SHOW_RECORD',
     FORM: 'SHOW_FORM',
     SORT: 'SORT_DATA',
     FILTER: 'FILTER_DATA',
     PAGE: 'SET_CURRENT_PAGE',
-    LOADER: 'SET_LOADER'
+    LOADER: 'SET_LOADER',
+    ERROR: 'SET_ERROR'
 }
 
 const headerNames = [

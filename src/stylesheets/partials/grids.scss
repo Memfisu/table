@@ -178,3 +178,16 @@ div {
 .recordInfo {
   @extend %boldText;
 }
+
+.errorWrapper {
+  padding: 30px;
+}
+
+.errorWrapper p {
+  display: block;
+  margin: 0 auto;
+  padding: 50px;
+  width: 420px;
+  background-color: $redColor;
+  color: $whiteColor;
+}

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '../../utils/Box';
 import Button from '../../utils/Button';
-import { setData } from '../../reducers/dataLoader';
+import { addData } from '../../reducers/dataLoader';
 import { clearNewRecord } from '../../reducers/newRecordAppendor';
 import InputWithValidation from '../../utils/InputWithValidation';
 import { validate } from '../../utils/validate';
@@ -20,7 +20,7 @@ const AddRecordForm = () => {
     };
 
     const handleAddRecord = useCallback(() => {
-        dispatch(setData({ newRecord: newRecordData }));
+        dispatch(addData({ newRecord: newRecordData }));
         dispatch(clearNewRecord());
     }, [dispatch, newRecordData]);
 
