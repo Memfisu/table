@@ -7,10 +7,11 @@ import TableFilter from './TableFilter';
 import TablePagination from './TablePagination';
 import { useDataSeparate } from '../../hooks/useDataSeparate';
 import { resetChosenRecord } from '../../reducers/recordInfoDemonstrator';
-import { chosenRecord, loadedData, filterInfo, pagination } from '../../selectors/selectors';
+import {chosenRecord, loadedData, filterInfo, pagination, loadingStatus} from '../../selectors/selectors';
 import AddRecordForm from '../../forms/AddRecordForm/AddRecordForm';
 import AddRecordButton from '../../forms/AddRecordForm/AddRecordButton';
 import Loader from '../Loader/Loader';
+import { statuses } from '../../constants/constants';
 
 const checkInclude = (obj, searchString) => Object.values(obj).some(elem => elem.toString().includes(searchString));
 
@@ -19,6 +20,7 @@ const Table = () => {
     let data = useSelector(loadedData);
     const chosenRecordInfo = useSelector(chosenRecord);
     const { currentPage } = useSelector(pagination);
+    const status = useSelector(loadingStatus);
 
     const { filterString } = useSelector(filterInfo);
     if (filterString) data = data.filter(item => checkInclude(item, filterString));
@@ -42,7 +44,7 @@ const Table = () => {
             </Box>
             <AddRecordForm />
             <TableHeader />
-            <Loader />
+            {status !== statuses.DONE ? <Loader /> : null}
             {tableData}
             <TablePagination />
         </Box>

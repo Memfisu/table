@@ -6,11 +6,11 @@ const directions = {
 };
 
 const actions = {
-    LOAD: 'LOAD_DATA',
+    FETCH: 'FETCH_DATA',
     NEW: 'CREATE_NEW_DATA',
     CLEAR: 'CLEAR_NEW_DATA',
     RESET: 'RESET_CHOSEN_RECORD',
-    ADD: 'ADD_NEW_DATA',
+    SET: 'SET_NEW_DATA',
     SHOW: 'SHOW_RECORD',
     FORM: 'SHOW_FORM',
     SORT: 'SORT_DATA',
@@ -30,7 +30,6 @@ const headerNames = [
 const statuses = {
     'ERROR': 'ERROR',
     'EMPTY': 'EMPTY',
-    'FETCHED': 'FETCHED',
     'DONE': 'DONE'
 }
 

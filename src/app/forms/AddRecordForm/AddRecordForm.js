@@ -2,13 +2,13 @@ import React, { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '../../utils/Box';
 import Button from '../../utils/Button';
-import { addData } from '../../reducers/dataLoader';
+import { setData } from '../../reducers/dataLoader';
 import { clearNewRecord } from '../../reducers/newRecordAppendor';
 import InputWithValidation from '../../utils/InputWithValidation';
 import { validate } from '../../utils/validate';
 import { formVisibility, newRecord } from '../../selectors/selectors';
 import { setFormVisibility } from '../../reducers/formDemonstrator';
-import { headerNames, statuses } from '../../constants/constants';
+import { headerNames } from '../../constants/constants';
 
 const AddRecordForm = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const AddRecordForm = () => {
     };
 
     const handleAddRecord = useCallback(() => {
-        dispatch(addData({ newRecord: newRecordData, status: statuses.DONE }));
+        dispatch(setData({ newRecord: newRecordData }));
         dispatch(clearNewRecord());
     }, [dispatch, newRecordData]);
 

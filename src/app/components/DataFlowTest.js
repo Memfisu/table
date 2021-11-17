@@ -2,12 +2,12 @@ import Box from '../utils/Box';
 import Button from '../utils/Button';
 import React, { useCallback } from 'react';
 import axios from 'axios';
-import {addData, loadData} from '../reducers/dataLoader';
+import { setData, fetchData } from '../reducers/dataLoader';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetChosenRecord, setChosenRecord } from '../reducers/recordInfoDemonstrator';
 import { loadedData, pagination } from '../selectors/selectors';
 import { clearNewRecord } from '../reducers/newRecordAppendor';
-import { directions, statuses } from '../constants/constants';
+import { directions } from '../constants/constants';
 import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { setFilterInfo } from '../reducers/dataFilter';
@@ -21,7 +21,7 @@ const useActions = () => {
     const dataLoad = useCallback(() => {
         axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then(res => {
-                dispatch(loadData({ data: res.data, status: statuses.FETCHED }));
+                dispatch(fetchData({ data: res.data }));
             })
             .catch(err => {
                 console.log(err);
@@ -44,7 +44,7 @@ const useActions = () => {
             email: 'DWhalley@in.gov',
             phone: '(612)211-6296'
         };
-        dispatch(addData({ newRecord: newRecordData, status: statuses.DONE }));
+        dispatch(setData({ newRecord: newRecordData }));
         dispatch(clearNewRecord());
     }, [dispatch]);
     
@@ -80,7 +80,7 @@ const useActions = () => {
         const sortedData = tableData.sort(sortData.direction === directions.UP ?
             compareAscending : compareDescending);
         
-        dispatch(loadData({ data: sortedData, status: statuses.DONE }));
+        dispatch(fetchData({ data: sortedData }));
     }, [dispatch, tableData]);
 
     const filter = useCallback(() => {

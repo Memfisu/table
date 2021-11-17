@@ -1,31 +1,31 @@
-import { actions } from '../constants/constants';
+import { actions, statuses } from '../constants/constants';
 
-const loadData = ({ data, status }) => ({
-    type: actions.LOAD,
-    payload: { data, status }
+const fetchData = ({ data }) => ({
+    type: actions.FETCH,
+    payload: { data }
 });
 
-const addData = ({ newRecord, status }) => ({
-    type: actions.ADD,
-    payload: { newRecord, status }
+const setData = ({ newRecord }) => ({
+    type: actions.SET,
+    payload: { newRecord }
 });
 
 const dataLoader = (state, { type, payload }) => {
     switch (type) {
-        case actions.LOAD:
+        case actions.FETCH:
             return {
                 data: [...payload.data],
-                status: payload.status
+                status: payload.data.length ? statuses.DONE : statuses.ERROR
             };
-        case actions.ADD:
+        case actions.SET:
             return {
                 data: [payload.newRecord, ...state.data],
-                status: payload.status
+                status: statuses.DONE
             };
         default:
             return state || {};
     }
 };
 
-export { loadData, addData };
+export { fetchData, setData };
 export default dataLoader;
