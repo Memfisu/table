@@ -15,11 +15,17 @@ const dataLoader = (state, { type, payload }) => {
         case actions.LOAD:
             return {
                 data: [...payload.data],
+                /*todo
+                *  status здесь д б хардкодом, а не браться из пареметра status: DONE, а те status: payload.status
+                * */
                 status: payload.status
             };
         case actions.ADD:
             return {
                 data: [payload.newRecord, ...state.data],
+                /*todo
+                *  аналогично
+                * */
                 status: payload.status
             };
         default:

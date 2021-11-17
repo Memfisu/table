@@ -19,7 +19,7 @@ const useActions = () => {
     const { currentPage } = useSelector(pagination);
 
     const dataLoad = useCallback(() => {
-        axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
+        axios.get('https://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}')
             .then(res => {
                 dispatch(loadData({ data: res.data, status: statuses.FETCHED }));
             })
@@ -47,7 +47,7 @@ const useActions = () => {
         dispatch(addData({ newRecord: newRecordData, status: statuses.DONE }));
         dispatch(clearNewRecord());
     }, [dispatch]);
-    
+
     const sort = useCallback(() => {
         const compareDescending = (a, b) => {
             if (a[sortData.column] > b[sortData.column]) {
@@ -76,10 +76,10 @@ const useActions = () => {
 
         // в реальной ситуации должен использоваться useSelector
         const { dataSorter: sortData } = store.getState();
-        
+
         const sortedData = tableData.sort(sortData.direction === directions.UP ?
             compareAscending : compareDescending);
-        
+
         dispatch(loadData({ data: sortedData, status: statuses.DONE }));
     }, [dispatch, tableData]);
 

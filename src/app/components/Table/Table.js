@@ -42,6 +42,11 @@ const Table = () => {
             </Box>
             <AddRecordForm />
             <TableHeader />
+            {/*
+            todo
+            логика показа д б не внутри лоадера а снаружи
+            {status !== DONE && <Loader />}
+            */}
             <Loader />
             {tableData}
             <TablePagination />

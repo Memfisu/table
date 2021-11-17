@@ -20,6 +20,10 @@ const AddRecordForm = () => {
     };
 
     const handleAddRecord = useCallback(() => {
+        /*todo
+        *  statuses.DONE не должно передаваться в параметрах, этот статус должна обнавлять логика редьюсера, достаточно
+        *   имени экшена в данномслучае addData
+        * */
         dispatch(addData({ newRecord: newRecordData, status: statuses.DONE }));
         dispatch(clearNewRecord());
     }, [dispatch, newRecordData]);
