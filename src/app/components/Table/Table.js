@@ -39,7 +39,10 @@ const Table = () => {
                 <AddRecordButton />
             </Box>
             <AddRecordForm />
-            <TableHeader />
+            <TableHeader />{/*
+            todo
+              надо писать {status === statuses.EMPTY && <Loader />} - не нужен тернарный оператон и null
+            */}
             {status === statuses.EMPTY ? <Loader /> : null}
             {status === statuses.ERROR ? <ErrorComponent /> : null}
             {tableData}
