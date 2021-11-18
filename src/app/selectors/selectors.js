@@ -4,6 +4,31 @@ import {getSortCallback} from "../utils/getSortCallback";
 const checkInclude = (obj, searchString) => Object.values(obj).some(elem => elem.toString().includes(searchString));
 
 export const useLoadedData = state => {
+    /*
+    * todo
+    *  переделать как в примере
+    * https://react-redux.js.org/api/hooks
+    *
+    * Ориентироваться на последний пример с использованием reselect
+    *
+      const makeSelectCompletedTodosCount = () =>
+      createSelector(
+        (state) => state.todos,
+        (_, completed) => completed,
+        (todos, completed) =>
+          todos.filter((todo) => todo.completed === completed).length
+      )
+
+    export const CompletedTodosCount = ({ completed }) => {
+      const selectCompletedTodosCount = useMemo(makeSelectCompletedTodosCount, [])
+
+      const matchingCount = useSelector((state) =>
+        selectCompletedTodosCount(state, completed)
+      )
+
+      return <div>{matchingCount}</div>
+    }
+    * */
     let { data } = state.dataLoader;
 
     const { filterString } = useSelector(filterInfo);
