@@ -21,7 +21,8 @@ import ErrorComponent from '../ErrorComponent/ErrorComponent';
 
 const Table = () => {
     const dispatch = useDispatch();
-    let data = useSelector((state) => filteredSortedData(state));
+    let data = useSelector(filteredSortedData);
+    console.log('data', data);
 
     const chosenRecordInfo = useSelector(chosenRecord);
     const { currentPage } = useSelector(pagination);

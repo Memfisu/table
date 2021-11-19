@@ -36,6 +36,20 @@ export const filteredSortedData = createSelector([
         });
         if (Object.keys(sortInfo).length) finalData = finalData.sort(sortCallback);
 
-        // console.log(finalData);
+        console.log('finalData', finalData);
         return finalData;
 });
+
+// export const filteredData = createSelector(loadedData, filterInfo, (data, filterInfo) => {
+//     if (filterInfo) return data.filter(item => checkInclude(item, filterInfo));
+//     return data;
+// });
+//
+// export const sortedData = createSelector(loadedData, sortInfo, (data, sortInfo) => {
+//     const sortCallback = getSortCallback({
+//         key: sortInfo?.column,
+//         direction: sortInfo?.direction
+//     });
+//     if (Object.keys(sortInfo).length) return data.sort(sortCallback);
+//     return data;
+// });
