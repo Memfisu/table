@@ -7,7 +7,12 @@ import TableFilter from './TableFilter';
 import TablePagination from './TablePagination';
 import { useDataSeparate } from '../../hooks/useDataSeparate';
 import { resetChosenRecord } from '../../reducers/recordInfoDemonstrator';
-import { chosenRecord, useLoadedData, pagination, loadingStatus } from '../../selectors/selectors';
+import {
+    chosenRecord,
+    pagination,
+    loadingStatus,
+    filteredSortedData
+} from '../../selectors/selectors';
 import AddRecordForm from '../../forms/AddRecordForm/AddRecordForm';
 import AddRecordButton from '../../forms/AddRecordForm/AddRecordButton';
 import Loader from '../Loader/Loader';
@@ -16,7 +21,8 @@ import ErrorComponent from '../ErrorComponent/ErrorComponent';
 
 const Table = () => {
     const dispatch = useDispatch();
-    let data = useSelector(useLoadedData);
+    let data = useSelector((state) => filteredSortedData(state));
+
     const chosenRecordInfo = useSelector(chosenRecord);
     const { currentPage } = useSelector(pagination);
     const status = useSelector(loadingStatus);
@@ -40,8 +46,8 @@ const Table = () => {
             </Box>
             <AddRecordForm />
             <TableHeader />
-            {status === statuses.EMPTY ? <Loader /> : null}
-            {status === statuses.ERROR ? <ErrorComponent /> : null}
+            {status === statuses.EMPTY && <Loader />}
+            {status === statuses.ERROR && <ErrorComponent />}
             {tableData}
             <TablePagination />
         </Box>
