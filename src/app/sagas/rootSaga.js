@@ -9,7 +9,7 @@ import store from '../store';
 
 export function* initDataSagaWorker () {
     yield put(initData());
-    const { data } = yield axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
+    const { data } = yield axios.get('https://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
     yield put(setCurrentPage({ currentPage: 0 }));
     yield put(setFormVisibility({ visibility: false }));
     if (data?.length) yield put(fetchData({ data }));
