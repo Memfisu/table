@@ -1,11 +1,12 @@
 import { eventChannel, END } from 'redux-saga'
-import { put, all, spawn, call, take } from 'redux-saga/effects';
+import { put, all, spawn, call, take, takeLatest } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
-import { initData, fetchData, setError } from '../reducers/dataLoader';
+import { initData, fetchData, setError, stopEmitterDemonstration } from '../reducers/dataLoader';
 import axios from 'axios';
 import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
+import {actions} from "../constants/constants";
 
 export function* initDataSagaWorker () {
     yield put(initData());
@@ -18,8 +19,10 @@ export function* initDataSagaWorker () {
 const autoSort = (interval, callback, commandsArray) => {
     return eventChannel(emitter => {
         let counter = 0;
+        console.log('start');
         const commandEmitter = setInterval(() => {
             if (counter < commandsArray.length) {
+                console.log(counter);
                 callback(commandsArray[counter++]);
             } else {
                 emitter(END);
@@ -64,12 +67,17 @@ export function* sagaAutoSort() {
             yield take(chan);
         }
     } finally {
+        yield put(stopEmitterDemonstration());
         console.log('done!');
     }
 }
 
+function* sagaIsEmittingWatcher() {
+   yield takeLatest(actions.EMITTING, sagaAutoSort);
+}
+
 export default function* rootSaga () {
-    const sagas = [initDataSagaWorker, sagaAutoSort];
+    const sagas = [initDataSagaWorker, sagaIsEmittingWatcher];
 
     const executeSagas = yield sagas.map(saga => {
         return spawn(function* () {

@@ -1,14 +1,15 @@
 import React, { useCallback } from 'react';
 import Box from '../utils/Box';
 import Button from '../utils/Button';
+import { setEmitterDemonstration } from '../reducers/dataLoader';
+import { useDispatch } from 'react-redux';
 
 const EmitterButton = () => {
-
-    // todo реализовать сценарий из саги по нажатию на кнопку
-
+    const dispatch = useDispatch();
+    
     const handleClick = useCallback(() => {
-        console.log('dispatchClick');
-    }, []);
+        dispatch(setEmitterDemonstration());
+    }, [dispatch]);
 
     return (
         <Box className="formWrapper">

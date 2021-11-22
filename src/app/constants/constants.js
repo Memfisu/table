@@ -19,7 +19,9 @@ const actions = {
     FILTER: 'FILTER_DATA',
     PAGE: 'SET_CURRENT_PAGE',
     LOADER: 'SET_LOADER',
-    ERROR: 'SET_ERROR'
+    ERROR: 'SET_ERROR',
+    EMITTING: 'SET_EMITTING',
+    STOP: 'STOP_EMITTING'
 }
 
 const headerNames = [
