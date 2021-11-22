@@ -15,6 +15,7 @@ const actions = {
     SHOW: 'SHOW_RECORD',
     FORM: 'SHOW_FORM',
     SORT: 'SORT_DATA',
+    AUTOSORT: 'AUTO_SORT_DATA',
     FILTER: 'FILTER_DATA',
     PAGE: 'SET_CURRENT_PAGE',
     LOADER: 'SET_LOADER',
