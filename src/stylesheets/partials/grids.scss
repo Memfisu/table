@@ -97,14 +97,11 @@ div {
 
 .formWrapper,
 .tableFilter,
-.tableBody {
-  padding-bottom: 20px;
-}
-
-.dataFlowButtonWrapper {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 40px;
+.tableBody,
+.emitterWrapper,
+.emitterWrapper .commonButton,
+.emitterItem {
+  margin-bottom: 20px;
 }
 
 .tableField,

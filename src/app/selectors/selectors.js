@@ -18,6 +18,8 @@ export const formVisibility = state => state.formDemonstrator;
 
 export const loadedData = state => state.dataLoader.data;
 
+export const queueData = state => state.queueHandler;
+
 const checkInclude = (obj, searchString) => Object.values(obj).some(elem => elem.toString().includes(searchString));
 
 export const filteredSortedData = createSelector([

@@ -21,7 +21,8 @@ const actions = {
     LOADER: 'SET_LOADER',
     ERROR: 'SET_ERROR',
     EMITTING: 'SET_EMITTING',
-    STOP: 'STOP_EMITTING'
+    STOP: 'STOP_EMITTING',
+    QUEUEADD: 'QUEUE_ADD_ITEM'
 }
 
 const headerNames = [

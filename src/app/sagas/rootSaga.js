@@ -1,5 +1,5 @@
 import { eventChannel, END } from 'redux-saga'
-import { put, all, spawn, call, take, takeLatest } from 'redux-saga/effects';
+import { put, all, spawn, call, take, takeEvery } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
 import { initData, fetchData, setError, stopEmitterDemonstration } from '../reducers/dataLoader';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import {actions} from "../constants/constants";
+import {setNewQueueItem} from "../reducers/queueHandler";
 
 export function* initDataSagaWorker () {
     yield put(initData());
@@ -62,6 +63,7 @@ const commandsArray = [
 
 export function* sagaAutoSort() {
     const chan = yield call(autoSort, 5000, callback, commandsArray);
+    // yield put(setNewQueueItem());
     try {
         while (true) {
             yield take(chan);
@@ -72,9 +74,24 @@ export function* sagaAutoSort() {
     }
 }
 
+// function* sagaQueue(queue) {
+//     const queue = yield [];
+//     yield takeEvery(actions.EMITTING, sagaQueue, queue);
+//     yield queue.push(sagaAutoSort);
+//     может call sagaAutoSort на каждый экшен + отслеживать конец по STOP?
+// }
+
 function* sagaIsEmittingWatcher() {
-   yield takeLatest(actions.EMITTING, sagaAutoSort);
+   yield takeEvery(actions.EMITTING, sagaAutoSort);
 }
+
+// export function * notificationSaga () {
+//   const requestChan = yield actionChannel(Notification.request)
+//   while (true) {
+//     const { payload } = yield take(requestChan)
+//     yield call(showNotification, payload)
+//   }
+// }
 
 export default function* rootSaga () {
     const sagas = [initDataSagaWorker, sagaIsEmittingWatcher];
