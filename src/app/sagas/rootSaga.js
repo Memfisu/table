@@ -1,5 +1,5 @@
 import { eventChannel, END, buffers } from 'redux-saga'
-import { put, all, spawn, call, take, actionChannel } from 'redux-saga/effects';
+import { put, all, spawn, call, take, actionChannel, fork } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
 import { initData, fetchData, setError, stopEmitterDemonstration } from '../reducers/dataLoader';
@@ -75,19 +75,30 @@ export function* sagaAutoSort(counter, delay) {
 
 let counter = 1;
 let delay = 3000;
-function* sagaIsEmittingWatcher() {
+function* sagaEmitterHandler() {
+    const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
+    while (true) {
+        yield take(requestChannel);
+        yield call(sagaAutoSort, counter, delay);
+    }
+}
+function* sagaMessagesHandler() {
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
     while (true) {
         yield take(requestChannel);
         yield put(setNewQueueItem({ counter, delay }));
-        yield call(sagaAutoSort, counter, delay);
         yield delay = delay/2;
         yield counter++;
     }
 }
 
+function* sagaEmitterWatcher() {
+    yield fork(sagaEmitterHandler);
+    yield fork(sagaMessagesHandler);
+}
+
 export default function* rootSaga () {
-    const sagas = [initDataSagaWorker, sagaIsEmittingWatcher];
+    const sagas = [initDataSagaWorker, sagaEmitterWatcher];
 
     const executeSagas = yield sagas.map(saga => {
         return spawn(function* () {
