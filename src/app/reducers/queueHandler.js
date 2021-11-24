@@ -5,14 +5,23 @@ const setNewQueueItem = (queueItem) => ({
     payload: queueItem
 });
 
+const removeQueueItem = () => ({
+    type: actions.QUEUEREMOVE
+});
+
 const queueHandler = (state, { type, payload }) => {
     switch (type) {
         case actions.QUEUEADD:
             return [...state, payload];
+        case actions.QUEUEREMOVE:
+        {   let changedState = [...state];
+            changedState.shift();
+            return [...changedState];
+        }
         default:
             return state || [];
     }
 };
 
-export { setNewQueueItem };
+export { setNewQueueItem, removeQueueItem };
 export default queueHandler;

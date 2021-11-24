@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 import Box from '../utils/Box';
 import Button from '../utils/Button';
 import { setEmitterDemonstration } from '../reducers/dataLoader';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { queueData } from '../selectors/selectors';
+import QueueItem from './QueueItem';
 
 const EmitterButton = () => {
     const dispatch = useDispatch();
@@ -24,11 +25,7 @@ const EmitterButton = () => {
                 onClick={handleClick}
                 label="Emitter button"
             />
-            {queue?.length ? queue.map((item, index) => <Box key={index}>
-                {`Number in the queue: ${item.counter}, delay: ${item.delay} мс`}
-            </Box>)
-                : null
-            }
+            {queue?.length ? queue.map((item, index) => <QueueItem item={item} index={index} />) : null}
         </Box>
     )
 }

@@ -22,7 +22,8 @@ const actions = {
     ERROR: 'SET_ERROR',
     EMITTING: 'SET_EMITTING',
     STOP: 'STOP_EMITTING',
-    QUEUEADD: 'QUEUE_ADD_ITEM'
+    QUEUEADD: 'QUEUE_ADD_ITEM',
+    QUEUEREMOVE: 'QUEUE_REMOVE_ITEM'
 }
 
 const headerNames = [

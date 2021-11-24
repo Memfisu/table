@@ -7,7 +7,7 @@ import axios from 'axios';
 import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { actions } from '../constants/constants';
-import { setNewQueueItem } from '../reducers/queueHandler';
+import { removeQueueItem, setNewQueueItem } from '../reducers/queueHandler';
 
 export function* initDataSagaWorker () {
     yield put(initData());
@@ -42,6 +42,10 @@ const commandsArray = [
         }}
 ];
 
+// todo перенести счётчик, задержку и их изменения в стор?
+let counter = 1;
+let delay = 4000;
+
 export function autoSort (interval, callback, commandsArray) {
     return eventChannel(emitter => {
         let counter = 0;
@@ -61,20 +65,19 @@ export function autoSort (interval, callback, commandsArray) {
     })
 }
 
-export function* sagaAutoSort(counter, delay) {
-    const chan = yield call(autoSort, delay, callback, commandsArray);
+export function* sagaAutoSort(counter, taskDelay) {
+    const chan = yield call(autoSort, taskDelay, callback, commandsArray);
     try {
         while (true) {
             yield take(chan);
         }
     } finally {
         yield put(stopEmitterDemonstration());
+        yield put(removeQueueItem());
         console.log('done!');
     }
 }
 
-let counter = 1;
-let delay = 3000;
 function* sagaEmitterHandler() {
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
     while (true) {
@@ -96,6 +99,8 @@ function* sagaEmitterWatcher() {
     yield fork(sagaEmitterHandler);
     yield fork(sagaMessagesHandler);
 }
+
+// todo реализовать отмену конкретной задачи из очереди по экшену
 
 export default function* rootSaga () {
     const sagas = [initDataSagaWorker, sagaEmitterWatcher];

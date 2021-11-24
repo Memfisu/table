@@ -99,9 +99,26 @@ div {
 .tableFilter,
 .tableBody,
 .emitterWrapper,
+.taskWrapper,
 .emitterWrapper .commonButton,
 .emitterItem {
   margin-bottom: 20px;
+}
+
+.taskWrapper {
+  display: flex;
+  width: 330px;
+  justify-content: space-between;
+  align-items: baseline;
+
+  .commonButton {
+    padding: 2px 5px 3px 5px;
+    margin-bottom: 0;
+  }
+}
+
+.taskWrapper.focused {
+  background-color: $lightYellow;
 }
 
 .tableField,
