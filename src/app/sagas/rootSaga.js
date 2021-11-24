@@ -1,13 +1,13 @@
-import { eventChannel, END } from 'redux-saga'
-import { put, all, spawn, call, take, takeEvery } from 'redux-saga/effects';
+import { eventChannel, END, buffers } from 'redux-saga'
+import { put, all, spawn, call, take, actionChannel } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
 import { initData, fetchData, setError, stopEmitterDemonstration } from '../reducers/dataLoader';
 import axios from 'axios';
 import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
-import {actions} from "../constants/constants";
-import {setNewQueueItem} from "../reducers/queueHandler";
+import { actions } from '../constants/constants';
+import { setNewQueueItem } from '../reducers/queueHandler';
 
 export function* initDataSagaWorker () {
     yield put(initData());
@@ -17,32 +17,13 @@ export function* initDataSagaWorker () {
     if (data?.length) yield put(fetchData({ data }));
 }
 
-const autoSort = (interval, callback, commandsArray) => {
-    return eventChannel(emitter => {
-        let counter = 0;
-        console.log('start');
-        const commandEmitter = setInterval(() => {
-            if (counter < commandsArray.length) {
-                console.log(counter);
-                callback(commandsArray[counter++]);
-            } else {
-                emitter(END);
-            }
-        }, interval);
-
-        return () => {
-            clearInterval(commandEmitter);
-        }
-    })
-};
-
 const callback = (action) => store.dispatch(setSortingInfo(action));
 
 const commandsArray = [
     {sortingInfo: {
-        direction: 'UP',
-        column: 'id'
-    }},
+            direction: 'UP',
+            column: 'id'
+        }},
     {sortingInfo: {
             direction: 'DOWN',
             column: 'firstName'
@@ -61,9 +42,27 @@ const commandsArray = [
         }}
 ];
 
-export function* sagaAutoSort() {
-    const chan = yield call(autoSort, 5000, callback, commandsArray);
-    // yield put(setNewQueueItem());
+export function autoSort (interval, callback, commandsArray) {
+    return eventChannel(emitter => {
+        let counter = 0;
+        console.log('start');
+        const commandEmitter = setInterval(() => {
+            if (counter < commandsArray.length) {
+                console.log(counter);
+                callback(commandsArray[counter++]);
+            } else {
+                emitter(END);
+            }
+        }, interval);
+
+        return () => {
+            clearInterval(commandEmitter);
+        }
+    })
+}
+
+export function* sagaAutoSort(counter, delay) {
+    const chan = yield call(autoSort, delay, callback, commandsArray);
     try {
         while (true) {
             yield take(chan);
@@ -74,24 +73,18 @@ export function* sagaAutoSort() {
     }
 }
 
-// function* sagaQueue(queue) {
-//     const queue = yield [];
-//     yield takeEvery(actions.EMITTING, sagaQueue, queue);
-//     yield queue.push(sagaAutoSort);
-//     может call sagaAutoSort на каждый экшен + отслеживать конец по STOP?
-// }
-
+let counter = 1;
+let delay = 3000;
 function* sagaIsEmittingWatcher() {
-   yield takeEvery(actions.EMITTING, sagaAutoSort);
+    const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
+    while (true) {
+        yield take(requestChannel);
+        yield put(setNewQueueItem({ counter, delay }));
+        yield call(sagaAutoSort, counter, delay);
+        yield delay = delay/2;
+        yield counter++;
+    }
 }
-
-// export function * notificationSaga () {
-//   const requestChan = yield actionChannel(Notification.request)
-//   while (true) {
-//     const { payload } = yield take(requestChan)
-//     yield call(showNotification, payload)
-//   }
-// }
 
 export default function* rootSaga () {
     const sagas = [initDataSagaWorker, sagaIsEmittingWatcher];
