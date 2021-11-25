@@ -1,5 +1,5 @@
 import { eventChannel, END, buffers } from 'redux-saga'
-import { put, all, spawn, call, take, actionChannel, fork } from 'redux-saga/effects';
+import { put, all, spawn, call, take, actionChannel, fork, cancel } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
 import { initData, fetchData, setError, stopEmitterDemonstration } from '../reducers/dataLoader';
@@ -7,11 +7,11 @@ import axios from 'axios';
 import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { actions } from '../constants/constants';
-import { removeQueueItem, setNewQueueItem } from '../reducers/queueHandler';
+import { finishQueueTask, setQueueTask } from '../reducers/queueHandler';
 
 export function* initDataSagaWorker () {
     yield put(initData());
-    const { data } = yield axios.get('https://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
+    const { data } = yield axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
     yield put(setCurrentPage({ currentPage: 0 }));
     yield put(setFormVisibility({ visibility: false }));
     if (data?.length) yield put(fetchData({ data }));
@@ -73,13 +73,15 @@ export function* sagaAutoSort(counter, taskDelay) {
         }
     } finally {
         yield put(stopEmitterDemonstration());
-        yield put(removeQueueItem());
+        yield put(finishQueueTask());
         console.log('done!');
     }
 }
 
 function* sagaEmitterHandler() {
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
+    // const cancelAction =  yield take(actions.QUEUECANCEL);
+    // if (cancelAction.payload.counter <= counter) cancel(sagaAutoSort);
     while (true) {
         yield take(requestChannel);
         yield call(sagaAutoSort, counter, delay);
@@ -89,7 +91,7 @@ function* sagaMessagesHandler() {
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
     while (true) {
         yield take(requestChannel);
-        yield put(setNewQueueItem({ counter, delay }));
+        yield put(setQueueTask({ counter, delay }));
         yield delay = delay/2;
         yield counter++;
     }

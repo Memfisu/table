@@ -11,11 +11,7 @@ const EmitterButton = () => {
     const queue = useSelector(queueData);
     
     const handleClick = useCallback(() => {
-        try {
-            dispatch(setEmitterDemonstration());
-        } catch (e) {
-            console.log(e.message);
-        }
+        dispatch(setEmitterDemonstration());
     }, [dispatch]);
 
     return (
@@ -25,7 +21,7 @@ const EmitterButton = () => {
                 onClick={handleClick}
                 label="Emitter button"
             />
-            {queue?.length ? queue.map((item, index) => <QueueItem item={item} index={index} />) : null}
+            {queue?.length ? queue.map((item, index) => <QueueItem item={item} key={index} index={index} />) : null}
         </Box>
     )
 }

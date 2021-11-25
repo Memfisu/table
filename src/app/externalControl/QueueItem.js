@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import Box from '../utils/Box';
 import Button from '../utils/Button';
+import { useDispatch } from 'react-redux';
+import { cancelQueueTask } from '../reducers/queueHandler';
 
-const QueueItem = ({ item }) => {
+const QueueItem = ({ item, index }) => {
+    const dispatch = useDispatch();
     const [selected, setSelected] = useState(false);
 
     const handleSelect = useCallback(() => {
@@ -11,8 +14,8 @@ const QueueItem = ({ item }) => {
     }, [selected]);
 
     const handleRemoveTask = useCallback(() => {
-        // todo диспатч экшена удаления конкретной задачи из очереди
-    }, []);
+        dispatch(cancelQueueTask({ counter: index+1 }));
+    }, [dispatch, index]);
 
     return (
         <Box className={selected ? "taskWrapper focused" : "taskWrapper"} onClick={handleSelect}>
