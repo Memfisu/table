@@ -10,6 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import pagination from './reducers/pagination';
 import { formDemonstrator } from './reducers/formDemonstrator';
 import queueHandler from './reducers/queueHandler';
+import queueHelper from './reducers/queueHelper';
 
 const saga = createSagaMiddleware();
 
@@ -21,7 +22,8 @@ const reducers = combineReducers ({
     dataFilter,
     pagination,
     formDemonstrator,
-    queueHandler
+    queueHandler,
+    queueHelper
 });
 
 const store = createStore(

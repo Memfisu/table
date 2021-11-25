@@ -1,5 +1,5 @@
 import { eventChannel, END, buffers } from 'redux-saga'
-import { put, all, spawn, call, take, actionChannel, fork, cancel } from 'redux-saga/effects';
+import { put, all, spawn, call, take, actionChannel, fork, cancel, select } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
 import { initData, fetchData, setError, stopEmitterDemonstration } from '../reducers/dataLoader';
@@ -8,12 +8,15 @@ import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { actions } from '../constants/constants';
 import { finishQueueTask, setQueueTask } from '../reducers/queueHandler';
+import {changeCounterAndDelay, initCounterAndDelay} from '../reducers/queueHelper';
+import { helper } from '../selectors/selectors';
 
-export function* initDataSagaWorker () {
+function* initDataSagaWorker () {
     yield put(initData());
     const { data } = yield axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
     yield put(setCurrentPage({ currentPage: 0 }));
     yield put(setFormVisibility({ visibility: false }));
+    yield put(initCounterAndDelay());
     if (data?.length) yield put(fetchData({ data }));
 }
 
@@ -42,14 +45,10 @@ const commandsArray = [
         }}
 ];
 
-// todo перенести счётчик, задержку и их изменения в стор?
-let counter = 1;
-let delay = 4000;
-
-export function autoSort (interval, callback, commandsArray) {
+function autoSort (interval, callback, commandsArray) {
     return eventChannel(emitter => {
         let counter = 0;
-        console.log('start');
+        console.log(`start ${interval}`);
         const commandEmitter = setInterval(() => {
             if (counter < commandsArray.length) {
                 console.log(counter);
@@ -65,11 +64,16 @@ export function autoSort (interval, callback, commandsArray) {
     })
 }
 
-export function* sagaAutoSort(counter, taskDelay) {
+function* sagaAutoSort(counter, taskDelay) {
     const chan = yield call(autoSort, taskDelay, callback, commandsArray);
+    // const cancelAction =  yield take(actions.QUEUECANCEL);
     try {
         while (true) {
             yield take(chan);
+            // if (cancelAction.payload.counter === 2) {
+            //     yield console.log(cancelAction.payload.counter === 2);
+                // yield cancel(action);
+            // }
         }
     } finally {
         yield put(stopEmitterDemonstration());
@@ -78,12 +82,13 @@ export function* sagaAutoSort(counter, taskDelay) {
     }
 }
 
+const helperArray = [];
+
 function* sagaEmitterHandler() {
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
-    // const cancelAction =  yield take(actions.QUEUECANCEL);
-    // if (cancelAction.payload.counter <= counter) cancel(sagaAutoSort);
     while (true) {
         yield take(requestChannel);
+        const { counter, delay } = yield select(helper);
         yield call(sagaAutoSort, counter, delay);
     }
 }
@@ -91,9 +96,10 @@ function* sagaMessagesHandler() {
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
     while (true) {
         yield take(requestChannel);
+        const { counter, delay } = yield select(helper);
         yield put(setQueueTask({ counter, delay }));
-        yield delay = delay/2;
-        yield counter++;
+        yield helperArray.push({ counter, delay });
+        yield put(changeCounterAndDelay());
     }
 }
 
