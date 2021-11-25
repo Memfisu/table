@@ -9,10 +9,16 @@ import QueueItem from './QueueItem';
 const EmitterButton = () => {
     const dispatch = useDispatch();
     const queue = useSelector(queueData);
-    
+
     const handleClick = useCallback(() => {
         try {
             dispatch(setEmitterDemonstration());
+            /*
+            * todo
+            *  Что мы здесь можем поймать, какую ошибку?
+            * Напомню, диспатч экшена - это синхронная операция
+            * На какой случай мы оборачиваем это в try - catch, какая была цель?
+            * */
         } catch (e) {
             console.log(e.message);
         }

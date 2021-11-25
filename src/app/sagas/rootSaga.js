@@ -11,7 +11,7 @@ import { removeQueueItem, setNewQueueItem } from '../reducers/queueHandler';
 
 export function* initDataSagaWorker () {
     yield put(initData());
-    const { data } = yield axios.get('https://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
+    const { data } = yield axios.get('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}');
     yield put(setCurrentPage({ currentPage: 0 }));
     yield put(setFormVisibility({ visibility: false }));
     if (data?.length) yield put(fetchData({ data }));
@@ -68,6 +68,10 @@ export function autoSort (interval, callback, commandsArray) {
 export function* sagaAutoSort(counter, taskDelay) {
     const chan = yield call(autoSort, taskDelay, callback, commandsArray);
     try {
+        /*
+        * todo
+        *  в чем смысл конструкции try - finally, что она делает?
+        * */
         while (true) {
             yield take(chan);
         }
@@ -110,6 +114,11 @@ export default function* rootSaga () {
                 try {
                     yield call(saga);
                 } catch (e) {
+                    /*
+                    *
+                    * todo
+                    *  Это плохой подход. Почему?
+                    * */
                     yield put(setError());
                     console.log(e);
                 }
