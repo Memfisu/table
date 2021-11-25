@@ -67,22 +67,17 @@ function autoSort (interval, callback, commandsArray) {
 function* sagaAutoSort(counter, taskDelay) {
     const chan = yield call(autoSort, taskDelay, callback, commandsArray);
     // const cancelAction =  yield take(actions.QUEUECANCEL);
-    try {
-        while (true) {
-            yield take(chan);
-            // if (cancelAction.payload.counter === 2) {
-            //     yield console.log(cancelAction.payload.counter === 2);
-                // yield cancel(action);
-            // }
-        }
-    } finally {
-        yield put(stopEmitterDemonstration());
-        yield put(finishQueueTask());
-        console.log('done!');
+    while (true) {
+        yield take(chan);
+        // if (cancelAction.payload.counter === 2) {
+        //     yield console.log(cancelAction.payload.counter === 2);
+        // yield cancel(action);
+        // }
     }
+    yield put(stopEmitterDemonstration());
+    yield put(finishQueueTask());
+    console.log('done!');
 }
-
-const helperArray = [];
 
 function* sagaEmitterHandler() {
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
@@ -98,7 +93,6 @@ function* sagaMessagesHandler() {
         yield take(requestChannel);
         const { counter, delay } = yield select(helper);
         yield put(setQueueTask({ counter, delay }));
-        yield helperArray.push({ counter, delay });
         yield put(changeCounterAndDelay());
     }
 }
