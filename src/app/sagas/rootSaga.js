@@ -66,34 +66,44 @@ function autoSort (interval, callback, commandsArray) {
 
 function* sagaAutoSort(counter, taskDelay) {
     const chan = yield call(autoSort, taskDelay, callback, commandsArray);
+    // todo реализовать отмену конкретной задачи из очереди по экшену
     // const cancelAction =  yield take(actions.QUEUECANCEL);
-    while (true) {
-        yield take(chan);
-        // if (cancelAction.payload.counter === 2) {
-        //     yield console.log(cancelAction.payload.counter === 2);
-        // yield cancel(action);
-        // }
-    }
-    yield put(stopEmitterDemonstration());
-    yield put(finishQueueTask());
-    console.log('done!');
+    // todo избавиться от try - catch с сохранением функционала
+    try {
+            while (true) {
+                yield take(chan);
+                // if (cancelAction.payload.counter === 2) {
+                //     yield console.log(cancelAction.payload.counter === 2);
+                // yield cancel(action);
+                // }
+
+            }
+        } finally {
+            yield put(stopEmitterDemonstration());
+            yield put(finishQueueTask());
+            console.log('done!');
+        }
 }
 
 function* sagaEmitterHandler() {
+    let index = 0;
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
     while (true) {
         yield take(requestChannel);
-        const { counter, delay } = yield select(helper);
-        yield call(sagaAutoSort, counter, delay);
+        const payload = yield select(helper);
+        yield call(sagaAutoSort, payload[index].counter, payload[index].delay);
+        yield index++;
     }
 }
 function* sagaMessagesHandler() {
+    let index = 0;
     const requestChannel = yield actionChannel(actions.EMITTING, buffers.fixed(5));
     while (true) {
         yield take(requestChannel);
-        const { counter, delay } = yield select(helper);
-        yield put(setQueueTask({ counter, delay }));
+        const payload = yield select(helper);
+        yield put(setQueueTask({ counter: payload[index].counter, delay: payload[index].delay }));
         yield put(changeCounterAndDelay());
+        yield index++;
     }
 }
 
@@ -102,20 +112,7 @@ function* sagaEmitterWatcher() {
     yield fork(sagaMessagesHandler);
 }
 
-// todo реализовать отмену конкретной задачи из очереди по экшену
-
 export default function* rootSaga () {
-    const sagas = [initDataSagaWorker, sagaEmitterWatcher];
-
-    const executeSagas = yield sagas.map(saga => {
-        return spawn(function* () {
-                try {
-                    yield call(saga);
-                } catch (e) {
-                    yield put(setError());
-                    console.log(e);
-                }
-        })
-    })
-    yield all(executeSagas);
+    yield spawn(initDataSagaWorker);
+    yield spawn(sagaEmitterWatcher);
 }
