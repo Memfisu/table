@@ -1,5 +1,4 @@
-import { eventChannel, END, buffers } from 'redux-saga'
-import { put, spawn, call, take, actionChannel, select } from 'redux-saga/effects';
+import { put, spawn, call, select, takeLatest, takeEvery } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
 import { initData, fetchData } from '../reducers/dataLoader';
@@ -8,6 +7,7 @@ import { setSortingInfo } from '../reducers/dataSorter';
 import store from '../store';
 import { actions } from '../constants/constants';
 import { queueData } from '../selectors/selectors';
+import { finishTaskFromQueue } from '../reducers/queueHandler';
 
 function* initDataSagaWorker () {
     yield put(initData());
@@ -42,45 +42,44 @@ const commandsArray = [
         }}
 ];
 
-function autoSort (interval, callback, commandsArray) {
-    return eventChannel(emitter => {
-        let counter = 0;
-        console.log(`start ${interval}`);
-        const commandEmitter = setInterval(() => {
-            if (counter < commandsArray.length) {
-                console.log(counter);
-                callback(commandsArray[counter++]);
-            } else {
-                emitter(END);
-            }
-        }, interval);
+function* sagaCounter(){
+    let counter = 0;
+    for (let i = 0 ; i < commandsArray.length; i++){
+        yield counter++;
+    }
+}
+const counter = sagaCounter();
 
-        return () => {
-            clearInterval(commandEmitter);
+function* sagaAutoSort(taskDelay, taskId) {
+    yield console.log(`start ${taskDelay}`);
+    const runner = yield setInterval(() => {
+        const next = counter.next();
+        if (next.done) {
+            clearInterval(runner);
+            store.dispatch(finishTaskFromQueue({ id: taskId }));
+            console.log('done!');
+        } else {
+            console.log(next.value);
+            callback(commandsArray[next.value]);
         }
-    })
+    }, taskDelay);
 }
 
-function* sagaAutoSort(counter, taskDelay) {
-    const chan = yield call(autoSort, taskDelay, callback, commandsArray);
-        while (true) {
-            yield take(chan);
-        }
+function* sagaCheckQueue() {
+    const payload = yield select(queueData);
+    if (payload.length) {
+        yield call(sagaAutoSort, payload[0].delay, payload[0].id);
+    }
 }
 
 // todo переделать на очередь из redux:
-// сага запускает сет сортировки из очереди
-// в конце сортировки кидается экшен - сигнал проверить очередь, есть ли там ещё айтемы
-// если есть, берём следующий сет
+// реагируем на QUEUEADD (takeLatest?) - запускаем sagaAutoSort с установленной taskDelay
+// реагируем на QUEUEFINISH (takeEvery?) - проверяем, есть ли ещё что-то в очереди
+// если есть - запускаем новый сет sagaAutoSort с новой taskDelay
+// + проследить, чтобы законченные таски пропадали из рендера очереди
 function* sagaEmitterHandler() {
-    let index = 0;
-    const requestChannel = yield actionChannel(actions.QUEUEADD, buffers.fixed(5));
-    while (true) {
-        yield take(requestChannel);
-        const payload = yield select(queueData);
-        yield call(sagaAutoSort, payload[index].counter, payload[index].delay);
-        yield index++;
-    }
+    yield takeLatest(actions.QUEUEADD, sagaCheckQueue);
+    yield takeEvery(actions.QUEUEFINISH, sagaCheckQueue);
 }
 
 export default function* rootSaga () {

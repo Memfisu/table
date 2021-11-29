@@ -22,6 +22,11 @@ const cancelTaskFromQueue = ({ id }) => ({
     payload: { id }
 });
 
+const finishTaskFromQueue = ({ id }) => ({
+    type: actions.QUEUEFINISH,
+    payload: { id }
+})
+
 const queueHandler = (state, { type, payload }) => {
     switch (type) {
         case actions.QUEUEADD:
@@ -43,10 +48,12 @@ const queueHandler = (state, { type, payload }) => {
                 delay: index === 0 ? initialData.delay : state[index-1].delay/2
             }));
         }
+        case actions.QUEUEFINISH:
+            return state.filter(item => item.id !== payload.id);
         default:
             return state || [];
     }
 };
 
-export { addTaskToQueue, cancelTaskFromQueue };
+export { addTaskToQueue, cancelTaskFromQueue, finishTaskFromQueue };
 export default queueHandler;
