@@ -18,14 +18,6 @@ const setError = () => ({
     type: actions.ERROR
 });
 
-const setEmitterDemonstration = () => ({
-    type: actions.EMITTING
-});
-
-const stopEmitterDemonstration = () => ({
-    type: actions.STOP
-});
-
 const dataLoader = (state, { type, payload }) => {
     switch (type) {
         case actions.INIT:
@@ -47,20 +39,10 @@ const dataLoader = (state, { type, payload }) => {
             return {
                 status: statuses.ERROR
             };
-        case actions.EMITTING:
-            return {
-                ...state,
-                emitting: true
-            };
-        case actions.STOP:
-            return {
-                ...state,
-                emitting: false
-            };
         default:
             return state || {};
     }
 };
 
-export { initData, fetchData, addData, setError, setEmitterDemonstration, stopEmitterDemonstration };
+export { initData, fetchData, addData, setError };
 export default dataLoader;

@@ -20,8 +20,6 @@ export const loadedData = state => state.dataLoader.data;
 
 export const queueData = state => state.queueHandler;
 
-export const helper = state => state.queueHelper;
-
 const checkInclude = (obj, searchString) => Object.values(obj).some(elem => elem.toString().includes(searchString));
 
 export const filteredSortedData = createSelector([

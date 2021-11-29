@@ -2,9 +2,9 @@ import React, { useCallback, useState } from 'react';
 import Box from '../utils/Box';
 import Button from '../utils/Button';
 import { useDispatch } from 'react-redux';
-import { cancelQueueTask } from '../reducers/queueHandler';
+import { cancelTaskFromQueue } from '../reducers/queueHandler';
 
-const QueueItem = ({ item, index }) => {
+const QueueItem = ({ item }) => {
     const dispatch = useDispatch();
     const [selected, setSelected] = useState(false);
 
@@ -14,8 +14,8 @@ const QueueItem = ({ item, index }) => {
     }, [selected]);
 
     const handleRemoveTask = useCallback(() => {
-        dispatch(cancelQueueTask({ counter: index+1 }));
-    }, [dispatch, index]);
+        dispatch(cancelTaskFromQueue({ id: item.id }));
+    }, [dispatch, item.id]);
 
     return (
         <Box className={selected ? "taskWrapper focused" : "taskWrapper"} onClick={handleSelect}>
