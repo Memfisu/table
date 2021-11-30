@@ -1,4 +1,4 @@
-import { put, spawn, call, select, takeLatest, takeEvery } from 'redux-saga/effects';
+import { put, spawn, call, select, take, takeEvery } from 'redux-saga/effects';
 import { setCurrentPage } from '../reducers/pagination';
 import { setFormVisibility } from '../reducers/formDemonstrator';
 import { initData, fetchData } from '../reducers/dataLoader';
@@ -42,22 +42,23 @@ const commandsArray = [
         }}
 ];
 
-function* sagaCounter(){
-    let counter = 0;
-    for (let i = 0 ; i < commandsArray.length; i++){
-        yield counter++;
-    }
+function* sagaCounter() {
+    yield 0;
+    yield 1;
+    yield 2;
+    yield 3;
+    yield 4;
 }
-const counter = sagaCounter();
 
 function* sagaAutoSort(taskDelay, taskId) {
     yield console.log(`start ${taskDelay}`);
+    const counter = sagaCounter();
     const runner = yield setInterval(() => {
         const next = counter.next();
         if (next.done) {
+            console.log('done!');
             clearInterval(runner);
             store.dispatch(finishTaskFromQueue({ id: taskId }));
-            console.log('done!');
         } else {
             console.log(next.value);
             callback(commandsArray[next.value]);
@@ -72,13 +73,12 @@ function* sagaCheckQueue() {
     }
 }
 
-// todo переделать на очередь из redux:
-// реагируем на QUEUEADD (takeLatest?) - запускаем sagaAutoSort с установленной taskDelay
-// реагируем на QUEUEFINISH (takeEvery?) - проверяем, есть ли ещё что-то в очереди
-// если есть - запускаем новый сет sagaAutoSort с новой taskDelay
-// + проследить, чтобы законченные таски пропадали из рендера очереди
+// todo:
+// реализовать возможность перезапуска очереди по окончании задач
+// далее - объединение задач
 function* sagaEmitterHandler() {
-    yield takeLatest(actions.QUEUEADD, sagaCheckQueue);
+    const action = yield take(actions.QUEUEADD);
+    if (action) yield call(sagaCheckQueue);
     yield takeEvery(actions.QUEUEFINISH, sagaCheckQueue);
 }
 
