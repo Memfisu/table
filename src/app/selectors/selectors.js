@@ -18,7 +18,8 @@ export const formVisibility = state => state.formDemonstrator;
 
 export const loadedData = state => state.dataLoader.data;
 
-export const queueData = state => state.queueHandler;
+export const queueData = state => state.queueHandler.queue;
+export const mergeData = state => state.queueHandler.merge;
 
 const checkInclude = (obj, searchString) => Object.values(obj).some(elem => elem.toString().includes(searchString));
 

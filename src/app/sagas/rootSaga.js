@@ -75,7 +75,6 @@ function* sagaCheckQueue() {
 
 // todo:
 // реализовать возможность перезапуска очереди по окончании задач
-// далее - объединение задач
 function* sagaEmitterHandler() {
     const action = yield take(actions.QUEUEADD);
     if (action) yield call(sagaCheckQueue);

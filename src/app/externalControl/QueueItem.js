@@ -2,16 +2,26 @@ import React, { useCallback, useState } from 'react';
 import Box from '../utils/Box';
 import Button from '../utils/Button';
 import { useDispatch } from 'react-redux';
-import { cancelTaskFromQueue } from '../reducers/queueHandler';
+import {
+    cancelTaskFromQueue,
+    addSelectedTaskToMerge,
+    deleteSelectedTaskFromMerge
+} from '../reducers/queueHandler';
 
 const QueueItem = ({ item }) => {
     const dispatch = useDispatch();
     const [selected, setSelected] = useState(false);
 
     const handleSelect = useCallback(() => {
-        if (!selected) setSelected(true);
-        else setSelected(false);
-    }, [selected]);
+        if (!selected) {
+            setSelected(true);
+            dispatch(addSelectedTaskToMerge({ id: item.id }));
+        }
+        else {
+            setSelected(false);
+            dispatch(deleteSelectedTaskFromMerge({ id: item.id }));
+        }
+    }, [dispatch, item.id, selected]);
 
     const handleRemoveTask = useCallback(() => {
         dispatch(cancelTaskFromQueue({ id: item.id }));
