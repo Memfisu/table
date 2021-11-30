@@ -6,7 +6,11 @@ import { setCurrentPage } from '../../../reducers/pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { pagination } from '../../../selectors/selectors';
 
-const PaginationItem = ({ direction }) => {
+type Props = {
+    direction: string
+}
+
+const PaginationItem = ({ direction }: Props) => {
     const dispatch = useDispatch();
     const { currentPage } = useSelector(pagination);
     
