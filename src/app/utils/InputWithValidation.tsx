@@ -5,12 +5,17 @@ import Label from './Label';
 import { setNewRecord } from '../reducers/newRecordAppendor';
 import { newRecord } from '../selectors/selectors';
 
+type Props = {
+    name: string,
+    placeholder: string,
+    validate: (name: string, value: string) => RegExpMatchArray | null
+}
+
 const InputWithValidation = ({
   name,
-  type= "text",
   placeholder,
   validate
-}) => {
+}: Props) => {
     const dispatch = useDispatch();
     const newRecordData = useSelector(newRecord);
     
@@ -23,7 +28,11 @@ const InputWithValidation = ({
     }, [name, validate]);
     
     useEffect(() => {
+        // @ts-ignore
+        // todo: сделать, чтобы работало без хака
         if (!isError) dispatch(setNewRecord({[name]: value}));
+        // @ts-ignore
+        // todo: сделать, чтобы работало без хака
         else dispatch(setNewRecord({[name]: null}));
     }, [dispatch, isError, name, value]);
 
@@ -34,7 +43,7 @@ const InputWithValidation = ({
     return (
         <Box>
             <input
-                type={type}
+                type="text"
                 placeholder={placeholder}
                 onChange={handleChange}
                 value={value}

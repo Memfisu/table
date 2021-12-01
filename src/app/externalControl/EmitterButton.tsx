@@ -4,7 +4,8 @@ import Button from '../utils/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { mergeData, queueData } from '../selectors/selectors';
 import QueueItem from './QueueItem';
-import {addTaskToQueue, mergeSelectedTasks} from '../reducers/queueHandler';
+import { addTaskToQueue, mergeSelectedTasks } from '../reducers/queueHandler';
+import { IQueueItem } from '../interfaces/interfaces';
 
 const EmitterButton = () => {
     const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const EmitterButton = () => {
                 onClick={handleStart}
                 label="Emitter button"
             />
-            {queue?.length > 0 && queue.map((item, index) => <QueueItem item={item} key={index} />)}
+            {queue?.length > 0 && queue.map((item: IQueueItem, index: number) => <QueueItem item={item} key={index} />)}
             {merge?.length > 1 &&
             <Button
                 className="commonButton"

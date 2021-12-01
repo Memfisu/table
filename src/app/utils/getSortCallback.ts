@@ -1,7 +1,13 @@
 import { directions } from '../constants/constants';
+import { IRowData } from '../interfaces/interfaces';
 
-export const getSortCallback = ({ key, direction }) =>
-    (a, b) => {
+type Props = {
+    key: string,
+    direction: string
+};
+
+export const getSortCallback = ({ key, direction }: Props) =>
+    (a: IRowData, b: IRowData) => {
         const value = direction === directions.UP ? 1 : -1;
         if (a[key] > b[key]) {
             return value;

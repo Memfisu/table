@@ -1,4 +1,6 @@
-const names = {
+import { ColumnNames } from '../interfaces/interfaces';
+
+const names: ColumnNames = {
     id: /^\d+$/g,
     firstName: /^[a-zA-Z]+$/g,
     lastName: /^[a-zA-Z]+$/g,
@@ -6,4 +8,8 @@ const names = {
     phone: /^\+?[78][-(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/g
 };
 
-export const validate = (name, value) => value?.match(names[name]);
+type Keys = keyof typeof names;
+
+// @ts-ignore
+// todo: разобраться с этой ошибкой ts
+export const validate = (name: Keys, value: string) => value?.match(names[name]);

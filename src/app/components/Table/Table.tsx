@@ -18,6 +18,7 @@ import AddRecordButton from '../../forms/AddRecordForm/AddRecordButton';
 import Loader from '../Loader/Loader';
 import { statuses } from '../../constants/constants';
 import ErrorComponent from '../ErrorComponent/ErrorComponent';
+import { IRowData } from '../../interfaces/interfaces';
 
 const Table = () => {
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const Table = () => {
         pageNumber: currentPage
     });
     const tableData =
-        separatedData?.map((item, index) => <TableRow key={index} rowData={item} />);
+        separatedData?.map((item: IRowData, index: number) => <TableRow key={index} rowData={item} />);
 
     const handleBlur = () => {
         if (chosenRecordInfo) dispatch(resetChosenRecord());

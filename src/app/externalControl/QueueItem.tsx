@@ -7,8 +7,13 @@ import {
     addSelectedTaskToMerge,
     deleteSelectedTaskFromMerge
 } from '../reducers/queueHandler';
+import { IQueueItem } from '../interfaces/interfaces';
 
-const QueueItem = ({ item }) => {
+type Props = {
+    item: IQueueItem
+}
+
+const QueueItem = ({ item }: Props) => {
     const dispatch = useDispatch();
     const [selected, setSelected] = useState(false);
 

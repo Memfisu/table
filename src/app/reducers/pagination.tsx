@@ -1,11 +1,16 @@
 import { actions } from '../constants/constants';
+import {IAction} from "../interfaces/interfaces";
 
-const setCurrentPage = ({ currentPage }) => ({
+type CurrentPage = {
+    currentPage: number
+}
+
+const setCurrentPage = ({ currentPage }: CurrentPage) => ({
     type: actions.PAGE,
     payload: currentPage
 });
 
-const pagination = (state, { type, payload }) => {
+const pagination = (state: [], { type, payload }: IAction) => {
     switch (type) {
         case actions.PAGE:
             return {

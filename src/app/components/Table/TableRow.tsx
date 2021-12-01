@@ -3,26 +3,10 @@ import { useDispatch } from 'react-redux'
 import Box from '../../utils/Box';
 import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
 import { headerNames } from '../../constants/constants';
-
-interface Address {
-    city: string,
-    state: string,
-    streetAddress: string,
-    zip: number
-}
-
-interface RowData {
-    description: string,
-    email: string,
-    firstName: string,
-    id: number,
-    lastName: string,
-    phone: string,
-    address: Address
-}
+import { IRowData } from '../../interfaces/interfaces';
 
 type Props = {
-    rowData: RowData
+    rowData: IRowData
 }
 
 const TableRow = ({ rowData }: Props) => {

@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Button = props => {
+// todo: указать более строгий тип
+const Button = (props: any) => {
     return (
         <button {...props}>
             {props.label}
