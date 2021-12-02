@@ -10,13 +10,11 @@ const setSortingInfo = ({ sortingInfo }: SortingInfo) => ({
     payload: sortingInfo
 });
 
-const dataSorter = (state: [], { type, payload }: IAction) => {
+const dataSorter = (state: ISortingInfo, { type, payload }: IAction) => {
     switch (type) {
         case actions.SORT:
             return {
                 ...state,
-                // @ts-ignore
-                // todo: сделать, чтобы работало без хака
                 ...payload
             }
         default:

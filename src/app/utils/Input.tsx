@@ -1,7 +1,10 @@
 import React from 'react';
 
-// todo: указать более строгий тип
-const Input = (props: any) => {
+interface ICommonInput extends React.HTMLAttributes<HTMLInputElement> {
+    type?: string
+}
+
+const Input = (props: ICommonInput) => {
     return <input {...props} />;
 };
 

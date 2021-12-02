@@ -1,5 +1,5 @@
 import { actions } from '../constants/constants';
-import { IAction } from '../interfaces/interfaces';
+import { IAction, IFilterString } from '../interfaces/interfaces';
 
 type FilterInfo = {
     filterInfo: string
@@ -10,7 +10,7 @@ const setFilterInfo = ({ filterInfo }: FilterInfo) => ({
     payload: filterInfo
 });
 
-const dataFilter = (state: [], { type, payload }: IAction) => {
+const dataFilter = (state: IFilterString, { type, payload }: IAction) => {
     switch (type) {
         case actions.FILTER:
             return {

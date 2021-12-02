@@ -1,5 +1,5 @@
 import { actions } from '../constants/constants';
-import { IAction } from '../interfaces/interfaces';
+import { IAction, IFormVisibility } from '../interfaces/interfaces';
 
 type Visibility = {
     visibility: boolean
@@ -10,7 +10,7 @@ const setFormVisibility = ({ visibility }: Visibility) => ({
     payload: visibility
 });
 
-export const formDemonstrator = (state: [], { type, payload }: IAction) => {
+export const formDemonstrator = (state: IFormVisibility, { type, payload }: IAction) => {
     switch (type) {
         case actions.FORM:
             return {

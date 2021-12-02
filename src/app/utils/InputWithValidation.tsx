@@ -28,11 +28,7 @@ const InputWithValidation = ({
     }, [name, validate]);
     
     useEffect(() => {
-        // @ts-ignore
-        // todo: сделать, чтобы работало без хака
         if (!isError) dispatch(setNewRecord({[name]: value}));
-        // @ts-ignore
-        // todo: сделать, чтобы работало без хака
         else dispatch(setNewRecord({[name]: null}));
     }, [dispatch, isError, name, value]);
 

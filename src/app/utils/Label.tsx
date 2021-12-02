@@ -1,7 +1,6 @@
 import React from 'react';
 
-// todo: указать более строгий тип
-const Label = (props: any) => {
+const Label = (props: React.HTMLAttributes<HTMLParagraphElement>) => {
     return <p {...props} />;
 };
 

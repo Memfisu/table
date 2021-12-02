@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '../../utils/Box';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import TableFilter from './TableFilter';
 import TablePagination from './TablePagination';
-import { useDataSeparate } from '../../hooks/useDataSeparate';
+import { separateData } from '../../utils/separateData';
 import { resetChosenRecord } from '../../reducers/recordInfoDemonstrator';
 import {
     chosenRecord,
@@ -28,10 +28,10 @@ const Table = () => {
     const { currentPage } = useSelector(pagination);
     const status = useSelector(loadingStatus);
 
-    const separatedData = useDataSeparate({
+    const separatedData = useMemo(() => separateData({
         data,
         pageNumber: currentPage
-    });
+    }), [currentPage, data]);
     const tableData =
         separatedData?.map((item: IRowData, index: number) => <TableRow key={index} rowData={item} />);
 

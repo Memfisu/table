@@ -12,8 +12,49 @@ export interface IRowData {
     id: number,
     lastName: string,
     phone: string,
-    address: IAddress,
-    [index: string]: string | number | IAddress | RegExp
+    address: IAddress
+    [index: string]: string | number | IAddress
+}
+
+export interface IColumnNames {
+    email: RegExp,
+    firstName: RegExp,
+    id: RegExp,
+    lastName: RegExp,
+    phone: RegExp
+    [index: string]: RegExp
+}
+
+export interface IAction {
+    type: string,
+    // todo заменить на вычисляемый тип
+    payload: any
+}
+
+export interface ISortingInfo {
+    column: string,
+    direction: string
+}
+
+export interface IDataLoader {
+    data: IRowData[],
+    status: 'ERROR' | 'EMPTY' | 'DONE'
+}
+
+export interface IFilterString {
+    filterString: string
+}
+
+export interface IPagination {
+    currentPage: number
+}
+
+export interface IChosenRecord {
+    chosenRecord: IRowData
+}
+
+export interface IFormVisibility {
+    visibility: boolean
 }
 
 export interface IQueueItem {
@@ -22,14 +63,18 @@ export interface IQueueItem {
     id: number
 }
 
-export type ColumnNames = Omit<IRowData, "description" & "address">;
-
-export interface IAction {
-    type: string,
-    payload: string | boolean | number
+export interface IQueueHandler {
+    queue: IQueueItem[],
+    merge: number[]
 }
 
-export interface ISortingInfo {
-    column: string,
-    direction: string
+export interface IState {
+    dataLoader: IDataLoader,
+    newRecordAppendor: IColumnNames,
+    additionalInfo: IChosenRecord,
+    dataSorter: ISortingInfo,
+    dataFilter: IFilterString,
+    pagination: IPagination,
+    formDemonstrator: IFormVisibility
+    queueHandler: IQueueHandler
 }

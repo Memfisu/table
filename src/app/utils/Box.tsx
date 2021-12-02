@@ -1,7 +1,6 @@
 import React from 'react';
 
-// todo: указать более строгий тип
-const Box = (props: any) => {
+const Box = (props: React.HTMLAttributes<HTMLDivElement>) => {
     return <div {...props} />;
 };
 

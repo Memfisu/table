@@ -1,7 +1,6 @@
 import React from 'react';
 
-// todo: указать более строгий тип
-const Span = (props: any) => {
+const Span = (props: React.HTMLAttributes<HTMLSpanElement>) => {
     return <span {...props} />;
 };
 

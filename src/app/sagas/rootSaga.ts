@@ -8,6 +8,7 @@ import store from '../store';
 import { actions } from '../constants/constants';
 import { queueData } from '../selectors/selectors';
 import { finishTaskFromQueue } from '../reducers/queueHandler';
+import { ISortingInfo } from '../interfaces/interfaces';
 
 function* initDataSagaWorker () {
     yield put(initData());
@@ -17,7 +18,11 @@ function* initDataSagaWorker () {
     if (data?.length) yield put(fetchData({ data }));
 }
 
-const callback = (action) => store.dispatch(setSortingInfo(action));
+type Action = {
+    sortingInfo: ISortingInfo
+}
+
+const callback = (action: Action) => store.dispatch(setSortingInfo(action));
 
 const commandsArray = [
     {sortingInfo: {
@@ -50,7 +55,8 @@ function* sagaCounter() {
     yield 4;
 }
 
-function* sagaAutoSort(taskDelay, taskId) {
+// todo сузить any?
+function* sagaAutoSort(taskDelay: number, taskId: number): any {
     yield console.log(`start ${taskDelay}`);
     const counter = sagaCounter();
     const runner = yield setInterval(() => {
@@ -66,16 +72,17 @@ function* sagaAutoSort(taskDelay, taskId) {
     }, taskDelay);
 }
 
-function* sagaCheckQueue() {
+// todo сузить any?
+function* sagaCheckQueue(): any {
     const payload = yield select(queueData);
     if (payload.length) {
         yield call(sagaAutoSort, payload[0].delay, payload[0].id);
     }
 }
 
-// todo:
-// реализовать возможность перезапуска очереди по окончании задач
-function* sagaEmitterHandler() {
+// todo: реализовать возможность перезапуска очереди по окончании задач
+// todo сузить any?
+function* sagaEmitterHandler(): any {
     const action = yield take(actions.QUEUEADD);
     if (action) yield call(sagaCheckQueue);
     yield takeEvery(actions.QUEUEFINISH, sagaCheckQueue);

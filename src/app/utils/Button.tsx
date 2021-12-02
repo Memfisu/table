@@ -1,7 +1,11 @@
 import React from 'react';
 
-// todo: указать более строгий тип
-const Button = (props: any) => {
+interface ICommonButton extends React.HTMLAttributes<HTMLButtonElement> {
+    label?: string,
+    disabled?: boolean
+}
+
+const Button = (props: ICommonButton) => {
     return (
         <button {...props}>
             {props.label}

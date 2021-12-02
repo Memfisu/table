@@ -1,5 +1,5 @@
 import { actions } from '../constants/constants';
-import {IAction, IRowData} from '../interfaces/interfaces';
+import { IAction, IRowData } from '../interfaces/interfaces';
 
 type RowData = {
     rowData: IRowData
@@ -14,7 +14,7 @@ const resetChosenRecord = () => ({
     payload: {}
 });
 
-export const recordInfoDemonstrator = (state: [], { type, payload }: IAction) => {
+export const recordInfoDemonstrator = (state: IRowData, { type, payload }: IAction) => {
     switch (type) {
         case actions.SHOW:
             return {

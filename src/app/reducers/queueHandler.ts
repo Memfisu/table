@@ -1,4 +1,5 @@
 import { actions } from '../constants/constants';
+import {IAction, IQueueHandler, IQueueItem} from '../interfaces/interfaces';
 
 const initialData = {
     counter: 1,
@@ -6,36 +7,40 @@ const initialData = {
     id: 42
 };
 
-const setUniqueId = array => {
+type Id = {
+    id: number
+}
+
+const setUniqueId = (array: IQueueItem[]) => {
     let id = Math.floor(Math.random() * 100);
-    if (array.find(item => item.id === id)) {
+    if (array.find(item => item.id === id) || !id) {
         setUniqueId(array);
     } else return id;
 };
 
-// todo: нужно оставлять одну объединённую задачу вместо переданных нескольких
-const delIdsFromArray = (ids, items) => items.filter(item => !ids.includes(item.id));
+// todo: нужно оставлять одну объединённую задачу вместо переданных нескольких?
+const delIdsFromArray = (ids: number[], items: IQueueItem[]) => items.filter(item => !ids.includes(item.id));
 
 const addTaskToQueue = () => ({
     type: actions.QUEUEADD
 });
 
-const cancelTaskFromQueue = ({ id }) => ({
+const cancelTaskFromQueue = ({ id }: Id) => ({
     type: actions.QUEUECANCEL,
     payload: { id }
 });
 
-const finishTaskFromQueue = ({ id }) => ({
+const finishTaskFromQueue = ({ id }: Id) => ({
     type: actions.QUEUEFINISH,
     payload: { id }
 });
 
-const addSelectedTaskToMerge = ({ id }) => ({
+const addSelectedTaskToMerge = ({ id }: Id) => ({
     type: actions.MERGEADD,
     payload: { id }
 });
 
-const deleteSelectedTaskFromMerge = ({ id }) => ({
+const deleteSelectedTaskFromMerge = ({ id }: Id) => ({
     type: actions.MERGEDELETE,
     payload: { id }
 });
@@ -44,7 +49,7 @@ const mergeSelectedTasks = () => ({
     type: actions.MERGE
 });
 
-const queueHandler = (state, { type, payload }) => {
+const queueHandler = (state: IQueueHandler, { type, payload }: IAction) => {
     switch (type) {
         case actions.QUEUEADD:
         {   const newState = [...state.queue];
@@ -52,6 +57,8 @@ const queueHandler = (state, { type, payload }) => {
                 newState.push({
                     counter: newState[newState.length-1].counter+1,
                     delay: newState[newState.length-1].delay/2,
+                    // @ts-ignore
+                    // todo починить
                     id: setUniqueId(newState)
                 })
                 : newState.push(initialData);
