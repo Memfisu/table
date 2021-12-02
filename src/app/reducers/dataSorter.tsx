@@ -13,10 +13,12 @@ const setSortingInfo = ({ sortingInfo }: SortingInfo) => ({
 const dataSorter = (state: [], { type, payload }: IAction) => {
     switch (type) {
         case actions.SORT:
+            /*
+            * todo
+            *  Нужно сделать обопщение в интерфейсе IAction, заменить в нем payload: any на вычисляемый тип, чтобы все было красиво
+            * */
             return {
                 ...state,
-                // @ts-ignore
-                // todo: сделать, чтобы работало без хака
                 ...payload
             }
         default:

@@ -27,7 +27,11 @@ const Table = () => {
     const chosenRecordInfo = useSelector(chosenRecord);
     const { currentPage } = useSelector(pagination);
     const status = useSelector(loadingStatus);
-
+    /*
+    * todo
+    *  Сейчас это не хук, поэтому его не нужно назвать use***
+    *  Это обыкновенный хелпер, который неплохо бы оберуть в useMemo, чтобы он не вычислялся заново при каждом рендере
+    * */
     const separatedData = useDataSeparate({
         data,
         pageNumber: currentPage

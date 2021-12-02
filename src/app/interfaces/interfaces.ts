@@ -26,7 +26,11 @@ export type ColumnNames = Omit<IRowData, "description" & "address">;
 
 export interface IAction {
     type: string,
-    payload: string | boolean | number
+    /*
+    * todo
+    *  Заменить эти на вычисляемый тип.
+    * */
+    payload: any
 }
 
 export interface ISortingInfo {
