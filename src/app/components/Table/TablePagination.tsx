@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '../../utils/Box';
 import PaginationItem from './fields/PaginationItem';
 import { directions } from '../../constants/constants';

@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '../../utils/Box';
 import TableHeaderItem from './fields/TableHeaderItem';
 import { headerNames } from '../../constants/constants';

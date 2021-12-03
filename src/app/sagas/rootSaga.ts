@@ -8,7 +8,7 @@ import store from '../store';
 import { actions } from '../constants/constants';
 import { queueData } from '../selectors/selectors';
 import { finishTaskFromQueue } from '../reducers/queueHandler';
-import { ISortingInfo } from '../interfaces/interfaces';
+import {IQueueItem, ISortingInfo} from '../interfaces/interfaces';
 
 function* initDataSagaWorker () {
     yield put(initData());
@@ -72,17 +72,15 @@ function* sagaAutoSort(taskDelay: number, taskId: number): any {
     }, taskDelay);
 }
 
-// todo сузить any?
-function* sagaCheckQueue(): any {
-    const payload = yield select(queueData);
+function* sagaCheckQueue() {
+    const payload: IQueueItem[] = yield select(queueData);
     if (payload.length) {
         yield call(sagaAutoSort, payload[0].delay, payload[0].id);
     }
 }
 
 // todo: реализовать возможность перезапуска очереди по окончании задач
-// todo сузить any?
-function* sagaEmitterHandler(): any {
+function* sagaEmitterHandler(): Generator {
     const action = yield take(actions.QUEUEADD);
     if (action) yield call(sagaCheckQueue);
     yield takeEvery(actions.QUEUEFINISH, sagaCheckQueue);

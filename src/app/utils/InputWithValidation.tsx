@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Box from './Box';
 import Label from './Label';

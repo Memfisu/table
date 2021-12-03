@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '../../utils/Box';
 import Label from '../../utils/Label';
 

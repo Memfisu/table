@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 import Box from '../../utils/Box';
 import Button from '../../utils/Button';
 import Input from '../../utils/Input';

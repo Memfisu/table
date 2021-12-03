@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '../../utils/Box';
 import Button from '../../utils/Button';

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '../../utils/Box';
 import TableHeader from './TableHeader';
@@ -33,6 +33,7 @@ const Table = () => {
         pageNumber: currentPage
     }), [currentPage, data]);
     const tableData =
+        // @ts-ignore
         separatedData?.map((item: IRowData, index: number) => <TableRow key={index} rowData={item} />);
 
     const handleBlur = () => {

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux'
 import Box from '../../utils/Box';
 import { setChosenRecord } from '../../reducers/recordInfoDemonstrator';
