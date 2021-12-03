@@ -10,7 +10,7 @@ const setSortingInfo = ({ sortingInfo }: SortingInfo) => ({
     payload: sortingInfo
 });
 
-const dataSorter = (state: ISortingInfo, { type, payload }: IAction<SortingInfo>) => {
+const dataSorter = (state: ISortingInfo, { type, payload }: IAction<ISortingInfo>) => {
     switch (type) {
         case actions.SORT:
             return {
