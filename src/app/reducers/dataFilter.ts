@@ -10,7 +10,7 @@ const setFilterInfo = ({ filterInfo }: FilterInfo) => ({
     payload: filterInfo
 });
 
-const dataFilter = (state: IFilterString, { type, payload }: IAction) => {
+const dataFilter = (state: IFilterString, { type, payload }: IAction<string>) => {
     switch (type) {
         case actions.FILTER:
             return {

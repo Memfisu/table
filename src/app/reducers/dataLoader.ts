@@ -25,7 +25,7 @@ const setError = () => ({
     type: actions.ERROR
 });
 
-const dataLoader = (state: IDataLoader, { type, payload }: IAction) => {
+const dataLoader = (state: IDataLoader, { type, payload }: IAction<IData | INewRecord>) => {
     switch (type) {
         case actions.INIT:
             return {

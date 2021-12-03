@@ -11,10 +11,10 @@ type Id = {
     id: number
 }
 
-const setUniqueId = (array: IQueueItem[]) => {
+const setUniqueId = (array: IQueueItem[]): number => {
     let id = Math.floor(Math.random() * 100);
     if (array.find(item => item.id === id) || !id) {
-        setUniqueId(array);
+        return setUniqueId(array);
     } else return id;
 };
 
@@ -57,8 +57,6 @@ const queueHandler = (state: IQueueHandler, { type, payload }: IAction) => {
                 newState.push({
                     counter: newState[newState.length-1].counter+1,
                     delay: newState[newState.length-1].delay/2,
-                    // @ts-ignore
-                    // todo починить
                     id: setUniqueId(newState)
                 })
                 : newState.push(initialData);

@@ -25,10 +25,9 @@ export interface IColumnNames {
     [index: string]: RegExp
 }
 
-export interface IAction {
+export interface IAction<T> {
     type: string,
-    // todo заменить на вычисляемый тип
-    payload: any
+    payload: T
 }
 
 export interface ISortingInfo {
