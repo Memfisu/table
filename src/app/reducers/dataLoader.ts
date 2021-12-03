@@ -1,22 +1,21 @@
 import { actions, statuses } from '../constants/constants';
 import {IAction, IColumnNames, IDataLoader, IRowData} from '../interfaces/interfaces';
 
+type IData = {
+    data: IRowData[],
+    newRecord: IColumnNames
+}
+
 const initData = () => ({
     type: actions.INIT,
 });
 
-type IData = {
-    data: IRowData[]
-}
 const fetchData = ({ data }: IData) => ({
     type: actions.FETCH,
     payload: { data }
 });
 
-type INewRecord = {
-    newRecord: IColumnNames
-}
-const addData = ({ newRecord }: INewRecord) => ({
+const addData = ({ newRecord }: IData) => ({
     type: actions.ADD,
     payload: { newRecord }
 });
@@ -25,7 +24,7 @@ const setError = () => ({
     type: actions.ERROR
 });
 
-const dataLoader = (state: IDataLoader, { type, payload }: IAction<IData | INewRecord>) => {
+const dataLoader = (state: IDataLoader, { type, payload }: IAction<IData>) => {
     switch (type) {
         case actions.INIT:
             return {
