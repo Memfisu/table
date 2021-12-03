@@ -49,7 +49,7 @@ const mergeSelectedTasks = () => ({
     type: actions.MERGE
 });
 
-const queueHandler = (state: IQueueHandler, { type, payload }: IAction) => {
+const queueHandler = (state: IQueueHandler, { type, payload }: IAction<Id>) => {
     switch (type) {
         case actions.QUEUEADD:
         {   const newState = [...state.queue];

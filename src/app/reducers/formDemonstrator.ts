@@ -10,7 +10,7 @@ const setFormVisibility = ({ visibility }: Visibility) => ({
     payload: visibility
 });
 
-export const formDemonstrator = (state: IFormVisibility, { type, payload }: IAction) => {
+export const formDemonstrator = (state: IFormVisibility, { type, payload }: IAction<Visibility>) => {
     switch (type) {
         case actions.FORM:
             return {

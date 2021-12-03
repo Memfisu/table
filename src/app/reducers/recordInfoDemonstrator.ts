@@ -14,7 +14,7 @@ const resetChosenRecord = () => ({
     payload: {}
 });
 
-export const recordInfoDemonstrator = (state: IRowData, { type, payload }: IAction) => {
+export const recordInfoDemonstrator = (state: IRowData, { type, payload }: IAction<RowData>) => {
     switch (type) {
         case actions.SHOW:
             return {

@@ -10,7 +10,7 @@ const setCurrentPage = ({ currentPage }: CurrentPage) => ({
     payload: currentPage
 });
 
-const pagination = (state: IPagination, { type, payload }: IAction) => {
+const pagination = (state: IPagination, { type, payload }: IAction<CurrentPage>) => {
     switch (type) {
         case actions.PAGE:
             return {

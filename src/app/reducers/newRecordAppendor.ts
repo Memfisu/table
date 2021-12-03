@@ -14,7 +14,7 @@ const clearNewRecord = () => ({
     payload: {}
 });
 
-const newRecordAppendor = (state: IColumnNames, { type, payload }: IAction) => {
+const newRecordAppendor = (state: IColumnNames, { type, payload }: IAction<NewRecord>) => {
     switch (type) {
         case actions.NEW:
             return {
